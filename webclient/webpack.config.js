@@ -3,8 +3,13 @@ var webpack = require('webpack');
 
 module.exports = {
   devtool: 'eval',
+  devServer: {
+    historyApiFallback: true,
+    contentBase: './',
+    hot: true
+  },
   entry: [
-    './src/index'
+    './src/index.js'
   ],
   output: {
     path: path.join(__dirname, 'dist'),

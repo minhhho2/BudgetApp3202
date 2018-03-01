@@ -1,6 +1,6 @@
 import * as React from 'react'
 import CounterComponent from "./features/counter/CounterComponent";
-const { BrowserRouter, Link, Route, Switch, Redirect } = require("react-router-dom");
+const { BrowserRouter, Link, Route, Switch, Redirect, NotFoundRoute } = require("react-router-dom");
 
 class NotFoundComponent extends React.Component {
     render() {
