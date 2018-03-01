@@ -1,0 +1,6 @@
+# Development only requirements
+flake8==3.5.0
+gunicorn==19.7.1
+mypy==0.560
+pytest==3.3.2
+pytest-cov==2.5.1

@@ -1,0 +1,3 @@
+# Install application and development requirements by default
+-r requirements-base.txt
+-r requirements-dev.txt
