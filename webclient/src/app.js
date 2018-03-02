@@ -1,6 +1,10 @@
 import * as React from 'react'
+// Components
 import CounterComponent from "./features/counter/CounterComponent";
-const { BrowserRouter, Link, Route, Switch, Redirect, NotFoundRoute } = require("react-router-dom");
+import LoginComponent from "./features/auth/LoginComponent";
+// Stores
+import UserStore from "./stores/UserStore";
+const { BrowserRouter, Link, Route, Switch } = require("react-router-dom");
 
 class NotFoundComponent extends React.Component {
     render() {
@@ -8,20 +12,22 @@ class NotFoundComponent extends React.Component {
     }
 }
 
-class BudgetComponent extends React.Component {
-    render() {
-        return <p>Budgets</p>;
-    }
-}
-
 export default class App extends React.Component {
     render() {
+        if (!UserStore.user) {
+            return (
+                <BrowserRouter>
+                    <Switch>                        
+                        <Route component={LoginComponent} />
+                    </Switch>
+                </BrowserRouter>
+            );
+        }
         return (
             <div>
                 <BrowserRouter>
                     <Switch>
                         <Route path="/" exact component={CounterComponent} />
-                        <Route path="/budget" exact component={BudgetComponent} />
                         <Route component={NotFoundComponent} />
                     </Switch>
                 </BrowserRouter>
