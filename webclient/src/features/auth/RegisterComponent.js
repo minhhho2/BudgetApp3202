@@ -9,11 +9,11 @@ export default class RegisterComponent extends React.Component {
     }
 
     changePasswordHandler = e => {
-        RegisterStore.credentials.newPassword = e.currentTarget.value;        
+        RegisterStore.credentials.newPassword = e.currentTarget.value;
     }
-    
+
     changePasswordConfirmHandler = e => {
-        RegisterStore.credentials.newPasswordConfirm = e.currentTarget.value;        
+        RegisterStore.credentials.newPasswordConfirm = e.currentTarget.value;
     }
 
     render() {

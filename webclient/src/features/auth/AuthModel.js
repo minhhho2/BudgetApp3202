@@ -6,7 +6,7 @@ export default class AuthModel {
 	@observable newPassword = "";
 	@observable newPasswordConfirm = "";
 
-	constructor(username="", password="") {
+	constructor(username = "", password = "") {
 		this.username = username;
 		this.password = password;
 	}

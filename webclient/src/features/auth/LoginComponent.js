@@ -33,7 +33,7 @@ export default class LoginComponent extends React.Component {
                         <Form.Field>
                             <label>Password</label>
                             <input
-                                value={LoginStore.credentials.password}                            
+                                value={LoginStore.credentials.password}
                                 onChange={this.changePasswordHandler}
                                 placeholder="Password"
                             />
@@ -43,6 +43,6 @@ export default class LoginComponent extends React.Component {
                     </Form>
                 </Segment>
             </div>
-                );
-            }
+        );
+    }
 }

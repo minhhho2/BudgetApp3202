@@ -1,7 +1,7 @@
 import { observable } from "mobx";
 
 class User {
-    constructor(id, name, roles=[], tokens=undefined) {
+    constructor(id, name, roles = [], tokens = undefined) {
         this.id = id;
         this.name = name;
         this.roles = roles;

@@ -30,7 +30,7 @@ class LoginStore {
                 console.log(res);
                 UserStore.isAuthenticating = true;
             })
-            .catch (err => console.log(err))
+            .catch(err => console.log(err))
     }
 }
 export default new LoginStore();

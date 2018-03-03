@@ -20,7 +20,7 @@ class RegisterStore {
     }
 
     register() {
-        this.validationErrors = [];        
+        this.validationErrors = [];
         const errors = this.validate();
         if (this.validationErrors.length > 0) {
             return;

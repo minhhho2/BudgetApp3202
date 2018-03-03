@@ -13,7 +13,7 @@ const defaultFetchOptions = {
 class ApiService {
     get(url, data) {
         // Maybe add data to the url string as encoded parameters
-        if(data && typeof data === 'object') {
+        if (data && typeof data === 'object') {
             url += "?" + this.parameterize(data);
         }
 
@@ -44,7 +44,7 @@ class ApiService {
             body: data !== undefined ? JSON.stringify(data) : undefined
         }).then(res => this.maybeParseJson(res));
     }
-    
+
     /**
      * Deserialize the response as JSON if it has a JSON content-type, otherwise return null.
      * @param response 
@@ -59,7 +59,7 @@ class ApiService {
     /**
      * Converts an object to a URL query string like ?thing=blah&anotherThing=Yep
      * See: http://stackoverflow.com/questions/22678346/convert-javascript-object-to-url-parameters
-     */ 
+     */
     parameterize(data) {
         return Object
             .keys(data)
@@ -76,7 +76,7 @@ class ApiService {
             return encodeURIComponent(value);
         }
     }
-    
+
 }
 
 export default new ApiService();

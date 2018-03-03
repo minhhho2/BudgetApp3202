@@ -33,6 +33,7 @@ class AuthResource(object):
         self._user_repo = user_repo
 
     def on_put(self, request, response):
+        ''' Register '''
         username = request.media['username']
         password = request.media['password']
         
