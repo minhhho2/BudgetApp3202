@@ -3,6 +3,8 @@ import { observer } from "mobx-react";
 // Components
 import CounterComponent from "./features/counter/CounterComponent";
 import LoginComponent from "./features/auth/LoginComponent";
+import DashboardComponent from "./features/dashboard/DashboardComponent";
+
 // Stores
 import UserStore from "./stores/UserStore";
 import RegisterComponent from './features/auth/RegisterComponent';
@@ -41,7 +43,7 @@ export default class App extends React.Component {
                 {spinner}
                 <BrowserRouter>
                     <Switch>
-                        <Route path="/" exact component={CounterComponent} />
+                        <Route path="/" exact component={DashboardComponent} />
                         <Route component={NotFoundComponent} />
                     </Switch>
                 </BrowserRouter>
