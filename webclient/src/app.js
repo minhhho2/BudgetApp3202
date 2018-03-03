@@ -19,23 +19,26 @@ class NotFoundComponent extends React.Component {
 export default class App extends React.Component {
     render() {
         const spinner = UserStore.isAuthenticating ?
-        (
-          <Dimmer active={true}>
-            <Loader active={true} inline="centered">Loading</Loader>
-          </Dimmer>
-        ) :
-        <div />;
-        // if (!UserStore.user) {
-        //     return (
-        //         <BrowserRouter>
-        //             <Switch>                        
-        //                 <Route path="/register" component={RegisterComponent} />
-        //                 <Route path="/budget" component={() => <p>Budgets!</p>} />
-        //                 <Route component={LoginComponent} />
-        //             </Switch>
-        //         </BrowserRouter>
-        //     );
-        // }
+            (
+                <Dimmer active={true}>
+                    <Loader active={true} inline="centered">Loading</Loader>
+                </Dimmer>
+            ) :
+            <div />;
+        if (!UserStore.user) {
+            return (
+                <div>
+                    {spinner}
+                    <BrowserRouter>
+                        <Switch>
+                            <Route path="/register" component={RegisterComponent} />
+                            <Route path="/budget" component={() => <p>Budgets!</p>} />
+                            <Route component={LoginComponent} />
+                        </Switch>
+                    </BrowserRouter>
+                </div>
+            );
+        }
         return (
             <div>
                 {spinner}

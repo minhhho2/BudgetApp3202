@@ -1,6 +1,6 @@
 begin;
 
-create table user
+create table users
 (
 	id serial not null
 		constraint users_pkey

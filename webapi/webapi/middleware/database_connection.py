@@ -3,7 +3,7 @@ from webapi.database import database
 class DatabaseConnectionMiddleware():
     ''' Process each request in a database transaction. '''
 
-    def process_request(self, request, response):
+    def process_resource(self, request, response, resource, params):
         if database.is_closed():
             database.connect()
         database.begin()

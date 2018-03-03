@@ -33,6 +33,18 @@ class ApiService {
         }).then(res => this.maybeParseJson(res));
     }
 
+    put(url, data) {
+        return fetch(baseUrl + url, {
+            ...defaultFetchOptions,
+            method: "put",
+            headers: new Headers({
+                "Content-Type": "application/json",
+                "X-Requested-With": "XMLHttpRequest"
+            }),
+            body: data !== undefined ? JSON.stringify(data) : undefined
+        }).then(res => this.maybeParseJson(res));
+    }
+    
     /**
      * Deserialize the response as JSON if it has a JSON content-type, otherwise return null.
      * @param response 

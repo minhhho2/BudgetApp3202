@@ -25,6 +25,7 @@ export default class LoginComponent extends React.Component {
                         <Form.Field>
                             <label>Username</label>
                             <input
+                                value={LoginStore.credentials.username}
                                 onChange={this.changeUsernameHandler}
                                 placeholder="Username"
                             />
@@ -32,6 +33,7 @@ export default class LoginComponent extends React.Component {
                         <Form.Field>
                             <label>Password</label>
                             <input
+                                value={LoginStore.credentials.password}                            
                                 onChange={this.changePasswordHandler}
                                 placeholder="Password"
                             />

@@ -4,6 +4,8 @@ import falcon_multipart.middleware
 
 from webapi.config import config
 from webapi.database import init_database
+from webapi.middleware.cors import CorsMiddleware
+from webapi.middleware.empty_resource import EmptyResponseMiddleware
 from webapi.middleware.database_connection import DatabaseConnectionMiddleware
 from webapi.error_handlers import register_error_handlers
 from webapi.media_handlers import register_media_handlers
@@ -12,12 +14,8 @@ from webapi.routes import register_routes
 init_database()
 
 def create_middleware():
-    cors = falcon_cors.CORS(allow_all_origins=True,
-                            allow_all_headers=True,
-                            allow_all_methods=True)
-
     return [
-        cors.middleware,
+        CorsMiddleware(),
         DatabaseConnectionMiddleware(),
         falcon_multipart.middleware.MultipartMiddleware()
     ]

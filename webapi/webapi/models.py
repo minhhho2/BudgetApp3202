@@ -1,17 +1,17 @@
-# from peewee import (Model, TextField, BooleanField, DateTimeField, IntegerField, FloatField,
-#                     ForeignKeyField)
+from peewee import (Model, TextField, BooleanField, DateTimeField, IntegerField, FloatField,
+                    ForeignKeyField)
 
-# from webapi.database import database
+from webapi.database import database
 
-# class BaseModel
-#     class Meta:
-#         database = database
+class BaseModel(Model):
+    class Meta:
+        database = database
 
-# class User(BaseModel):
-#     class Meta:
-#         db_table = 'user'
+class User(BaseModel):
+    class Meta:
+        db_table = 'user'
 
-#     first_name = TextField()
-#     last_name = TextField()
-#     user_name = TextField()
-#     password_hash = TextField()
+    user_name = TextField()
+    first_name = TextField()
+    last_name = TextField()
+    password_hash = TextField()

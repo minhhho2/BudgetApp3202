@@ -8,6 +8,10 @@ class CatchAllHandler(Exception):
     @staticmethod
     def handle(ex, request, response, params):
         ''' Called if an exception has not been handled. Logs the exception. '''
+        if isinstance(ex, falcon.HTTPStatus):
+            # If a request was terminated early with a non-error status code, do nothing
+            raise ex
+
         if isinstance(ex, falcon.HTTPError):
             # Don't log stack trace for invalid requests
             raise ex

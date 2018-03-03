@@ -1,12 +1,14 @@
 import { observable } from "mobx";
 import AuthModel from "./AuthModel";
+import UserStore from "../../stores/UserStore";
+import ApiService from "../../services/ApiService";
 
 class RegisterStore {
     @observable credentials = new AuthModel();
     @observable validationErrors = [];
 
     validate() {
-        const { username, password, passwordConfirm } = this.credentials;
+        const { username, newPassword, newPasswordConfirm } = this.credentials;
         if (username.length < 6) {
         }
         if (newPassword.length < 6) {
@@ -20,11 +22,19 @@ class RegisterStore {
     register() {
         this.validationErrors = [];        
         const errors = this.validate();
-        if (validationErrors.length > 0) {
+        if (this.validationErrors.length > 0) {
             return;
         }
 
-        /* Registration Logic */
+        const { username, newPassword } = this.credentials;
+        const data = { username, password: newPassword };
+
+        UserStore.isAuthenticating = true;
+        ApiService.put('/auth', data)
+            .then(res => {
+                console.log(res);
+                UserStore.isAuthenticating = false;
+            });
     }
 }
 export default new RegisterStore();

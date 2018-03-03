@@ -1,4 +1,5 @@
 import json
+from webapi.resources.authentication import AuthResource
 
 class RootResource(object):
     def on_get(self, request, response):
@@ -8,9 +9,9 @@ class RootResource(object):
         # put in body
         response.body = json.dumps({ 'Success': True, 'Message': 'Budgets' })
 
-
 routes = [
     ('/', RootResource),
+    ('/auth', AuthResource)
 ]
 
 def register_routes(app):
