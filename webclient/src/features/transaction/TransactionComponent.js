@@ -12,27 +12,16 @@ const options = [
 @observer
 export default class TransactionComponent extends React.Component {
 
-    handleChangeType = (e) => {
-        TransactionStore.type = e.target.value;
-    }
+    handleChangeType = (e) => { TransactionStore.type = e.target.value; }
+    handleChangeAmount = (e) => { TransactionStore.amount = e.target.value; }
+    handleChangeDate = (e) => { TransactionStore.date = e.target.value; }
 
-    handleChangeAmount = (e) => {
-        TransactionStore.amount = e.target.value;
-    }
-
-    handleChangeDate = (e) => {
-        TransactionStore.date = e.target.value;
-    }
-
-    handleOpen() {
-        TransactionStore.state = true;
-    }
-    handleClose() {
-        TransactionStore.state = false;
-    }
+    handleOpen() { TransactionStore.state = true; }
+    handleClose() { TransactionStore.state = false; }
 
     handleAddTransaction() {
-        console.log("Added Transaction - " + this.type + " - " + this.amount + " - " + this.date);
+        console.log("Added Transaction - " + TransactionStore.type + " - " + 
+        TransactionStore.amount + " - " + TransactionStore.date);
         TransactionStore.state = false;
     }
 
@@ -44,22 +33,22 @@ export default class TransactionComponent extends React.Component {
                     <Select placeholder='Select transaction type' 
                         options={options} 
                         value={TransactionStore.type}
-                        onChange={this.handleChangeType}
+                        onChange={(e) => this.handleChangeType(e)}
                     />
                     <Input type="number" placeholder='amount' 
                         value={TransactionStore.amount}
-                        onChange={this.handleChangeAmount}
+                        onChange={(e) => this.handleChangeAmount(e)}
                     />
                     <Input type="date" placeholder='date' 
                         value={TransactionStore.date}
-                        onChange={this.handleChangeDate}
+                        onChange={(e) => this.handleChangeDate(e)}
                     />
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button color='red' onClick = {this.handleClose}>
+                    <Button color='red' onClick={this.handleClose}>
                         <Icon name='remove' /> Cancel
                     </Button>
-                    <Button color='green' onClick = {this.handleAddTransaction}>
+                    <Button color='green' onClick={this.handleAddTransaction}>
                         <Icon name='checkmark' /> Confirm
                     </Button>
                 </Modal.Actions>
