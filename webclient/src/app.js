@@ -1,10 +1,13 @@
-import * as React from 'react'
+import * as React from "react";
+import { observer } from "mobx-react";
 // Components
 import CounterComponent from "./features/counter/CounterComponent";
 import LoginComponent from "./features/auth/LoginComponent";
 // Stores
 import UserStore from "./stores/UserStore";
-const { BrowserRouter, Link, Route, Switch } = require("react-router-dom");
+import RegisterComponent from './features/auth/RegisterComponent';
+import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
+import { Dimmer, Loader } from "semantic-ui-react";
 
 class NotFoundComponent extends React.Component {
     render() {
@@ -12,19 +15,30 @@ class NotFoundComponent extends React.Component {
     }
 }
 
+@observer
 export default class App extends React.Component {
     render() {
-        if (!UserStore.user) {
-            return (
-                <BrowserRouter>
-                    <Switch>                        
-                        <Route component={LoginComponent} />
-                    </Switch>
-                </BrowserRouter>
-            );
-        }
+        const spinner = UserStore.isAuthenticating ?
+        (
+          <Dimmer active={true}>
+            <Loader active={true} inline="centered">Loading</Loader>
+          </Dimmer>
+        ) :
+        <div />;
+        // if (!UserStore.user) {
+        //     return (
+        //         <BrowserRouter>
+        //             <Switch>                        
+        //                 <Route path="/register" component={RegisterComponent} />
+        //                 <Route path="/budget" component={() => <p>Budgets!</p>} />
+        //                 <Route component={LoginComponent} />
+        //             </Switch>
+        //         </BrowserRouter>
+        //     );
+        // }
         return (
             <div>
+                {spinner}
                 <BrowserRouter>
                     <Switch>
                         <Route path="/" exact component={CounterComponent} />

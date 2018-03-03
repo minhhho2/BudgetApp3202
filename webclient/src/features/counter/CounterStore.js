@@ -1,14 +1,17 @@
 import { observable } from "mobx";
 import ApiService from "../../services/ApiService";
+import UserStore from "../../stores/UserStore";
 
 class CounterStore {
     @observable count = 0;
     @observable message = '';
 
-    getHelloMessage() {
-        ApiService.get('/')
-            // Get pulls out { Success: true, Message: "Hello, Minh" }
-            .then(({ Success, Message }) => this.message = Message);
+    testAuthenticate() {
+        UserStore.isAuthenticating = true;
+        (new Promise(r => setTimeout(r, 1500)))
+            .then(res => {
+                UserStore.isAuthenticating = false;
+            });
     }
 }
 export default new CounterStore();

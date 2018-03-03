@@ -9,11 +9,14 @@ class User {
         if (tokens) this.tokens = tokens;
     }
 }
+
 class UserStore {
+    @observable isAuthenticating = false;
     @observable user = undefined;
     @observable amountLeftToSpend = 0;
 
     setUser() {
-        this.user = new User(1, 'name', []);
+        this.user = new User(1, "name", []);
     }
 }
+export default new UserStore();
