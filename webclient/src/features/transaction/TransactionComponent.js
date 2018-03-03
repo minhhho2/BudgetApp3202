@@ -27,7 +27,7 @@ export default class TransactionComponent extends React.Component {
 
     render() {
         return (
-            <Modal open={TransactionStore.state} trigger={<Button onClick={this.handleOpen}>Add Transaction</Button>} closeIcon>
+            <Modal onClose={this.handleClose} open={TransactionStore.state} trigger={<Button onClick={this.handleOpen} >Add Transaction</Button>} closeIcon>
                 <Header icon='money' content='New Transaction' />
                 <Modal.Content>
                     <Select placeholder='Select transaction type' 
