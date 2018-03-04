@@ -4,8 +4,8 @@ class TransactionStore {
     @observable type = "income";
     @observable amount = 0;
     @observable date = this.formatDate(new Date());
-    @observable state = false;
-
+    @observable isOpen = false;
+    
     formatDate(date) { return date.toISOString().split('T')[0]; }
 }
 

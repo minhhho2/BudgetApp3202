@@ -15,20 +15,19 @@ export default class TransactionComponent extends React.Component {
     handleChangeType = (e) => { TransactionStore.type = e.target.value; }
     handleChangeAmount = (e) => { TransactionStore.amount = e.target.value; }
     handleChangeDate = (e) => { TransactionStore.date = e.target.value; }
-
-    handleOpen() { TransactionStore.state = true; }
-    handleClose() { TransactionStore.state = false; }
+    handleOpen() { TransactionStore.isOpen = true; }
+    handleClose() { TransactionStore.isOpen = false; }
 
     handleAddTransaction() {
         console.log("Added Transaction - " + TransactionStore.type + " - " + 
         TransactionStore.amount + " - " + TransactionStore.date);
-        TransactionStore.state = false;
+        TransactionStore.isOpen = false;
     }
 
     render() {
         return (
-            <Modal onClose={this.handleClose} open={TransactionStore.state} trigger={<Button onClick={this.handleOpen} >Add Transaction</Button>} closeIcon>
-                <Header icon='money' content='New Transaction' />
+            <Modal onClose={this.handleClose} open={TransactionStore.isOpen} trigger={<Button onClick={this.handleOpen} >Transaction</Button>}>
+                <Header icon='money' content='Transaction' />
                 <Modal.Content>
                     <Select placeholder='Select transaction type' 
                         options={options} 
