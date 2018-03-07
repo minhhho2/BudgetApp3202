@@ -1,20 +1,16 @@
 import { observable } from "mobx";
-
+import Transaction from "../transaction/Transaction";
 class DashboardStore {
     @observable visible = true;
     @observable transactions = [
-        {type: "income", amount: 10, date: new Date()},
-        {type: "expense", amount: 100, date: new Date()},
-        {type: "income", amount: -1000, date: new Date()},
-        {type: "income", amount: 20, date: new Date()},
-        {type: "expense", amount: 200, date: new Date()},
-        {type: "income", amount: -2000, date: new Date()}
+        new Transaction(1, "income", "food", 100, new Date()),
+        new Transaction(2, "expense", "fuel", -100, new Date()),
+        new Transaction(3, "income", "food", -100, new Date()),
+        new Transaction(4, "expense", "food", 100, new Date())
     ];
 
     getTransactionType(type) {
-
         return this.transactions.filter(el => el.type === type);
-
     }
 
 }

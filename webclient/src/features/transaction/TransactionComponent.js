@@ -3,6 +3,7 @@ const { Link } = require("react-router-dom");
 import { observer } from "mobx-react";
 import { Button, Container, Header, Icon, Modal, Select, Input } from 'semantic-ui-react'
 import TransactionStore from "./TransactionStore";
+import Transaction from "./Transaction";
 
 const options = [
     {key: 1,  value: "income", text: "income"},
@@ -12,18 +13,23 @@ const options = [
 @observer
 export default class TransactionComponent extends React.Component {
 
-
     handleChangeType = (e) => { TransactionStore.type = e.target.value; }
+    handleChangeCategory = (e) => {TransactionStore.category = e.target.value; }
     handleChangeAmount = (e) => { TransactionStore.amount = e.target.value; }
     handleChangeDate = (e) => { TransactionStore.date = e.target.value; }
+
     handleOpen() { TransactionStore.isOpen = true; }
     handleClose() { TransactionStore.isOpen = false; }
 
     handleAddTransaction() {
-
-        console.log("Added Transaction - " + TransactionStore.type + " - " + 
-        TransactionStore.amount + " - " + TransactionStore.date);
+        var newTransaction = new Transaction(1000, TransactionStore.type,
+            TransactionStore.type, TransactionStore.amount, 
+            TransactionStore.date
+        );
+        
+        console.log("Adding transaction: " + newTransaction.toString());
         TransactionStore.isOpen = false;
+        
     }
 
     render() {
@@ -35,6 +41,10 @@ export default class TransactionComponent extends React.Component {
                         options={options} 
                         value={TransactionStore.type}
                         onChange={(e) => this.handleChangeType(e)}
+                    />
+                    <Input type="text" placeholder='category' 
+                        value={TransactionStore.category}
+                        onChange={(e) => this.handleChangeCategory(e)}
                     />
                     <Input type="number" placeholder='amount' 
                         value={TransactionStore.amount}

@@ -2,6 +2,7 @@ import { observable } from "mobx";
 
 class TransactionStore {
     @observable type = "income";
+    @observable category = "misc";
     @observable amount = 0;
     @observable date = this.formatDate(new Date());
     @observable isOpen = false;

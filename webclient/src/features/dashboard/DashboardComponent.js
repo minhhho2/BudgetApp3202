@@ -16,7 +16,6 @@ export default class DashboardComponent extends React.Component {
         super(props);
 
         this.handleItemClick = this.handleItemClick.bind(this);
-
     }
 
     handleItemClick() { console.log("print click from dashboard_component"); }
