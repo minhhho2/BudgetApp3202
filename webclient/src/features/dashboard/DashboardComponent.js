@@ -8,6 +8,7 @@ import { observer } from "mobx-react";
 
 import TransactionComponent from "../../features/transaction/TransactionComponent";
 import DashboardStore from "./DashboardStore";
+import ApplicationContent from "../../features/applicationcontent/ApplicationContent";
 
 @observer
 export default class DashboardComponent extends React.Component {
@@ -15,12 +16,10 @@ export default class DashboardComponent extends React.Component {
         super(props);
 
         this.handleItemClick = this.handleItemClick.bind(this);
-        this.handleMenuNewTransaction = this.handleMenuNewTransaction.bind(this);
 
     }
 
-    handleItemClick() { console.log("print clikc"); }
-    handleMenuNewTransaction() { }
+    handleItemClick() { console.log("print click from dashboard_component"); }
 
     render() {
         return (
@@ -39,7 +38,7 @@ export default class DashboardComponent extends React.Component {
                             <Icon name='tasks' />
                             Analyse
                         </Menu.Item>
-                        <Menu.Item name='Transaction' onClick={this.handleMenuNewTransaction}>
+                        <Menu.Item name='Transaction' >
                             <Icon name='add' />
                             <TransactionComponent />
                         </Menu.Item>
@@ -50,7 +49,14 @@ export default class DashboardComponent extends React.Component {
                     </Sidebar>
                     <Sidebar.Pusher>
                         <Segment basic>
-                            <Header as='h3'>Application Content</Header>
+
+                            <Header as='h3'>Raw Transaction Summary</Header>
+                            
+                            <ApplicationContent 
+                                income={DashboardStore.getTransactionType("income")}
+                                expense={DashboardStore.getTransactionType("expense")}
+                            />
+
                         </Segment>
                     </Sidebar.Pusher>
                 </Sidebar.Pushable>

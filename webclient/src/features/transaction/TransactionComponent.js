@@ -12,6 +12,7 @@ const options = [
 @observer
 export default class TransactionComponent extends React.Component {
 
+
     handleChangeType = (e) => { TransactionStore.type = e.target.value; }
     handleChangeAmount = (e) => { TransactionStore.amount = e.target.value; }
     handleChangeDate = (e) => { TransactionStore.date = e.target.value; }
@@ -19,6 +20,7 @@ export default class TransactionComponent extends React.Component {
     handleClose() { TransactionStore.isOpen = false; }
 
     handleAddTransaction() {
+
         console.log("Added Transaction - " + TransactionStore.type + " - " + 
         TransactionStore.amount + " - " + TransactionStore.date);
         TransactionStore.isOpen = false;
