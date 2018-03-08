@@ -7,8 +7,10 @@ export default class Transaction {
         this.date = date;
     }
 
+    getDateString() { return this.date.toISOString().split('T')[0]; }
+
     toString() {
-        console.log(this.id + " - " + this.type + " - " + this.category + 
+        return (this.id + " - " + this.type + " - " + this.category + 
         " - " + this.amount + " - " + this.date.toString());
     }
 }

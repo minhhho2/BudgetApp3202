@@ -13,6 +13,13 @@ class DashboardStore {
         return this.transactions.filter(el => el.type === type);
     }
 
+    addTransaction(transaction) {
+        var transactions = this.transactions.slice();
+        transactions.push(transaction);
+        this.transactions = transactions;
+        console.log(this.transactions);
+    }
+
 }
 
 export default new DashboardStore();

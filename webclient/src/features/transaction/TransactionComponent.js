@@ -12,24 +12,27 @@ const options = [
 
 @observer
 export default class TransactionComponent extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
     handleChangeType = (e) => { TransactionStore.type = e.target.value; }
     handleChangeCategory = (e) => {TransactionStore.category = e.target.value; }
     handleChangeAmount = (e) => { TransactionStore.amount = e.target.value; }
     handleChangeDate = (e) => { TransactionStore.date = e.target.value; }
 
-    handleOpen() { TransactionStore.isOpen = true; }
-    handleClose() { TransactionStore.isOpen = false; }
+    handleOpen = () => { TransactionStore.isOpen = true; }
+    handleClose = () => { TransactionStore.isOpen = false; }
 
-    handleAddTransaction() {
+    handleAddTransaction = () => {
         var newTransaction = new Transaction(1000, TransactionStore.type,
-            TransactionStore.type, TransactionStore.amount, 
-            TransactionStore.date
+            TransactionStore.type, TransactionStore.amount, TransactionStore.date
         );
-        
+
+        this.props.updateTransactions(newTransaction);
+
         console.log("Adding transaction: " + newTransaction.toString());
         TransactionStore.isOpen = false;
-        
     }
 
     render() {

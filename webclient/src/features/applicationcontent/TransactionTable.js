@@ -27,7 +27,7 @@ export default class TransactionTable extends React.Component {
                     <Table.Body>
                         {dataset.map(data => (
                             <Table.Row key={data.amount}>
-                                <Table.Cell> {data.date.toUTCString()} </Table.Cell>
+                                <Table.Cell> {data.getDateString()} </Table.Cell>
                                 <Table.Cell> {data.amount} </Table.Cell>
                                 <Table.Cell> {data.type} </Table.Cell>
                             </Table.Row>
