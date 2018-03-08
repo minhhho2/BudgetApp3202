@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Button } from "semantic-ui-react";
 import { Container, Header, Icon } from "semantic-ui-react";
-import { Sidebar, Segment, Menu, Image } from 'semantic-ui-react';
+import { Table, Sidebar, Segment, Menu, Image } from 'semantic-ui-react';
 const { Link } = require("react-router-dom");
 import { observer } from "mobx-react";
 import Transaction from "../transaction/Transaction";
@@ -22,14 +22,15 @@ export default class DashboardComponent extends React.Component {
     }
 
 
+
     updateTransactions = (transaction) => {
         DashboardStore.transactions.push(transaction);
 
         console.log("Current State: " + transaction.toString()); // + this.state.state);
     }
 
-    handleItemClick = () => { 
-        console.log("print click from dashboard_component"); 
+    handleItemClick = () => {
+        console.log("print click from dashboard_component");
     }
 
     render() {
@@ -62,6 +63,9 @@ export default class DashboardComponent extends React.Component {
                         <Segment basic>
 
                             <Header as='h3'>Raw Transaction Summary</Header>
+                            <h2> Total is {DashboardStore.calculateBalance()} </h2>
+
+
 
                             <ApplicationContent
                                 income={DashboardStore.getTransactionType("income")}
@@ -71,7 +75,7 @@ export default class DashboardComponent extends React.Component {
                         </Segment>
                     </Sidebar.Pusher>
                 </Sidebar.Pushable>
-            </div>
+            </div >
         )
     }
 }

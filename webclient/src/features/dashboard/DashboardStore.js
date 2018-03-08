@@ -8,6 +8,16 @@ class DashboardStore {
         new Transaction(3, "income", "food", -100, new Date()),
         new Transaction(4, "expense", "food", 100, new Date())
     ];
+    @observable balance = 0;
+
+    calculateBalance() {
+        var total = 0;
+        this.transactions.forEach((transaction) => {
+            total += transaction.amount;
+        });
+
+        return total;
+    }
 
     getTransactionType(type) {
         return this.transactions.filter(el => el.type === type);

@@ -15,18 +15,19 @@ export default class TransactionTable extends React.Component {
         return (
             <div>
                 <h2> {name} </h2>
+                
                 <Table color={color}>
                     <Table.Header>
                         <Table.Row>
-                            {headers.map(header => (
-                                <Table.HeaderCell key={header}> {header} </Table.HeaderCell>
+                            {headers.map((header, index) => (
+                                <Table.HeaderCell key={index}> {header} </Table.HeaderCell>
                             ))}
                         </Table.Row>
                     </Table.Header>
 
                     <Table.Body>
-                        {dataset.map(data => (
-                            <Table.Row key={data.amount}>
+                        {dataset.map((data, index) => (
+                            <Table.Row key={index}>
                                 <Table.Cell> {data.getDateString()} </Table.Cell>
                                 <Table.Cell> {data.amount} </Table.Cell>
                                 <Table.Cell> {data.type} </Table.Cell>
