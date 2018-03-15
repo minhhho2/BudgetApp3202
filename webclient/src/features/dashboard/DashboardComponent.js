@@ -9,7 +9,7 @@ import Transaction from "../transaction/Transaction";
 import TransactionComponent from "../../features/transaction/TransactionComponent";
 import DashboardStore from "./DashboardStore";
 import ApplicationContent from "../../features/applicationcontent/ApplicationContent";
-
+import BudgetView from "../../features/budget/BudgetView";
 @observer
 export default class DashboardComponent extends React.Component {
 
@@ -21,9 +21,9 @@ export default class DashboardComponent extends React.Component {
         }
     }
 
-    handleOnClickBudget = () => { this.setState({view: "budget"})}
-    handleOnClickTransaction = () => {this.setState({view: "transaction"})}
-    handleOnClickAddTransaction = () => {this.setState({view: "addTransaction"})}
+    onClickBudget = () => { this.setState({view: "budget"})}
+    onClickTransaction = () => {this.setState({view: "transaction"})}
+    onClickAddTransaction = () => {this.setState({view: "addTransaction"})}
 
     updateTransactions = (transaction) => {
         DashboardStore.transactions.push(transaction);
@@ -40,7 +40,7 @@ export default class DashboardComponent extends React.Component {
             );
         } else if (this.state.view === "budget") {
             return (
-                <h1> budget view </h1>
+                <BudgetView />
             );
         } else if (this.state.view === "addTransaction") {
             return (
@@ -54,7 +54,7 @@ export default class DashboardComponent extends React.Component {
             <div>
                 <Sidebar.Pushable as={Segment}>
                     <Sidebar as={Menu} animation='push' width='thin' visible={DashboardStore.visible} icon='labeled' vertical inverted>
-                        <Menu.Item name='Budget' onClick={this.handleOnClickBudget}>
+                        <Menu.Item name='Budget' onClick={this.onClickBudget}>
                             <Icon name='money' />
                             Budget
                         </Menu.Item>
@@ -66,11 +66,11 @@ export default class DashboardComponent extends React.Component {
                             <Icon name='tasks' />
                             Analyse
                         </Menu.Item>
-                        <Menu.Item name='Transaction' onClick={this.handleOnClickTransaction}>
+                        <Menu.Item name='Transaction' onClick={this.onClickTransaction}>
                             <Icon name='money' />
                             Transaction
                         </Menu.Item>
-                        <Menu.Item name='AddTransaction' onClick={this.handleOnClickAddTransaction}>
+                        <Menu.Item name='AddTransaction' onClick={this.onClickAddTransaction}>
                             <Icon name='add' />
                             Add Transaction
                         </Menu.Item>
@@ -83,8 +83,6 @@ export default class DashboardComponent extends React.Component {
                         <Segment basic>
 
                             <Header as='h3'>Application Content</Header>
-
-                            <h2> Total is {DashboardStore.calculateBalance()} </h2>
 
                             {this.renderApplicationContent()}
 

@@ -5,6 +5,8 @@ import { Button, Container, Header, Icon, Modal, Select, Input } from 'semantic-
 import TransactionStore from "./TransactionStore";
 import Transaction from "./Transaction";
 
+
+
 const options = [
     {key: 1,  value: "income", text: "income"},
     {key: 2, value: "expense", text: "expense"}
