@@ -16,13 +16,17 @@ export default class TransactionComponent extends React.Component {
         super(props);
     }
 
+    componentDidMount() {
+        TransactionStore.isOpen = true;
+    }
+
+
     handleChangeType = (e) => { TransactionStore.type = e.target.value; }
     handleChangeCategory = (e) => {TransactionStore.category = e.target.value; }
     handleChangeAmount = (e) => { TransactionStore.amount = e.target.value; }
     handleChangeDate = (e) => { TransactionStore.date = e.target.value; }
 
-    handleOpen = () => { TransactionStore.isOpen = true; }
-    handleClose = () => { TransactionStore.isOpen = false; }
+    close = () => { TransactionStore.isOpen = false; }
 
     handleAddTransaction = () => {
         var newTransaction = new Transaction(1000, TransactionStore.type,
@@ -37,7 +41,7 @@ export default class TransactionComponent extends React.Component {
 
     render() {
         return (
-            <Modal onClose={this.handleClose} open={TransactionStore.isOpen} trigger={<Button onClick={this.handleOpen} >Transaction</Button>}>
+            <Modal onClose={this.close} open={TransactionStore.isOpen}>
                 <Header icon='money' content='Transaction' />
                 <Modal.Content>
                     <Select placeholder='Select transaction type' 

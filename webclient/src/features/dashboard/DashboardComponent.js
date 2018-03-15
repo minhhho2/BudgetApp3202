@@ -17,20 +17,36 @@ export default class DashboardComponent extends React.Component {
         super(props);
 
         this.state = {
-            state: 0
+            view: "transaction"
         }
     }
 
-
+    handleOnClickBudget = () => { this.setState({view: "budget"})}
+    handleOnClickTransaction = () => {this.setState({view: "transaction"})}
+    handleOnClickAddTransaction = () => {this.setState({view: "addTransaction"})}
 
     updateTransactions = (transaction) => {
         DashboardStore.transactions.push(transaction);
-
         console.log("Current State: " + transaction.toString()); // + this.state.state);
     }
 
-    handleItemClick = () => {
-        console.log("print click from dashboard_component");
+    renderApplicationContent = () => {
+        if (this.state.view === "transaction") {
+            return (
+                <ApplicationContent
+                    income={DashboardStore.getTransactionType("income")}
+                    expense={DashboardStore.getTransactionType("expense")}
+                />
+            );
+        } else if (this.state.view === "budget") {
+            return (
+                <h1> budget view </h1>
+            );
+        } else if (this.state.view === "addTransaction") {
+            return (
+                <TransactionComponent updateTransactions={this.updateTransactions} />
+            );
+        }
     }
 
     render() {
@@ -38,7 +54,7 @@ export default class DashboardComponent extends React.Component {
             <div>
                 <Sidebar.Pushable as={Segment}>
                     <Sidebar as={Menu} animation='push' width='thin' visible={DashboardStore.visible} icon='labeled' vertical inverted>
-                        <Menu.Item name='Budget' onClick={this.handleItemClick}>
+                        <Menu.Item name='Budget' onClick={this.handleOnClickBudget}>
                             <Icon name='money' />
                             Budget
                         </Menu.Item>
@@ -50,9 +66,13 @@ export default class DashboardComponent extends React.Component {
                             <Icon name='tasks' />
                             Analyse
                         </Menu.Item>
-                        <Menu.Item name='Transaction' >
+                        <Menu.Item name='Transaction' onClick={this.handleOnClickTransaction}>
+                            <Icon name='money' />
+                            Transaction
+                        </Menu.Item>
+                        <Menu.Item name='AddTransaction' onClick={this.handleOnClickAddTransaction}>
                             <Icon name='add' />
-                            <TransactionComponent updateTransactions={this.updateTransactions} />
+                            Add Transaction
                         </Menu.Item>
                         <Menu.Item name='Settings'>
                             <Icon name='setting' />
@@ -62,15 +82,12 @@ export default class DashboardComponent extends React.Component {
                     <Sidebar.Pusher>
                         <Segment basic>
 
-                            <Header as='h3'>Raw Transaction Summary</Header>
+                            <Header as='h3'>Application Content</Header>
+
                             <h2> Total is {DashboardStore.calculateBalance()} </h2>
 
+                            {this.renderApplicationContent()}
 
-
-                            <ApplicationContent
-                                income={DashboardStore.getTransactionType("income")}
-                                expense={DashboardStore.getTransactionType("expense")}
-                            />
 
                         </Segment>
                     </Sidebar.Pusher>
