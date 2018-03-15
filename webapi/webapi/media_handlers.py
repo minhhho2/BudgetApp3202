@@ -26,4 +26,4 @@ def register_media_handlers(app):
     })
 
     app.req_options.media_handlers = handlers
-    app.resp_options.media_handlers = handlersd
+    app.resp_options.media_handlers = handlers
