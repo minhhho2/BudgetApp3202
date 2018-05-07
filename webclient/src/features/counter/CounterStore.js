@@ -6,6 +6,10 @@ class CounterStore {
     @observable count = 0;
     @observable message = '';
 
+    getHelloMessage() {
+        this.message = "set hello message";
+    }
+
     testAuthenticate() {
         UserStore.isAuthenticating = true;
         (new Promise(r => setTimeout(r, 1500)))
