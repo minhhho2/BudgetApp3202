@@ -25,12 +25,13 @@ class LoginStore {
         }
         const { username, password } = this.credentials;
         UserStore.isAuthenticating = true;
-        ApiService.post('/auth', { username, password })
+        ApiService.post('/user', { username, password })
             .then(res => {
-                console.log(res);
+                UserStore.setUser(res)
                 UserStore.isAuthenticating = true;
             })
             .catch(err => console.log(err))
+            .finally(() => UserStore.isAuthenticating = false);
     }
 }
 export default new LoginStore();

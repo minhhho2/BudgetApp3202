@@ -5,6 +5,8 @@ import ApiService from "../../services/ApiService";
 
 class RegisterStore {
     @observable credentials = new AuthModel();
+    @observable first_name = '';
+    @observable last_name = '';
     @observable validationErrors = [];
 
     validate() {

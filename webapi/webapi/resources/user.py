@@ -17,7 +17,7 @@ class UserRepository():
         return self._serialise_user(user)
 
     def validate_credentials(self, username, password):
-        user = self._User.select().first()
+        user = self._User.select().where(self._User.user_name == username).first()
         if not user:
             return None
         return self._serialise_user(user) #self._serialise_user(user)
@@ -68,7 +68,7 @@ class UserResource(object):
         else:
             response.set_cookie('budgetapp_login', str(user['id']),
                         max_age=3600)
-            response.media = json.dumps({ 'Success': True, 'Message': 'User signed in' })
+            response.media = json.dumps({ 'Success': True, 'Message': user })
 
 class AuthResource(object):
     def __init__(self, user_repo=UserRepository):

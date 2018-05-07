@@ -1,22 +1,27 @@
 import { observable } from "mobx";
 
 class User {
-    constructor(id, name, roles = [], tokens = undefined) {
-        this.id = id;
-        this.name = name;
-        this.roles = roles;
+    @observable id = 0;
+    @observable first_name = '';
+    @observable last_name = '';
+    @observable user_name = '';
 
-        if (tokens) this.tokens = tokens;
+    constructor(user) {
+        const { id, first_name, last_name, user_name } = user;
+        this.id = id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.user_name = user_name;
     }
 }
 
 class UserStore {
     @observable isAuthenticating = false;
-    @observable user = new User(1, "minh", ["admin"]);
+    @observable user = undefined;
     @observable amountLeftToSpend = 0;
 
-    setUser() {
-        this.user = new User(1, "name", []);
+    setUser(user) {
+        this.user = new User(user);
     }
 }
 export default new UserStore();

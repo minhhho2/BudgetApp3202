@@ -13,6 +13,7 @@ import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
 import { Dimmer, Loader } from "semantic-ui-react";
 import { Header, Icon, Image } from 'semantic-ui-react'
 import DashboardStore from "./features/dashboard/DashboardStore";
+import ApiService from "./services/ApiService";
 
 class NotFoundComponent extends React.Component {
     render() {
@@ -25,8 +26,12 @@ export default class App extends React.Component {
 
     constructor(props) {
         super(props);
-
         this.toggleVisibility = this.toggleVisibility.bind(this);
+    }
+
+    componentDidMount() {
+        ApiService.get('/auth')
+            .then(console.log)
     }
 
     toggleVisibility() {
@@ -42,21 +47,20 @@ export default class App extends React.Component {
                 </Dimmer>
             ) :
             <div />;
-        // if (!UserStore.user) {
-        //     return (
-        //         <BrowserRouter>
-        //             <Switch>                        
-        //                 <Route path="/register" component={RegisterComponent} />
-        //                 <Route path="/budget" component={() => <p>Budgets!</p>} />
-        //                 <Route component={LoginComponent} />
-        //             </Switch>
-        //         </BrowserRouter>
-        //     );
-        // }
+        if (!UserStore.user) {
+            return (
+                <BrowserRouter>
+                    <Switch>                        
+                        <Route path="/register" component={RegisterComponent} />
+                        <Route path="/budget" component={() => <p>Budgets!</p>} />
+                        <Route component={LoginComponent} />
+                    </Switch>
+                </BrowserRouter>
+            );
+        }
         return (
             <div>
                 {spinner}
-
                 <div>
                     <Header as='h2' icon textAlign='center'>
                         <Icon name='dashboard' onClick={this.toggleVisibility} size='massive' />
