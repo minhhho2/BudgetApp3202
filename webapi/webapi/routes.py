@@ -1,5 +1,5 @@
 import json
-from webapi.resources.authentication import AuthResource
+from webapi.resources.user import UserResource, AuthResource
 
 class RootResource(object):
     def on_get(self, request, response):
@@ -7,10 +7,11 @@ class RootResource(object):
         # touch the database
         # pull out a budget
         # put in body
-        response.body = json.dumps({ 'Success': True, 'Message': 'Budgets' })
+        response.body = json.dumps({ 'Success': True, 'Message': 'Budgets here' })
 
 routes = [
     ('/', RootResource),
+    ('/user', UserResource),
     ('/auth', AuthResource)
 ]
 

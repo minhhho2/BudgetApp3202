@@ -1,8 +1,6 @@
 import falcon
 import falcon_cors
 
-from webapi.config import config
-
 class CorsMiddleware(falcon_cors.CORSMiddleware):
     ''' Handle CORS. '''
     def __init__(self):
