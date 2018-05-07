@@ -12,7 +12,7 @@ class User {
 
 class UserStore {
     @observable isAuthenticating = false;
-    @observable user = undefined;
+    @observable user = new User(1, "minh", ["admin"]);
     @observable amountLeftToSpend = 0;
 
     setUser() {
