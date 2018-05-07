@@ -25,7 +25,7 @@ class Budget(BaseModel):
     user = ForeignKeyField(User)
     name = TextField()
     description = TextField()
-    limit = FloatField()
+    amount = FloatField()
     frequency = IntegerField()
     timeunit = TextField()
     end_date = DateTimeField()
