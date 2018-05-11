@@ -26,9 +26,13 @@ class LoginStore {
         const { username, password } = this.credentials;
         UserStore.isAuthenticating = true;
         ApiService.post('/user', { username, password })
+            .then(JSON.parse)
             .then(res => {
-                UserStore.setUser(res)
-                UserStore.isAuthenticating = true;
+                if (!res['Success']) {
+                    alert(res.Message);
+                    return;
+                }
+                UserStore.setUser(res);
             })
             .catch(err => console.log(err))
             .finally(() => UserStore.isAuthenticating = false);

@@ -7,7 +7,8 @@ const headers = new Headers();
 headers.append("X-Requested-With", "XMLHttpRequest");
 
 const defaultFetchOptions = {
-    headers: headers
+    credentials: 'include',
+    headers
 };
 
 class ApiService {

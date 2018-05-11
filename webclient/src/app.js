@@ -10,7 +10,7 @@ import DashboardComponent from "./features/dashboard/DashboardComponent";
 import UserStore from "./stores/UserStore";
 import RegisterComponent from './features/auth/RegisterComponent';
 import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
-import { Dimmer, Loader } from "semantic-ui-react";
+import { Dimmer, Loader, Button } from "semantic-ui-react";
 import { Header, Icon, Image } from 'semantic-ui-react'
 import DashboardStore from "./features/dashboard/DashboardStore";
 import ApiService from "./services/ApiService";
@@ -31,13 +31,25 @@ export default class App extends React.Component {
 
     componentDidMount() {
         ApiService.get('/auth')
-            .then(console.log)
+            .then(JSON.parse)
+            .then(r => {
+                if (!r.Success) {
+                    return;
+                }
+                UserStore.setUser(r.Message);
+            });
     }
 
-    toggleVisibility() {
+    toggleVisibility = () => {
         DashboardStore.visible = !DashboardStore.visible;
     }
 
+    logout = () => {
+        fetch('http://localhost:4100/auth', {
+            method: 'POST',
+            credentials: 'include'
+        }).then(_ => UserStore.user = undefined);
+    }
 
     render() {
         const spinner = UserStore.isAuthenticating ?
@@ -68,6 +80,7 @@ export default class App extends React.Component {
                             Financial Freedom
                         </Header.Content>
                     </Header>
+                    <Button onClick={this.logout}>Logout</Button>
                 </div>
 
 

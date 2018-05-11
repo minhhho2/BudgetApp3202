@@ -22,8 +22,8 @@ class UserRepository():
             return None
         return self._serialise_user(user) #self._serialise_user(user)
 
-    def get_user(self, id):
-        user = self._User.get(User.id == id)
+    def get_user(self, user_id):
+        user = self._User.get(self._User.id == user_id)
         return self._serialise_user(user)
 
     def _serialise_user(self, user: User):
@@ -66,21 +66,25 @@ class UserResource(object):
         if not user or user is None:
             return
         else:
-            response.set_cookie('budgetapp_login', str(user['id']),
-                        max_age=3600)
+            response.set_cookie('budgetapp_login', str(user['id']))
             response.media = json.dumps({ 'Success': True, 'Message': user })
 
 class AuthResource(object):
-    def __init__(self, user_repo=UserRepository):
+    def __init__(self, user_repo=UserRepository()):
         self._user_repo = user_repo
 
     def on_get(self, request, response):
         cookies = request.cookies
-        my_cookie_value = None
+        user_id = None
         if 'budgetapp_login' in cookies:
-            my_cookie_value = cookies['budgetapp_login']
+            user_id = int(cookies['budgetapp_login'])
 
-        if my_cookie_value is not None:
-            response.media = json.dumps({ 'Success': True, 'Message': 'You are logged in.'})
+        if user_id is not None:
+            user = self._user_repo.get_user(user_id)
+            response.media = json.dumps({ 'Success': True, 'Message': user})
         else:
             response.media = json.dumps({ 'Success': False, 'Message': 'You are not logged in.'})
+
+    def on_post(self, request, response):
+        response.unset_cookie('budgetapp_login')
+        raise falcon.HTTPStatus(falcon.HTTP_OK)
