@@ -1,89 +1,68 @@
 import * as React from "react";
-import { Divider, Form, Label, Input, TextArea } from 'semantic-ui-react'
-import { Select, Button, Checkbox, Icon } from 'semantic-ui-react'
+import {
+    Divider, Form, Label, Input, TextArea,
+    Icon, Header, Select, Button, Checkbox,
+    Table
+} from 'semantic-ui-react'
+import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
-
 import BudgetStore from "./BudgetStore";
-import ApiService from "../../services/ApiService";
 
 @observer
 export default class BudgetComponent extends React.Component {
-
-    onChangeName = (e) => { BudgetStore.name = e.target.value }
-
-    save = (e) => {
-        e.preventDefault();
-        ApiService.put('/budget', {
-            name: 'my budget',
-            description: 'This is my main budget.',
-            amount: 1000,
-            frequency: 1,
-            timeunit: 'monthly'
-        })
-            .then(console.log)
-    }
-
-    getBudgets = (e) => {
-        e.preventDefault();
-        ApiService.get('/budget')
-            .then(console.log)
+    componentDidMount() {
+        BudgetStore.getBudgets();
     }
 
     render() {
-
-        const freqOptions = [
-            { text: 'daily', value: 'daily' },
-            { text: 'weekly', value: 'weekly' },
-            { text: 'monthly', value: 'monthly' },
-            { text: 'yearly', value: 'yearly' }
-        ];
+        const { budgets } = BudgetStore;
 
         return (
-            <Form>
-                <Form.Field>
-                    <Input
-                        placeholder="Budget name"
-                        value={BudgetStore.name}
-                        onChange={this.onChangeName}
-                    />
-                    <TextArea
-                        placeholder="Description"
-                    />
-                </Form.Field>
-
-                <div>
-                    <h2> Income </h2>
-                    {BudgetStore.incomes.map((incRow, index) => {
-                        return (
-                            <Form.Group widths='equal' key={index}>
-                                <Form.Input
-                                    value={incRow.Description}
-                                    fluid label='Category'
-                                    placeholder='Category'
-                                />
-                                <Form.Field
-                                    control={Select} label='Frequency'
-                                    options={freqOptions} placeholder='Frequency'
-                                />
-                            </Form.Group>
-                        );
-                    })}
-                    <Icon name="add" onClick={() => BudgetStore.addRow()} />
-                </div>
-
-                <div>
-                    <h2> Expense </h2>
-                    <Form.Group widths='equal'>
-                        <Form.Input
-                            fluid label='Category'
-                            placeholder='Category' />
-                    </Form.Group>
+            <div>
+                <Header as="h2">
+                    <Header.Content>My budgets</Header.Content>
+                </Header>
+                <Button
+                    positive
+                    as={Link}
+                    to="/budget/create"
+                >
                     <Icon name="add" />
-                </div>
+                    New
+                </Button>
+                <Button.Group>
+                    <Button color="teal">
+                        <Icon name="plus" />
+                        Income
+                    </Button>
+                    <Button.Or />
+                    <Button color="orange">
+                        <Icon name="minus" />
+                        Expense
+                    </Button>
+                </Button.Group>
 
-                <Button onClick={this.getBudgets}>Get</Button>
-                <Button onClick={this.save}>Save</Button>
-            </Form>
+                <Table color="olive" selectable>
+                    <Table.Header>
+                        <Table.Row>
+                            <Table.HeaderCell>Name</Table.HeaderCell>
+                            <Table.HeaderCell>Description</Table.HeaderCell>
+                            <Table.HeaderCell>Amount</Table.HeaderCell>
+                            <Table.HeaderCell>End date</Table.HeaderCell>
+                        </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
+                        {budgets.map((budget, index) => (
+                            <Table.Row key={index} onClick={() => window.location.href=`/budget/edit/${budget.id}`}>
+                                <Table.Cell>{budget.name}</Table.Cell>
+                                <Table.Cell>{budget.description}</Table.Cell>
+                                <Table.Cell>{budget.amount}</Table.Cell>
+                                <Table.Cell>{budget.end_date}</Table.Cell>
+                            </Table.Row>
+                        ))}
+                    </Table.Body>
+                </Table>
+            </div>
         );
     }
 }
