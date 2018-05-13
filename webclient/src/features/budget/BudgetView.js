@@ -20,7 +20,7 @@ export default class BudgetComponent extends React.Component {
         return (
             <div>
                 <Header as="h2">
-                    <Header.Content>My budgets</Header.Content>
+                    <Header.Content>Personal finance</Header.Content>
                 </Header>
                 <Button
                     positive
@@ -42,6 +42,7 @@ export default class BudgetComponent extends React.Component {
                     </Button>
                 </Button.Group>
 
+                <h4>My savings goals</h4>
                 <Table color="olive" selectable>
                     <Table.Header>
                         <Table.Row>
@@ -63,6 +64,7 @@ export default class BudgetComponent extends React.Component {
                     </Table.Body>
                 </Table>
 
+                <h4>Incomes</h4>
                 <Table color="violet" selectable>
                     <Table.Header>
                         <Table.Row>
@@ -73,7 +75,7 @@ export default class BudgetComponent extends React.Component {
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                        {income.map((income, index) => (
+                        {incomes.map((income, index) => (
                             <Table.Row key={index} onClick={() => window.location.href = `/budget/edit/${income.id}`}>
                                 <Table.Cell>{income.name}</Table.Cell>
                                 <Table.Cell>{income.description}</Table.Cell>
@@ -84,6 +86,7 @@ export default class BudgetComponent extends React.Component {
                     </Table.Body>
                 </Table>
 
+                <h4>Expenses</h4>
                 <Table color="orange" selectable>
                     <Table.Header>
                         <Table.Row>

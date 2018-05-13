@@ -82,7 +82,9 @@ export default class App extends React.Component {
                     <Header as="h2" icon textAlign="center">
                         <Icon name="dashboard" onClick={this.toggleVisibility} size="massive" />
                         <Header.Content>
-                            Financial Freedom
+                            <span style={{ letterSpacing: "3px" }}>
+                                Cloudstacks
+                            </span>
                         </Header.Content>
                     </Header>
                     <Button onClick={this.logout}>Logout</Button>
