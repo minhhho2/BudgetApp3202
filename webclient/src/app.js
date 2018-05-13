@@ -32,11 +32,9 @@ export default class App extends React.Component {
     componentDidMount() {
         ApiService.get('/auth')
             .then(JSON.parse)
-            .then(r => {
-                if (!r.Success) {
-                    return;
-                }
-                UserStore.setUser(r.Message);
+            .then(res => {
+                if (res.Success)
+                    UserStore.setUser(res.Message);
             });
     }
 
@@ -62,7 +60,7 @@ export default class App extends React.Component {
         if (!UserStore.user) {
             return (
                 <BrowserRouter>
-                    <Switch>                        
+                    <Switch>
                         <Route path="/register" component={RegisterComponent} />
                         <Route path="/budget" component={() => <p>Budgets!</p>} />
                         <Route component={LoginComponent} />

@@ -1,14 +1,34 @@
 import * as React from "react";
-import { Divider, Form, Label } from 'semantic-ui-react'
+import { Divider, Form, Label, Input, TextArea } from 'semantic-ui-react'
 import { Select, Button, Checkbox, Icon } from 'semantic-ui-react'
 import { observer } from "mobx-react";
 
 import BudgetStore from "./BudgetStore";
+import ApiService from "../../services/ApiService";
 
 @observer
 export default class BudgetComponent extends React.Component {
 
     onChangeName = (e) => { BudgetStore.name = e.target.value }
+
+    save = (e) => {
+        e.preventDefault();
+        ApiService.put('/budget', {
+            name: 'my budget',
+            description: 'This is my main budget.',
+            amount: 1000,
+            frequency: 1,
+            timeunit: 'monthly'
+        })
+            .then(console.log)
+    }
+
+    getBudgets = (e) => {
+        e.preventDefault();
+        ApiService.get('/budget')
+            .then(console.log)
+    }
+
     render() {
 
         const freqOptions = [
@@ -21,11 +41,13 @@ export default class BudgetComponent extends React.Component {
         return (
             <Form>
                 <Form.Field>
-                    <label>Budget Name</label>
-                    <input
-                        placeholder={'Budget Name'}
+                    <Input
+                        placeholder="Budget name"
                         value={BudgetStore.name}
                         onChange={this.onChangeName}
+                    />
+                    <TextArea
+                        placeholder="Description"
                     />
                 </Form.Field>
 
@@ -59,6 +81,8 @@ export default class BudgetComponent extends React.Component {
                     <Icon name="add" />
                 </div>
 
+                <Button onClick={this.getBudgets}>Get</Button>
+                <Button onClick={this.save}>Save</Button>
             </Form>
         );
     }

@@ -1,7 +1,7 @@
 import { observable } from "mobx";
 
 class BudgetStore {
-    @observable name = "test";
+    @observable name = "";
     @observable incomes = [];
     @observable expenses = [];
 

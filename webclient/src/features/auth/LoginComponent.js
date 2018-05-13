@@ -35,6 +35,7 @@ export default class LoginComponent extends React.Component {
                             <input
                                 value={LoginStore.credentials.password}
                                 onChange={this.changePasswordHandler}
+                                type="password"
                                 placeholder="Password"
                             />
                         </Form.Field>
