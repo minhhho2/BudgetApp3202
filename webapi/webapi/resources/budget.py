@@ -15,6 +15,7 @@ class BudgetRepository():
     def _serialise_tx(self, income):
         end_date = income.end_date.isoformat() if income.end_date else None
         return {
+            'id': income.id,
             'name': income.name,
             'description': income.description,
             'amount': income.amount,

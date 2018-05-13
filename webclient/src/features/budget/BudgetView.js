@@ -15,7 +15,7 @@ export default class BudgetComponent extends React.Component {
     }
 
     render() {
-        const { budgets } = BudgetStore;
+        const { budgets, incomes, expenses } = BudgetStore;
 
         return (
             <div>
@@ -53,11 +53,53 @@ export default class BudgetComponent extends React.Component {
                     </Table.Header>
                     <Table.Body>
                         {budgets.map((budget, index) => (
-                            <Table.Row key={index} onClick={() => window.location.href=`/budget/edit/${budget.id}`}>
+                            <Table.Row key={index} onClick={() => window.location.href = `/budget/edit/${budget.id}`}>
                                 <Table.Cell>{budget.name}</Table.Cell>
                                 <Table.Cell>{budget.description}</Table.Cell>
                                 <Table.Cell>{budget.amount}</Table.Cell>
                                 <Table.Cell>{budget.end_date}</Table.Cell>
+                            </Table.Row>
+                        ))}
+                    </Table.Body>
+                </Table>
+
+                <Table color="violet" selectable>
+                    <Table.Header>
+                        <Table.Row>
+                            <Table.HeaderCell>Name</Table.HeaderCell>
+                            <Table.HeaderCell>Description</Table.HeaderCell>
+                            <Table.HeaderCell>Amount</Table.HeaderCell>
+                            <Table.HeaderCell>End date</Table.HeaderCell>
+                        </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
+                        {income.map((income, index) => (
+                            <Table.Row key={index} onClick={() => window.location.href = `/budget/edit/${income.id}`}>
+                                <Table.Cell>{income.name}</Table.Cell>
+                                <Table.Cell>{income.description}</Table.Cell>
+                                <Table.Cell>{income.amount}</Table.Cell>
+                                <Table.Cell>{income.end_date}</Table.Cell>
+                            </Table.Row>
+                        ))}
+                    </Table.Body>
+                </Table>
+
+                <Table color="orange" selectable>
+                    <Table.Header>
+                        <Table.Row>
+                            <Table.HeaderCell>Name</Table.HeaderCell>
+                            <Table.HeaderCell>Description</Table.HeaderCell>
+                            <Table.HeaderCell>Amount</Table.HeaderCell>
+                            <Table.HeaderCell>End date</Table.HeaderCell>
+                        </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
+                        {expenses.map((expense, index) => (
+                            <Table.Row key={index} onClick={() => window.location.href = `/budget/edit/${expense.id}`}>
+                                <Table.Cell>{expense.name}</Table.Cell>
+                                <Table.Cell>{expense.description}</Table.Cell>
+                                <Table.Cell>{expense.amount}</Table.Cell>
+                                <Table.Cell>{expense.end_date}</Table.Cell>
                             </Table.Row>
                         ))}
                     </Table.Body>
