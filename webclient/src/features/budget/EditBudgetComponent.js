@@ -10,72 +10,94 @@ export default class EditBudgetComponent extends React.Component {
     constructor(props) {
         super(props);
         const id = parseInt(props.match.params.id, 10);
-        
-        if (isNaN(id)) {
+
+        // TODO: breaking shit here
+        /*if (isNaN(id)) {
             return;
-        }
+        }*/
 
         EditBudgetStore.getData(id);
     }
+    onChangeName = (e) => { EditBudgetStore.name = e.target.value; }
+    onChangeDescription = (e) => { EditBudgetStore.description = e.target.value; }
+    onChangeAmount = (e) => { EditBudgetStore.amount = e.target.value; }
+    onChangeFrequency = (e) => { EditBudgetStore.frequency = e.target.value; }
+    onChangeTimeUnit = (e) => { EditBudgetStore.timeunit = e.target.value; }
+    onChangeEndDate= (e) => { EditBudgetStore.endDate = e.target.value; }
+    onChangeOneOff = (e) => { EditBudgetStore.oneOff = e.target.value; } // Doesnt work properly
+
     render() {
         const freqOptions = [
-            { text: 'daily', value: 'daily' },
-            { text: 'weekly', value: 'weekly' },
-            { text: 'monthly', value: 'monthly' },
-            { text: 'yearly', value: 'yearly' }
+            { text: 'day', value: '7' },
+            { text: 'week', value: '14' },
+            { text: 'month', value: '31' },
+            { text: 'year', value: '365' }
         ];
 
-        const { name, description, amount, oneOff } = EditBudgetStore;
+        // TODO: breaking shit here
+        const { name, description, amount, oneOff} = EditBudgetStore;
 
-        const frequencyComponent = oneOff ?
+        var frequencyComponent =  EditBudgetComponent.oneOff ?
             <div /> :
             (
-                <div style={{ display: "inline" }}>
-                    <Input type="number" label="frequency" />
-                    <Input label="timeunit" />
-                </div>
+                <Form.Group widths='equal'>
+                    <Form.Field>
+                        <Input fluid type="number" label="frequency"/>
+                    </Form.Field>
+                    <Form.Field>
+                        <Select fluid placeholder="select time unit" options={freqOptions} />
+                    </Form.Field>
+                </Form.Group>
             )
-
+            
         return (
             <div>
                 <Header as="h3">
                     <Header.Content>Create budget</Header.Content>
                 </Header>
-                <Form.Field>
-                    <Input
-                        placeholder="Budget name"
-                        label="Name"
-                        value={name}
-                        onChange={this.onChangeName}
-                    />
-                    <br />
-                    <TextArea
-                        placeholder="Description"
-                        label="Description"
-                    />
-                    <br />
-                    <Input
-                        placeholder="amount"
-                        label="Amount"
-                        type="number"
-                        value={amount}
-                        onChange={this.onChangeAmount}
-                    />
-                    <br />
-                    <Checkbox
-                        toggle
-                        label="One off?"
-                        checked={oneOff}
-                        onChange={this.oneOffHandler}
-                    />
-                    <br />
+                <Form>
+                    <Form.Field>
+                        <Input
+                            placeholder="Budget name"
+                            label="Name"
+                            value={name}
+                            onChange={this.onChangeName}
+                        />
+                    </Form.Field>
+                    <Form.Field>
+                        <TextArea
+                            placeholder="Description"
+                            label="Description"
+                            onChange={this.onChangeDescription}
+                        />
+                    </Form.Field>
+                    <Form.Field>
+                        <Input
+                            placeholder="amount"
+                            label="Amount"
+                            type="number"
+                            value={amount}
+                            onChange={this.onChangeAmount}
+                        />
+                    </Form.Field>
+                    <Form.Field>
+
+                        <Checkbox
+                            toggle
+                            label="One off?"
+                            checked={EditBudgetComponent.oneOff === true}
+                            onChange={this.onChangeOneOff}
+                        />
+                    </Form.Field>
                     {frequencyComponent}
-                    <Input
-                        type="date"
-                        label="End date"
-                    />
-                    <br />
-                </Form.Field>
+                    <Form.Field>
+                        <Input
+                            type="date"
+                            label="End date"
+                        />
+                    </Form.Field>
+
+                </Form>
             </div>
         );
     }

@@ -39,14 +39,13 @@ export default class SettingView extends React.Component {
                     <Form.Field>
                         <Checkbox
                             toggle
-                            label="Share budger information"
+                            label="Share budget information"
                             value={SettingStore.sharing}
                             checked={SettingStore.sharing === true}
                             onChange={this.handleSharingChange}
                         />
                     </Form.Field>
                 </Form>
-
             </div>
         );
     }

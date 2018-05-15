@@ -95,29 +95,26 @@ export default class App extends React.Component {
                 <BrowserRouter>
                     <Sidebar.Pushable as={Segment}>
                         <Sidebar as={Menu} animation="push" width="thin" visible={true} icon="labeled" vertical inverted>
-                        <Menu.Item as={Link} to="/budget" name="Budget">
-                            <Icon name="money" />
-                            Budget
+                            <Menu.Item as={Link} to="/budget" name="Budget">
+                                <Icon name="money" />
+                                Budget
                         </Menu.Item>
-                        <Menu.Item name="Compare">
-                            <Icon name="copy" />
-                            Compare
+                            <Menu.Item name="Compare">
+                                <Icon name="copy" />
+                                Compare
                         </Menu.Item>
-                        <Menu.Item name="Analyse">
-                            <Icon name="tasks" />
-                            Analyse
+                            <Menu.Item name="Analyse">
+                                <Icon name="tasks" />
+                                Analyse
                         </Menu.Item>
-                        <Menu.Item name="Transaction" onClick={this.onClickTransaction}>
-                            <Icon name="money" />
-                            Transaction
-                        </Menu.Item>
-                        <Menu.Item as={Link} to="/setting" name="Setting">
-                            <Icon name="setting" />
-                            Setting
-                        </Menu.Item>
-                        <Menu.Item name="Logout">
-                            <Icon name="log out" />
-                            Logout
+
+                            <Menu.Item as={Link} to="/setting" name="Setting">
+                                <Icon name="setting" />
+                                Setting
+                            </Menu.Item>
+                            <Menu.Item name="Logout">
+                                <Icon name="log out" />
+                                Logout
                         </Menu.Item>
                         </Sidebar>
                         <Sidebar.Pusher>

@@ -10,8 +10,10 @@ class EditBudgetStore {
     @observable frequency = 0;
     @observable timeunit = "";
     @observable endDate = undefined;
+    @observable oneOff = false;
 
     getData(id) {
-
     }
 }
+
+export default new EditBudgetStore();
