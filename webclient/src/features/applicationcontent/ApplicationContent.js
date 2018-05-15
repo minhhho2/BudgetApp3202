@@ -23,6 +23,7 @@ export default class ApplicationContent extends React.Component {
         return (
             <div>
                 <h2> Summary </h2>
+                
                 <Table color={"black"}>
                     <Table.Header>
                         <Table.Row>

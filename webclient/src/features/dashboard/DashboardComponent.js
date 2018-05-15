@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import { Button } from "semantic-ui-react";
 import { Container, Header, Icon } from "semantic-ui-react";
 import { Table, Sidebar, Segment, Menu, Image } from 'semantic-ui-react';
@@ -10,6 +11,8 @@ import TransactionComponent from "../../features/transaction/TransactionComponen
 import DashboardStore from "./DashboardStore";
 import ApplicationContent from "../../features/applicationcontent/ApplicationContent";
 import BudgetView from "../../features/budget/BudgetView";
+import CompareComponent from "../../features/compare/CompareComponent";
+
 @observer
 export default class DashboardComponent extends React.Component {
 
@@ -17,11 +20,12 @@ export default class DashboardComponent extends React.Component {
         super(props);
 
         this.state = {
-            view: "transaction"
+            view: "budget"
         }
     }
 
     onClickBudget = () => { this.setState({view: "budget"})}
+    onClickCompare = () => { this.setState({view: "compare"})}
     onClickTransaction = () => {this.setState({view: "transaction"})}
     onClickAddTransaction = () => {this.setState({view: "addTransaction"})}
 
@@ -31,21 +35,22 @@ export default class DashboardComponent extends React.Component {
     }
 
     renderApplicationContent = () => {
-        if (this.state.view === "transaction") {
-            return (
-                <ApplicationContent
+        if (this.state.view === "budget") {
+            return <BudgetView />;
+
+        } else if (this.state.view === "transaction") {
+            return <ApplicationContent 
                     income={DashboardStore.getTransactionType("income")}
                     expense={DashboardStore.getTransactionType("expense")}
-                />
-            );
-        } else if (this.state.view === "budget") {
-            return (
-                <BudgetView />
-            );
+            />;
+        } else if (this.state.view === "compare") {
+            return <CompareComponent 
+                income={DashboardStore.getTransactionType("income")}
+                expense={DashboardStore.getTransactionType("expense")}
+            />;
+
         } else if (this.state.view === "addTransaction") {
-            return (
-                <TransactionComponent updateTransactions={this.updateTransactions} />
-            );
+            return <TransactionComponent updateTransactions={this.updateTransactions} />;
         }
     }
 
@@ -53,12 +58,12 @@ export default class DashboardComponent extends React.Component {
         return (
             <div>
                 <Sidebar.Pushable as={Segment}>
-                    <Sidebar as={Menu} animation='push' width='thin' visible={DashboardStore.visible} icon='labeled' vertical inverted>
+                    <Sidebar as={Menu} animation='overlay' direction='top' visible={DashboardStore.visible} inverted>
                         <Menu.Item name='Budget' onClick={this.onClickBudget}>
                             <Icon name='money' />
                             Budget
                         </Menu.Item>
-                        <Menu.Item name='Compare'>
+                        <Menu.Item name='Compare' onClick={this.onClickCompare}>
                             <Icon name='copy' />
                             Compare
                         </Menu.Item>
@@ -82,10 +87,7 @@ export default class DashboardComponent extends React.Component {
                     <Sidebar.Pusher>
                         <Segment basic>
 
-                            <Header as='h3'>Application Content</Header>
-
                             {this.renderApplicationContent()}
-
 
                         </Segment>
                     </Sidebar.Pusher>
