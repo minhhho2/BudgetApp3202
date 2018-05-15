@@ -1,6 +1,6 @@
 import * as React from "react";
 import {
-    Form, Checkbox
+    Form, Checkbox, Button, Header
 } from 'semantic-ui-react'
 
 import { observer } from "mobx-react";
@@ -9,16 +9,21 @@ import SettingStore from "./SettingStore";
 @observer
 export default class SettingView extends React.Component {
 
+    // handle method of notification
     handleEmailChange = (e, { value }) => SettingStore.emails = !value;
     handleTextChange = (e, { value }) => SettingStore.texts = !value;
+
+    // handle type of notification
     handleSharingChange = (e, { value }) => SettingStore.sharing = !value;
 
+    // handle privacy
     render() {
 
         return (
             <div>
                 <Form>
                     <Form.Field>
+                        <Header as='h3'>Method of Notifications</Header>
                         <Checkbox
                             toggle
                             label="Email notification"
@@ -26,8 +31,8 @@ export default class SettingView extends React.Component {
                             checked={SettingStore.emails === true}
                             onChange={this.handleEmailChange}
                         />
-                    </Form.Field>
-                    <Form.Field>
+                        <br />
+
                         <Checkbox
                             toggle
                             label="Text notification"
@@ -36,7 +41,27 @@ export default class SettingView extends React.Component {
                             onChange={this.handleTextChange}
                         />
                     </Form.Field>
+
                     <Form.Field>
+                        <Header as='h3'>Types of Notifications</Header>
+                        <Checkbox
+                            toggle
+                            label="Exceed budget"
+                        />
+                        <br />
+                        <Checkbox
+                            toggle
+                            label="Reach saving goal"
+                        />
+                        <br />
+                        <Checkbox
+                            toggle
+                            label="Abnormal spending behavior"
+                        />
+                    </Form.Field>
+
+                    <Form.Field>
+                        <Header as='h3'>Privacy</Header>
                         <Checkbox
                             toggle
                             label="Share budget information"
@@ -45,8 +70,10 @@ export default class SettingView extends React.Component {
                             onChange={this.handleSharingChange}
                         />
                     </Form.Field>
+                    <Button toggle onClick={SettingStore.saveSetting}> Save </Button>
+
                 </Form>
-            </div>
+            </div >
         );
     }
 }
