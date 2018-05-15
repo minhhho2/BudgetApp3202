@@ -24,7 +24,7 @@ export default class EditBudgetComponent extends React.Component {
     onChangeFrequency = (e) => { EditBudgetStore.frequency = e.target.value; }
     onChangeTimeUnit = (e) => { EditBudgetStore.timeunit = e.target.value; }
     onChangeEndDate= (e) => { EditBudgetStore.endDate = e.target.value; }
-    onChangeOneOff = (e) => { EditBudgetStore.oneOff = e.target.value; } // Doesnt work properly
+    onChangeOneOff = (e, {value}) => { EditBudgetStore.oneOff = !value } // Doesnt work properly
 
     render() {
         const freqOptions = [
@@ -37,7 +37,7 @@ export default class EditBudgetComponent extends React.Component {
         // TODO: breaking shit here
         const { name, description, amount, oneOff} = EditBudgetStore;
 
-        var frequencyComponent =  EditBudgetComponent.oneOff ?
+        var frequencyComponent =  EditBudgetStore.oneOff ?
             <div /> :
             (
                 <Form.Group widths='equal'>
@@ -81,11 +81,11 @@ export default class EditBudgetComponent extends React.Component {
                         />
                     </Form.Field>
                     <Form.Field>
-
                         <Checkbox
                             toggle
                             label="One off?"
-                            checked={EditBudgetComponent.oneOff === true}
+                            value={EditBudgetStore.oneOff}
+                            checked={EditBudgetStore.oneOff === true}
                             onChange={this.onChangeOneOff}
                         />
                     </Form.Field>
