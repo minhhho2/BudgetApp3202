@@ -14,8 +14,11 @@ import { Dimmer, Loader, Button, Sidebar, Menu, Segment } from "semantic-ui-reac
 import { Header, Icon, Image } from "semantic-ui-react"
 import DashboardStore from "./features/dashboard/DashboardStore";
 import ApiService from "./services/ApiService";
-import BudgetView from "./features/budget/BudgetView";
 import EditBudgetComponent from "./features/budget/EditBudgetComponent";
+
+// Views
+import BudgetView from "./features/budget/BudgetView";
+import SettingView from "./features/setting/SettingView";
 
 class NotFoundComponent extends React.Component {
     render() {
@@ -108,13 +111,9 @@ export default class App extends React.Component {
                             <Icon name="money" />
                             Transaction
                         </Menu.Item>
-                        <Menu.Item name="AddTransaction" onClick={this.onClickAddTransaction}>
-                            <Icon name="add" />
-                            Add Transaction
-                        </Menu.Item>
-                        <Menu.Item name="Settings">
+                        <Menu.Item as={Link} to="/setting" name="Setting">
                             <Icon name="setting" />
-                            Settings
+                            Setting
                         </Menu.Item>
                         <Menu.Item name="Logout">
                             <Icon name="log out" />
@@ -128,6 +127,8 @@ export default class App extends React.Component {
                                     <Route path="/budget" exact component={BudgetView} />
                                     <Route path="/budget/create" exact component={EditBudgetComponent} />
                                     <Route path="/budget/edit/:id" exact component={EditBudgetComponent} />
+
+                                    <Route path="/setting" exact component={SettingView} />
                                     <Route component={NotFoundComponent} />
                                 </Switch>
                             </Segment>
