@@ -27,7 +27,6 @@ export default class SettingView extends React.Component {
                         <Checkbox
                             toggle
                             label="Email notification"
-                            value={SettingStore.emails}
                             checked={SettingStore.emails === true}
                             onChange={this.handleEmailChange}
                         />
@@ -36,7 +35,6 @@ export default class SettingView extends React.Component {
                         <Checkbox
                             toggle
                             label="Text notification"
-                            value={SettingStore.texts}
                             checked={SettingStore.texts === true}
                             onChange={this.handleTextChange}
                         />
@@ -65,7 +63,6 @@ export default class SettingView extends React.Component {
                         <Checkbox
                             toggle
                             label="Share budget information"
-                            value={SettingStore.sharing}
                             checked={SettingStore.sharing === true}
                             onChange={this.handleSharingChange}
                         />

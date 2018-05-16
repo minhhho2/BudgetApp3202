@@ -1,9 +1,10 @@
 import * as React from "react";
 import { observer } from "mobx-react";
 import {
-    Form, Input, TextArea, Select, Checkbox, Header
+    Form, Input, TextArea, Select, Checkbox, Header, Button
 } from "semantic-ui-react";
 import EditBudgetStore from "./EditBudgetStore";
+import BudgetStore from "./BudgetStore";
 
 @observer
 export default class EditBudgetComponent extends React.Component {
@@ -60,7 +61,7 @@ export default class EditBudgetComponent extends React.Component {
                         <Input
                             placeholder="Budget name"
                             label="Name"
-                            value={name}
+                            value={EditBudgetStore.name}
                             onChange={this.onChangeName}
                         />
                     </Form.Field>
@@ -76,15 +77,14 @@ export default class EditBudgetComponent extends React.Component {
                             placeholder="amount"
                             label="Amount"
                             type="number"
-                            value={amount}
+                            value={EditBudgetStore.amount}
                             onChange={this.onChangeAmount}
                         />
                     </Form.Field>
                     <Form.Field>
                         <Checkbox
                             toggle
-                            label="One off?"
-                            value={EditBudgetStore.oneOff}
+                            label="One off"
                             checked={EditBudgetStore.oneOff === true}
                             onChange={this.onChangeOneOff}
                         />
@@ -98,6 +98,7 @@ export default class EditBudgetComponent extends React.Component {
                     </Form.Field>
 
                 </Form>
+                <Button onClick={BudgetStore.save}> Save </Button>
             </div>
         );
     }

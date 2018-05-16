@@ -21,8 +21,7 @@ class BudgetStore {
             amount: 1000,
             frequency: 1,
             timeunit: 'monthly'
-        })
-            .then(console.log)
+        }).then(console.log)
     }
 
     getBudgets() {
