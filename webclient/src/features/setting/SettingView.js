@@ -10,11 +10,11 @@ import SettingStore from "./SettingStore";
 export default class SettingView extends React.Component {
 
     // handle method of notification
-    handleEmailChange = (e, { value }) => SettingStore.emails = !value;
-    handleTextChange = (e, { value }) => SettingStore.texts = !value;
+    handleEmailChange = (e, { value }) => SettingStore.emails = !value | 0;
+    handleTextChange = (e, { value }) => SettingStore.texts = !value | 0;
 
     // handle type of notification
-    handleSharingChange = (e, { value }) => SettingStore.sharing = !value;
+    handleSharingChange = (e, { value }) => SettingStore.sharing = !value | 0;
 
     // handle privacy
     render() {
@@ -27,7 +27,8 @@ export default class SettingView extends React.Component {
                         <Checkbox
                             toggle
                             label="Email notification"
-                            checked={SettingStore.emails === true}
+                            value={SettingStore.emails}
+                            checked={SettingStore.emails === 1}
                             onChange={this.handleEmailChange}
                         />
                         <br />
@@ -35,7 +36,8 @@ export default class SettingView extends React.Component {
                         <Checkbox
                             toggle
                             label="Text notification"
-                            checked={SettingStore.texts === true}
+                            value={SettingStore.texts}
+                            checked={SettingStore.texts === 1}
                             onChange={this.handleTextChange}
                         />
                     </Form.Field>
@@ -63,7 +65,8 @@ export default class SettingView extends React.Component {
                         <Checkbox
                             toggle
                             label="Share budget information"
-                            checked={SettingStore.sharing === true}
+                            value={SettingStore.sharing}
+                            checked={SettingStore.sharing === 1}
                             onChange={this.handleSharingChange}
                         />
                     </Form.Field>

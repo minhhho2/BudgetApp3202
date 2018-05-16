@@ -1,9 +1,9 @@
 import { observable } from "mobx";
 
 class SettingStore {
-    @observable emails = false;
-    @observable texts = false;
-    @observable sharing = false;
+    @observable emails = 0;
+    @observable texts = 0;
+    @observable sharing = 0;
 
     getSetting() {
         console.log("GET SETTING");

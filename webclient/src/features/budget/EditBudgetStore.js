@@ -1,6 +1,5 @@
 import { observable } from "mobx";
 import ApiService from "../../services/ApiService";
-import BudgetStore from "./BudgetStore";
 
 class EditBudgetStore {
     @observable id = undefined;
@@ -10,7 +9,7 @@ class EditBudgetStore {
     @observable frequency = 0;
     @observable timeunit = "";
     @observable endDate = undefined;
-    @observable oneOff = false;
+    @observable oneOff = 1;
 
     getData(id) {
     }

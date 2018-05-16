@@ -1,5 +1,6 @@
 import { observable } from "mobx";
 import ApiService from "../../services/ApiService";
+import EditBudgetStore from "./EditBudgetStore";
 
 class BudgetStore {
     @observable budgets = [];
@@ -16,11 +17,11 @@ class BudgetStore {
 
     save() {
         ApiService.put('/budget', {
-            name: 'my budget',
-            description: 'This is my main budget.',
-            amount: 1000,
-            frequency: 1,
-            timeunit: 'monthly'
+            name: EditBudgetStore.name,
+            description: EditBudgetStore.description, //'This is my main budget.',
+            amount: EditBudgetStore.amount, //1000,
+            frequency: EditBudgetStore.frequency, //1,
+            timeunit: EditBudgetStore.timeunit //'monthly'
         }).then(console.log)
     }
 
