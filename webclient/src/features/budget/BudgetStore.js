@@ -32,6 +32,14 @@ class BudgetStore {
                 this.budgets = budgets["Message"];
             })
     }
+
+    deleteBudget(id) {
+        ApiService.delete('/budget', {
+            id
+        }).then(_ => {
+            alert(`deleted ${id}`);
+        });
+    }
 }
 
 export default new BudgetStore();

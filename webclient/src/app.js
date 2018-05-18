@@ -14,11 +14,8 @@ import { Dimmer, Loader, Button, Sidebar, Menu, Segment } from "semantic-ui-reac
 import { Header, Icon, Image } from "semantic-ui-react"
 import DashboardStore from "./features/dashboard/DashboardStore";
 import ApiService from "./services/ApiService";
-import EditBudgetComponent from "./features/budget/EditBudgetComponent";
-
-// Views
 import BudgetView from "./features/budget/BudgetView";
-import SettingView from "./features/setting/SettingView";
+import EditBudgetComponent from "./features/budget/EditBudgetComponent";
 
 class NotFoundComponent extends React.Component {
     render() {
@@ -48,10 +45,9 @@ export default class App extends React.Component {
     }
 
     logout = () => {
-        fetch("http://localhost:4100/auth", {
-            method: "POST",
-            credentials: "include"
-        }).then(_ => UserStore.user = undefined);
+        ApiService.post("/auth")
+            .then(_ => UserStore.user = undefined)
+            .catch(_ => UserStore.user = undefined);
     }
 
     updateTransactions = (transaction) => {
@@ -85,36 +81,40 @@ export default class App extends React.Component {
                     <Header as="h2" icon textAlign="center">
                         <Icon name="dashboard" onClick={this.toggleVisibility} size="massive" />
                         <Header.Content>
-                            <span style={{ letterSpacing: "3px" }}>
-                                Cloudstacks
-                            </span>
+                            Cloudstacks
                         </Header.Content>
                     </Header>
-                    <Button onClick={this.logout}>Logout</Button>
                 </div>
                 <BrowserRouter>
                     <Sidebar.Pushable as={Segment}>
                         <Sidebar as={Menu} animation="push" width="thin" visible={true} icon="labeled" vertical inverted>
-                            <Menu.Item as={Link} to="/budget" name="Budget">
-                                <Icon name="money" />
-                                Budget
+                        <Menu.Item as={Link} to="/budget" name="Budget">
+                            <Icon name="money" />
+                            Budget
                         </Menu.Item>
-                            <Menu.Item name="Compare">
-                                <Icon name="copy" />
-                                Compare
+                        <Menu.Item name="Compare">
+                            <Icon name="copy" />
+                            Compare
                         </Menu.Item>
-                            <Menu.Item name="Analyse">
-                                <Icon name="tasks" />
-                                Analyse
+                        <Menu.Item name="Analyse">
+                            <Icon name="tasks" />
+                            Analyse
                         </Menu.Item>
-
-                            <Menu.Item as={Link} to="/setting" name="Setting">
-                                <Icon name="setting" />
-                                Setting
-                            </Menu.Item>
-                            <Menu.Item name="Logout">
-                                <Icon name="log out" />
-                                Logout
+                        <Menu.Item name="Transaction" onClick={this.onClickTransaction}>
+                            <Icon name="money" />
+                            Transaction
+                        </Menu.Item>
+                        <Menu.Item name="AddTransaction" onClick={this.onClickAddTransaction}>
+                            <Icon name="add" />
+                            Add Transaction
+                        </Menu.Item>
+                        <Menu.Item name="Settings">
+                            <Icon name="setting" />
+                            Settings
+                        </Menu.Item>
+                        <Menu.Item name="Logout" onClick={this.logout}>
+                            <Icon name="log out" />
+                            Logout
                         </Menu.Item>
                         </Sidebar>
                         <Sidebar.Pusher>
@@ -124,8 +124,6 @@ export default class App extends React.Component {
                                     <Route path="/budget" exact component={BudgetView} />
                                     <Route path="/budget/create" exact component={EditBudgetComponent} />
                                     <Route path="/budget/edit/:id" exact component={EditBudgetComponent} />
-
-                                    <Route path="/setting" exact component={SettingView} />
                                     <Route component={NotFoundComponent} />
                                 </Switch>
                             </Segment>

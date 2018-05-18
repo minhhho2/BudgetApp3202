@@ -14,6 +14,14 @@ export default class BudgetComponent extends React.Component {
         BudgetStore.getBudgets();
     }
 
+    edit = (id) => {
+        window.location.href = `/budget/edit/${id}`;
+    }
+
+    delete = (id) => {
+        BudgetStore.deleteBudget(id);
+    }
+
     render() {
         const { budgets, incomes, expenses } = BudgetStore;
 
@@ -50,15 +58,26 @@ export default class BudgetComponent extends React.Component {
                             <Table.HeaderCell>Description</Table.HeaderCell>
                             <Table.HeaderCell>Amount</Table.HeaderCell>
                             <Table.HeaderCell>End date</Table.HeaderCell>
+                            <Table.HeaderCell />
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
                         {budgets.map((budget, index) => (
-                            <Table.Row key={index} onClick={() => window.location.href = `/budget/edit/${budget.id}`}>
+                            <Table.Row key={index}>
                                 <Table.Cell>{budget.name}</Table.Cell>
                                 <Table.Cell>{budget.description}</Table.Cell>
                                 <Table.Cell>{budget.amount}</Table.Cell>
                                 <Table.Cell>{budget.end_date}</Table.Cell>
+                                <Table.Cell>
+                                    <Button primary onClick={() => this.edit(budget.id)}>
+                                        <Icon name="edit" />
+                                        Edit
+                                    </Button>
+                                    <Button negative onClick={() => this.delete(budget.id)}>
+                                        <Icon name="delete" />
+                                        Delete
+                                    </Button>
+                                </Table.Cell>
                             </Table.Row>
                         ))}
                     </Table.Body>
