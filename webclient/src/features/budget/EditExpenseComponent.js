@@ -3,38 +3,22 @@ import { observer } from "mobx-react";
 import {
     Form, Input, TextArea, Select, Checkbox, Header, Button
 } from "semantic-ui-react";
-import EditBudgetStore from "./EditBudgetStore";
+import EditExpenseStore from "./EditExpenseStore";
 import BudgetStore from "./BudgetStore";
 
 
 @observer
-export default class EditBudgetComponent extends React.Component {
+export default class EditExpenseComponent extends React.Component {
     constructor(props) {
         super(props);
         const id = parseInt(props.match.params.id, 10);
 
-        // TODO: breaking shit here
-        /*if (isNaN(id)) {
-            return;
-        }*/
 
-        EditBudgetStore.getData(id);
     }
     onChangeName = (e) => { EditBudgetStore.name = e.target.value; }
-    onChangeDescription = (e) => { EditBudgetStore.description = e.target.value; }
-    onChangeAmount = (e) => { EditBudgetStore.amount = e.target.value; }
-    onChangeFrequency = (e) => { EditBudgetStore.frequency = e.target.value; }
-    onChangeTimeUnit = (e) => { EditBudgetStore.timeunit = e.target.value; }
-    onChangeEndDate= (e) => { EditBudgetStore.endDate = e.target.value; }
-    onChangeOneOff = (e, { value }) => { EditBudgetStore.oneOff = !value | 0 } 
 
     render() {
-        const freqOptions = [
-            { text: 'day', value: '7' },
-            { text: 'week', value: '14' },
-            { text: 'month', value: '31' },
-            { text: 'year', value: '365' }
-        ];
+
 
         // TODO: breaking shit here
         const { name, description, amount, oneOff} = EditBudgetStore;
