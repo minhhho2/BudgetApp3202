@@ -12,6 +12,12 @@ class EditBudgetStore {
     @observable oneOff = 1;
 
     getData(id) {
+        ApiService.get(`/budget/${id}`)
+            .then(budget => {
+                this.id = id;
+                this.name = budget.name;
+                this.description = budget.description;
+            })
     }
 }
 

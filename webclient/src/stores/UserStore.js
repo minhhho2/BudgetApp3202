@@ -18,9 +18,11 @@ class User {
 class UserStore {
     @observable isAuthenticating = false;
     @observable user = undefined;
+    @observable loggedIn = false;
     @observable amountLeftToSpend = 0;
 
     setUser(user) {
+        this.loggedIn = true;
         this.user = new User(user);
     }
 }
