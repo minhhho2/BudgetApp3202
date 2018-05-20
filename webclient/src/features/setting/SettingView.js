@@ -5,6 +5,7 @@ import {
 
 import { observer } from "mobx-react";
 import SettingStore from "./SettingStore";
+import Chart from 'chart.js';
 
 @observer
 export default class SettingView extends React.Component {
@@ -18,9 +19,6 @@ export default class SettingView extends React.Component {
     handleTextChange = (e, { value }) => SettingStore.texts = !value | 0;
     handleSharingChange = (e, { value }) => SettingStore.sharing = !value | 0;
 
-    // handle type of notification
-
-    // handle privacy
     render() {
 
         return (
@@ -59,7 +57,6 @@ export default class SettingView extends React.Component {
                 />
 
                 <br />
-
                 <Button toggle onClick={SettingStore.saveSettings}> Save </Button>
             </div >
         );

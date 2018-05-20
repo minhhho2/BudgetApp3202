@@ -1,5 +1,4 @@
 import { observable } from "mobx";
-import {browserHistory} from 'react-router';
 
 class SettingStore {
     @observable emails = 0;
