@@ -1,22 +1,38 @@
 import { observable } from "mobx";
+import {browserHistory} from 'react-router';
 
 class SettingStore {
     @observable emails = 0;
     @observable texts = 0;
     @observable sharing = 0;
+    @observable availableNotifications = [];
 
-    getSetting() {
+    getSettings() {
         console.log("GET SETTING");
-        // TODO: implement api for settings - get current settings of user from api
-        /*
+
+        /* Mock Data until api */
+        this.emails = 1;
+        this.texts = 0;
+        this.sharing = 1;
+        this.availableNotifications = [
+            { key: '0', text: 'reached income', value: 'income_1' },
+            { key: '1', text: 'insufficient income', value: 'income_2' },
+            { key: '2', text: 'reached expense', value: 'income_3' },
+            { key: '3', text: 'insufficient swag', value: 'income_4' },
+        ];
+        
+        /* TODO: implement api for settings - get current settings of user from api
         ApiService.get('/setting').then(JSON.parse)
             .then(settings => {
-                this.settings = settings;
+                this.emails = emails;
+                this.texts = texts;
+                this.sharing = sharing;
+                this.notifications = notifications;
             })
         */
     }
 
-    saveSetting() {
+    saveSettings() {
         console.log("SAVE SETTING");
         /* TODO: implement api for saving settings 
         ApiService.put('/setting', {
