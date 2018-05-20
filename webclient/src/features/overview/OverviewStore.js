@@ -4,8 +4,8 @@ class OverviewStore {
     @observable incomes = 0;
     @observable expenses = 0;
     @observable budgets = 0;
-    @observable chartOptions = ['pie', 'radar', 'line'];
     @observable charts = [];
+    @observable chartOptions = ['pie', 'radar', 'line'];
 
     @observable testData = 0;
     @observable testOption = 0;
