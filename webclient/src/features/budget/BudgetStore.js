@@ -6,6 +6,7 @@ class BudgetStore {
     @observable budgets = [];
     @observable incomes = [];
     @observable expenses = [];
+    @observable txModal = false;
 
     addRow() {
         console.log(this);
@@ -34,11 +35,12 @@ class BudgetStore {
     }
 
     deleteBudget(id) {
-        ApiService.delete('/budget', {
-            id
-        }).then(_ => {
-            alert(`deleted ${id}`);
-        });
+        ApiService.delete(`/budget/${id}`)
+            .then(_ => {
+                this.budgets =
+                    this.budgets.filter(b => b.id !== id);
+            })
+            .catch(_ => alert("Couldn't delete!"));
     }
 }
 

@@ -73,4 +73,15 @@ create table expenses
 	timeunit text,
 	end_date timestamp
 );
+
+create table transactions
+(
+	id serial not null
+		constraint transactions_pkey
+			primary key,
+	user_id integer references users(id),
+	description text,
+	amount numeric not null,
+	dt timestamp
+)
 commit;

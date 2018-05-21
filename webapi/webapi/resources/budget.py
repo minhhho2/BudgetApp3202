@@ -2,7 +2,7 @@ import json
 import falcon
 import datetime
 
-from webapi.models import User, Budget, Income, Expense
+from webapi.models import Budget, Income, Expense, User
 from webapi.resources.user import UserRepository
 
 class BudgetRepository():
@@ -33,6 +33,10 @@ class BudgetRepository():
     def _serialise_budget(self, budget):
         return self._serialise_tx(budget)
 
+    def get_budget(self, id: int):
+        budget = self._Budget.get(self._Budget.id == id)
+        return self._serialise_budget(budget)
+
     def get_budgets(self, user_id: int):
         budgets = self._Budget.select().where(self._Budget.user_id == user_id)
         return [self._serialise_budget(b) for b in budgets]
@@ -49,7 +53,7 @@ class BudgetRepository():
 
         return self._serialise_budget(budget)
 
-    def update_budget(self):
+    def update_budget(self, budget: dict, id: int):
         pass
 
     def create_income(self, media: dict):
@@ -57,6 +61,12 @@ class BudgetRepository():
 
     def create_expense(self, media: dict):
         pass
+
+    def delete_budget(self, budget_id: int):
+        (self._Budget
+            .delete()
+            .where(self._Budget.id == budget_id)
+            .execute())
 
 class IncomeResource(object):
     def __init__(self, budget_repo=BudgetRepository()):
@@ -82,7 +92,7 @@ class ExpenseResource(object):
         expenses = self._budget_repo.get_expenses()
         response.media = json.dumps({ 'Success': True, 'Message': expenses })
 
-class BudgetResource(object):
+class BudgetCollection(object):
     def __init__(self, budget_repo=BudgetRepository()):
         self._budget_repo = budget_repo
 
@@ -98,3 +108,16 @@ class BudgetResource(object):
 
     def on_post(self, request, response):
         response.media = json.dumps({ 'Success': True, 'Message': 'Budget updated.' })
+
+class BudgetResource(object):
+    def __init__(self, budget_repo=BudgetRepository()):
+        self._budget_repo = budget_repo
+
+    def on_get(self, request, response, id: int):
+        return self._budget_repo.get_budget(id)
+
+    def on_post(self, request, response, id: int):
+        return self._budget_repo.update_budget(request.media, id)
+
+    def on_delete(self, request, response, id: int):
+        self._budget_repo.delete_budget(id)

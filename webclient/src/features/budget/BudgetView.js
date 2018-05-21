@@ -4,6 +4,7 @@ import {
     Icon, Header, Select, Button, Checkbox,
     Table
 } from 'semantic-ui-react'
+import TxModal from "./txmodal";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
 import BudgetStore from "./BudgetStore";
@@ -14,12 +15,12 @@ export default class BudgetComponent extends React.Component {
         BudgetStore.getBudgets();
     }
 
-    edit = (id) => {
-        window.location.href = `/budget/edit/${id}`;
-    }
-
     delete = (id) => {
         BudgetStore.deleteBudget(id);
+    }
+
+    openTxModal = () => {
+        BudgetStore.txModal = true;
     }
 
     render() {
@@ -27,6 +28,7 @@ export default class BudgetComponent extends React.Component {
 
         return (
             <div>
+                <TxModal />
                 <Header as="h2">
                     <Header.Content>Personal finance</Header.Content>
                 </Header>
@@ -49,6 +51,15 @@ export default class BudgetComponent extends React.Component {
                         Expense
                     </Button>
                 </Button.Group>
+                <div style={{ float: "right", paddingRight: "10em" }}>
+                    <Button
+                        primary
+                        onClick={this.openTxModal}
+                    >
+                        <Icon name="money" />
+                        Transaction
+                    </Button>
+                </div>
 
                 <h4>My savings goals</h4>
                 <Table color="olive" selectable>
@@ -69,7 +80,7 @@ export default class BudgetComponent extends React.Component {
                                 <Table.Cell>{budget.amount}</Table.Cell>
                                 <Table.Cell>{budget.end_date}</Table.Cell>
                                 <Table.Cell>
-                                    <Button primary onClick={() => this.edit(budget.id)}>
+                                    <Button primary as={Link} to={`/budget/edit/${budget.id}`}>
                                         <Icon name="edit" />
                                         Edit
                                     </Button>
@@ -83,7 +94,7 @@ export default class BudgetComponent extends React.Component {
                     </Table.Body>
                 </Table>
 
-                <h4>Incomes</h4>
+                <h4>Recuring encomes</h4>
                 <Table color="violet" selectable>
                     <Table.Header>
                         <Table.Row>
@@ -105,7 +116,7 @@ export default class BudgetComponent extends React.Component {
                     </Table.Body>
                 </Table>
 
-                <h4>Expenses</h4>
+                <h4>Recuring expenses</h4>
                 <Table color="orange" selectable>
                     <Table.Header>
                         <Table.Row>

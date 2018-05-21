@@ -1,6 +1,6 @@
 import * as moment from "moment";
 
-const baseUrl = "https://api.cloudstacks.co";
+const baseUrl = "http://localhost:4100";
 
 // So we can distinguish fetch requests on the backend
 const headers = new Headers();

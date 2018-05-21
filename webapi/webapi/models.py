@@ -54,3 +54,11 @@ class Expense(BaseModel):
     timeunit = TextField()
     end_date = DateTimeField()
 
+class Transaction(BaseModel):
+    class Meta:
+        db_table = 'transactions'
+
+    user = ForeignKeyField(User)
+    description = TextField()
+    amount = FloatField()
+    dt = DateTimeField()
