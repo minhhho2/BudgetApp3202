@@ -13,10 +13,9 @@ export default class EditBudgetComponent extends React.Component {
         super(props);
         const id = parseInt(props.match.params.id, 10);
 
-        // TODO: breaking shit here
-        /*if (isNaN(id)) {
+        if (isNaN(id)) {
             return;
-        }*/
+        }
 
         EditBudgetStore.getData(id);
     }
