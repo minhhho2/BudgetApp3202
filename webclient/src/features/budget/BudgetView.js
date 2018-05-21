@@ -24,7 +24,7 @@ export default class BudgetComponent extends React.Component {
     }
 
     render() {
-        const { budgets, incomes, expenses } = BudgetStore;
+        const { budgets, incomes, expenses, transactions } = BudgetStore;
 
         return (
             <div>
@@ -106,7 +106,7 @@ export default class BudgetComponent extends React.Component {
                     </Table.Header>
                     <Table.Body>
                         {incomes.map((income, index) => (
-                            <Table.Row key={index} onClick={() => window.location.href = `/budget/edit/${income.id}`}>
+                            <Table.Row key={index}>
                                 <Table.Cell>{income.name}</Table.Cell>
                                 <Table.Cell>{income.description}</Table.Cell>
                                 <Table.Cell>{income.amount}</Table.Cell>
@@ -128,11 +128,31 @@ export default class BudgetComponent extends React.Component {
                     </Table.Header>
                     <Table.Body>
                         {expenses.map((expense, index) => (
-                            <Table.Row key={index} onClick={() => window.location.href = `/budget/edit/${expense.id}`}>
+                            <Table.Row key={index}>
                                 <Table.Cell>{expense.name}</Table.Cell>
                                 <Table.Cell>{expense.description}</Table.Cell>
                                 <Table.Cell>{expense.amount}</Table.Cell>
                                 <Table.Cell>{expense.end_date}</Table.Cell>
+                            </Table.Row>
+                        ))}
+                    </Table.Body>
+                </Table>
+
+                <h4>One-off expenses</h4>
+                <Table color="red" selectable>
+                    <Table.Header>
+                        <Table.Row>
+                            <Table.HeaderCell>Description</Table.HeaderCell>
+                            <Table.HeaderCell>Amount</Table.HeaderCell>
+                            <Table.HeaderCell>Date</Table.HeaderCell>
+                        </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
+                        {transactions.map((tx, index) => (
+                            <Table.Row key={index}>
+                                <Table.Cell>{tx.description}</Table.Cell>
+                                <Table.Cell>{tx.amount}</Table.Cell>
+                                <Table.Cell>{tx.dt}</Table.Cell>
                             </Table.Row>
                         ))}
                     </Table.Body>

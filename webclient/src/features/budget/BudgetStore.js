@@ -6,6 +6,7 @@ class BudgetStore {
     @observable budgets = [];
     @observable incomes = [];
     @observable expenses = [];
+    @observable transactions = [];
     @observable txModal = false;
 
     addRow() {

@@ -41,6 +41,7 @@ export default class AnalyticsComponent extends React.Component {
                 <ul>
                     <li>Income distribution</li>
                     <li>Expense distribution</li>
+                    <li>Transaction distribution</li>
                 </ul>
             </div>
         )

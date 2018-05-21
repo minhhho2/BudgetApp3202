@@ -12,8 +12,7 @@ export default class TxModal extends React.Component {
     }
 
     submit = () => {
-        alert("saved");
-        this.handleClose();
+        TxStore.save();
     }
 
     handleDescriptionChangeSelect = (e, data) => {
@@ -32,8 +31,8 @@ export default class TxModal extends React.Component {
 
     render() {
         const txTypes = [
-            { key: 'made', value: 1, text: 'Made' },
-            { key: 'spent', value: -1, text: 'Spent' }
+            { key: '+', value: 1, text: '+' },
+            { key: '-', value: -1, text: '-' }
         ];
 
         const descriptionInput = TxStore.isOther ?
@@ -50,7 +49,7 @@ export default class TxModal extends React.Component {
                     <Modal.Description>
                         <Form onSubmit={this.submit}>
                             <Select
-                                placeholder="Made/Spent"
+                                placeholder="+/-"
                                 options={txTypes}
                                 onChange={this.handleDirChangeSelect}
                             />
