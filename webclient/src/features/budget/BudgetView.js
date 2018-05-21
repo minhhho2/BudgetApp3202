@@ -4,7 +4,7 @@ import {
     Icon, Header, Select, Button, Checkbox,
     Table
 } from 'semantic-ui-react'
-import TxModal from "./txmodal";
+import TxModal from "./TxModal";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
 import BudgetStore from "./BudgetStore";
