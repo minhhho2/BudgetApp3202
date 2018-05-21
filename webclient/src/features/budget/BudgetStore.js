@@ -23,7 +23,8 @@ class BudgetStore {
             amount: EditBudgetStore.amount, //1000,
             frequency: EditBudgetStore.frequency, //1,
             timeunit: EditBudgetStore.timeunit //'monthly'
-        }).then(console.log)
+        })
+            .then(console.log)
     }
 
     getBudgets() {
