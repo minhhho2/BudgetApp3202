@@ -38,7 +38,7 @@ export default class BudgetComponent extends React.Component {
                     to="/budget/create"
                 >
                     <Icon name="add" />
-                    New
+                    New savings goal
                 </Button>
                 <Button.Group>
                     <Button color="teal">
