@@ -134,7 +134,6 @@ export default class App extends React.Component {
                         </Sidebar.Pusher>
                     </Sidebar.Pushable>
                 </BrowserRouter>
-
             </div>
         );
     }
