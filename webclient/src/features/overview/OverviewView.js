@@ -10,45 +10,56 @@ export default class OverviewView extends React.Component {
 
     componentDidMount() {
         OverviewStore.getData();
-/*
-        let chartCanvas = this.refs.chart;
-        let myChart = new Chart(chartCanvas, {
-            type: 'radar',
-            data: JSON.parse(JSON.stringify(OverviewStore.testData)),
-            options: JSON.parse(JSON.stringify(OverviewStore.testOption))
-        });*/
     }
 
     handleChange = (e, { value }) => {
         OverviewStore.charts = value;
         console.log(Array.apply(null, OverviewStore.charts));
-
-        console.log(Object.values(this.refs));
-
         
+
+        var testData = {
+            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'
+                ],
+                borderWidth: 1
+            }]
+        }
+
+        var testOption = {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+
         Object.values(this.refs).forEach(canvas => {
             let myChart = new Chart(canvas, {
-                type: 'pie',
-                data: JSON.parse(JSON.stringify(OverviewStore.testData)),
-                options: JSON.parse(JSON.stringify(OverviewStore.testOption))
+                type: canvas.id,
+                data: testData,
+                options: testOption
             });
-            
         });
 
     }
 
     render() {
-        //<canvas ref={'chart'} height={'200'} width={'300'}></canvas>
-
         const chartOptions = [
             { key: '1', value: 'pie', text: 'pie' },
             { key: '2', value: 'radar', text: 'radar' },
-        ]; // OverviewStore.chartOptions.map((chart, index) => <Dropdown.Item key={index} value={chart} text={chart} /> );
+            { key: '3', value: 'line', text: 'line'},
+        ]; 
 
-        const lines = OverviewStore.chartOptions.map((chart, index) => {
-            return <canvas ref={chart} key={index}height={'200'} width={'300'}></canvas>
-
-            //return <h1 key={index}> {chart} </h1>
+        const charts = OverviewStore.charts.map((chart, index) => {
+            return <div><canvas ref={chart} key={index} id={chart} height={'200'} width={'300'}></canvas></div>
         });
         
         return (
@@ -60,7 +71,7 @@ export default class OverviewView extends React.Component {
                     value={Array.apply(null, OverviewStore.charts)}
                 /> 
 
-                {lines}
+                {charts}
 
             </div >
         );
