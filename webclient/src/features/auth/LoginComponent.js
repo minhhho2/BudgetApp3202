@@ -1,6 +1,6 @@
 import * as React from "react";
 import { observer } from "mobx-react";
-import { Form, Button, Segment, Header } from "semantic-ui-react";
+import { Form, Button, Segment, Header, Input, Divider } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import LoginStore from "./LoginStore";
 
@@ -24,7 +24,8 @@ export default class LoginComponent extends React.Component {
                     <Form onSubmit={() => LoginStore.signIn()}>
                         <Form.Field>
                             <label>Username</label>
-                            <input
+                            <Input
+                                icon='user'
                                 value={LoginStore.credentials.username}
                                 onChange={this.changeUsernameHandler}
                                 placeholder="Username"
@@ -32,14 +33,15 @@ export default class LoginComponent extends React.Component {
                         </Form.Field>
                         <Form.Field>
                             <label>Password</label>
-                            <input
+                            <Input
+                                icon='lock'
                                 value={LoginStore.credentials.password}
                                 onChange={this.changePasswordHandler}
                                 type="password"
                                 placeholder="Password"
                             />
                         </Form.Field>
-                        <Button positive type="submit">Submit</Button>
+                        <Button positive type="submit">Login</Button>
                         <Button as={Link} to="/register">Register</Button>
                     </Form>
                 </Segment>
