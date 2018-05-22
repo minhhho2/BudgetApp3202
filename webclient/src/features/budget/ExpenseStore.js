@@ -17,7 +17,7 @@ class ExpenseStore {
     create() {
         UserStore.isAuthenticating = true;
         BudgetStore.expenseModal = false;
-        console.log(this.endDate)
+
         ApiService.put('/expense', {
             name: this.name,
             amount: this.amount,

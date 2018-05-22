@@ -17,7 +17,7 @@ class IncomeStore {
     create() {
         UserStore.isAuthenticating = true;
         BudgetStore.incomeModal = false;
-        console.log(this.endDate)
+
         ApiService.put('/income', {
             name: this.name,
             amount: this.amount,
