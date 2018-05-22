@@ -74,7 +74,7 @@ export default class ExpenseModal extends React.Component {
 
         return (
             <Modal open={BudgetStore.expenseModal} onClose={this.handleClose}>
-                <Modal.Header>Add transaction</Modal.Header>
+                <Modal.Header>Add recuring expense</Modal.Header>
                 <Modal.Content>
                     <Modal.Description>
                         <Form onSubmit={this.submit}>
@@ -86,7 +86,7 @@ export default class ExpenseModal extends React.Component {
                             <br style={{ paddingBottom: "1em" }} />
                             <Select
                                 onChange={this.handleDescriptionChangeSelect}
-                                placeholder="Description"
+                                placeholder="Type"
                                 options={transactionTypes}
                             />
                             <br style={{ paddingBottom: "1em" }} />

@@ -28,7 +28,6 @@ class ExpenseStore {
                 this.endDate :
                 undefined
         })
-            .then(console.log)
             .then(() => BudgetStore.getExpenses())
             .catch(console.log)
             .then(() => UserStore.isAuthenticating = false)
