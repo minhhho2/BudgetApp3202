@@ -1,5 +1,4 @@
 from twilio.rest import Client
-from file1 import *  
 
 mock_receiver = "+61466389745"
 mock_sender = "+61448068514"

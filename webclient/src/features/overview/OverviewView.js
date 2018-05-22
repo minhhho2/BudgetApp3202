@@ -11,22 +11,37 @@ export default class OverviewView extends React.Component {
     componentDidMount() {
         OverviewStore.getData();
     }
+
     componentDidUpdate() {
         const amounts = this.getAmounts();
         const labels = this.getLabels();
-        console.log(amounts + labels);
-
         Object.values(this.refs).forEach(canvas => {
             let myChart = new Chart(canvas, {
                 type: canvas.id,
                 data: {
                     labels: labels,
                     datasets: [{
+                        label: 'Title of Graph',
                         data: amounts,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderWidth: 1
                     }]
                 },
                 options: {
-                    responsive: false
+
+                    responsive: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+
                 }
             });
         });
@@ -34,19 +49,19 @@ export default class OverviewView extends React.Component {
 
     getLabels = () => {
         var labels = [];
-        var data = OverviewStore.incomes.map(income => {
-            if (!labels.includes(income.description)) {
-                labels.push(income.description);
+        var data = OverviewStore.expenses.map(expense => {
+            if (!labels.includes(expense.description)) {
+                labels.push(expense.description);
             }
         });
         return labels;
     }
 
-    getAmounts= () => {
+    getAmounts = () => {
         var amounts = [];
         var labels = this.getLabels();
         labels.forEach(label => {
-            const results = OverviewStore.incomes.filter(income => label === income.description);
+            const results = OverviewStore.expenses.filter(expense => label === expense.description);
             var sum = results.reduce((accumulator, currentValue) => {
                 return accumulator + currentValue.amount;
             }, 0);
@@ -69,7 +84,7 @@ export default class OverviewView extends React.Component {
 
         const charts = OverviewStore.charts.map((chart, index) => {
             return <div key={index}>
-                <canvas ref={chart} id={chart} height={'300'} width={'300'}></canvas>
+                <canvas ref={chart} id={chart} height={'500'} width={'500'}></canvas>
             </div>
         });
 
@@ -81,8 +96,10 @@ export default class OverviewView extends React.Component {
                     onChange={this.handleChange}
                     value={selectedCharts}
                 />
-
+                <h2> Budgets </h2>
                 {charts}
+
+
 
             </div >
         );
