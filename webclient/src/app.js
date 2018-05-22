@@ -70,7 +70,6 @@ export default class App extends React.Component {
                 <BrowserRouter>
                     <Switch>
                         <Route path="/register" component={RegisterComponent} />
-                        <Route path="/budget" component={() => <p>Budgets!</p>} />
                         <Route component={LoginComponent} />
                     </Switch>
                 </BrowserRouter>
