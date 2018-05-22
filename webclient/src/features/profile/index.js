@@ -75,7 +75,7 @@ export default class ProfileComponent extends React.Component {
                                         name="requested_order_ship_date" 
                                         type="date"
                                         disabled={ProfileStore.editable}
-                                        value={ProfileStore.birthday}
+                                        value={new Date()}
                                         onChange={this.handleChangeBirthday} 
                                     />
 
@@ -85,7 +85,11 @@ export default class ProfileComponent extends React.Component {
 
                                 </Form>
                                 <Button onClick={this.handleSave}> Save </Button>
-                                <Button onClick={this.handleEdit}> Edit </Button>
+                                <Button onClick={this.handleEdit}>
+                                    {ProfileStore.editable ?
+                                        "Edit" :
+                                        "Cancel"}
+                                </Button>
                             </h4>
                         </Grid.Column>
                     </Grid.Row>

@@ -55,7 +55,7 @@ class ExpenseRepository():
         return self._serialise_expense(expense)
 
     def delete_expense(self, id: int):
-        (self._expense
+        (self._Expense
             .delete()
             .where(self._Expense.id == id)
             .execute())

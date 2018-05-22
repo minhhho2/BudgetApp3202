@@ -22,6 +22,8 @@ class ProfileStore {
                 this.lastname = profile.last_name;
                 this.birthday = new Date(profile.birthday);
                 this.mobile = profile.phone_number;
+
+                console.log(new Date(this.birthday));
             })
             .then(() => UserStore.isAuthenticating = false);
 

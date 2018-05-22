@@ -15,6 +15,7 @@ import { observer } from "mobx-react";
 import BudgetStore from "./BudgetStore";
 import TxStore from "./TxStore";
 import ExpenseStore from "./ExpenseStore";
+import IncomeStore from "./IncomeStore";
 
 @observer
 export default class BudgetComponent extends React.Component {
@@ -35,6 +36,10 @@ export default class BudgetComponent extends React.Component {
 
     deleteExpense = (id) => {
         ExpenseStore.delete(id);
+    }
+
+    deleteIncome = (id) => {
+        IncomeStore.delete(id);
     }
 
     openTxModal = () => {
@@ -132,14 +137,16 @@ export default class BudgetComponent extends React.Component {
                     </Table.Body>
                 </Table>
 
-                <h4>Recuring encomes</h4>
+                <h4>Recuring incomes</h4>
                 <Table color="violet" selectable>
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell>Name</Table.HeaderCell>
                             <Table.HeaderCell>Description</Table.HeaderCell>
                             <Table.HeaderCell>Amount</Table.HeaderCell>
+                            <Table.HeaderCell>Timing</Table.HeaderCell>
                             <Table.HeaderCell>End date</Table.HeaderCell>
+                            <Table.HeaderCell />
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
@@ -148,7 +155,18 @@ export default class BudgetComponent extends React.Component {
                                 <Table.Cell>{income.name}</Table.Cell>
                                 <Table.Cell>{income.description}</Table.Cell>
                                 <Table.Cell>{income.amount}</Table.Cell>
+                                <Table.Cell>{income.frequency}/{income.timeunit}</Table.Cell>
                                 <Table.Cell>{income.end_date}</Table.Cell>
+                                <Table.Cell>
+                                    <Button primary onClick={this.openIncomeModal}>
+                                        <Icon name="edit" />
+                                        Edit
+                                    </Button>
+                                    <Button negative onClick={() => this.deleteIncome(income.id)}>
+                                        <Icon name="delete" />
+                                        Delete
+                                    </Button>
+                                </Table.Cell>
                             </Table.Row>
                         ))}
                     </Table.Body>
