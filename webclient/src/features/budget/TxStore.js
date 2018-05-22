@@ -8,7 +8,7 @@ class TxStore {
     @observable description = "";
     @observable isOther = false;
 
-    save() {
+    create() {
         const amount = this.amount * this.mult;
         ApiService.put('/transaction', {
             amount,

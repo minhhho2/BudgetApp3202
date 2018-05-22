@@ -1,5 +1,7 @@
 import { observable } from "mobx";
 import ApiService from "../../services/ApiService";
+import UserStore from "../../stores/UserStore";
+import BudgetStore from "./BudgetStore";
 
 class EditBudgetStore {
     @observable id = undefined;
@@ -21,15 +23,19 @@ class EditBudgetStore {
     }
 
     create() {
+        BudgetStore.editBudgetModal = false;
+        UserStore.isAuthenticating = true;
+
         ApiService.put('/budget', {
-            name: EditBudgetStore.name,
-            description: EditBudgetStore.description, //'This is my main budget.',
-            amount: EditBudgetStore.amount, //1000,
-            frequency: EditBudgetStore.frequency, //1,
-            timeunit: EditBudgetStore.timeunit //'monthly'
+            name: this.name,
+            description: this.description, //'This is my main budget.',
+            amount: this.amount, //1000,
+            frequency: this.frequency, //1,
+            timeunit: this.timeunit //'monthly'
         })
-            .then(console.log)
-            .catch(alert)
+            .then(() => BudgetStore.getBudgets())
+            .catch(() => UserStore.isAuthenticating = false)
+            .then(() => UserStore.isAuthenticating = false)
     }
 }
 

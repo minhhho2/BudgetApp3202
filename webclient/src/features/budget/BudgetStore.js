@@ -23,19 +23,24 @@ class BudgetStore {
     getBudgets() {
         ApiService.get('/budget')
             .then(JSON.parse)
+            .then(res => res.Message)
             .then(budgets => {
-                this.budgets = budgets["Message"];
+                this.budgets = budgets;
             })
     }
 
     getIncomes() {
         ApiService.get('/income')
+            .then(JSON.parse)
+            .then(res => res.Message)
             .then(incomes => this.incomes = incomes);
     }
 
 
     getExpenses() {
         ApiService.get('/expense')
+            .then(JSON.parse)
+            .then(res => res.Message)
             .then(expenses => this.expenses = expenses);
     }
 

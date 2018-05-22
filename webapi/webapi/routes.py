@@ -23,7 +23,7 @@ routes = [
     ('/transaction/{id:int}', TransactionResource),
     ('/expense', ExpenseCollection),
     ('/expense/{id:int}', ExpenseResource),
-    ('/expense', ExpenseResource),
+    ('/expense', ExpenseCollection),
     ('/budget', BudgetCollection),
     ('/budget/{id:int}', BudgetResource),
 ]

@@ -24,7 +24,7 @@ class ExpenseStore {
             .catch(err => alert(err.message));
     }
 
-    getexpense(id) {
+    getExpense(id) {
         ApiService.get(`/expense/${id}`)
             .then(res => res.Message)
             .then(expense => {

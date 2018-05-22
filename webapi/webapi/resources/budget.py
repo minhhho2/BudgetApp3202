@@ -10,15 +10,15 @@ class BudgetRepository():
         self._user_repo = user_repo
         self._Budget = budget_model
 
-    def _serialise_tx(self, income):
-        end_date = income.end_date.isoformat() if income.end_date else None
+    def _serialise_tx(self, tx):
+        end_date = tx.end_date.isoformat() if tx.end_date else None
         return {
-            'id': income.id,
-            'name': income.name,
-            'description': income.description,
-            'amount': income.amount,
-            'frequency': income.frequency,
-            'timeunit': income.timeunit,
+            'id': tx.id,
+            'name': tx.name,
+            'description': tx.description,
+            'amount': tx.amount,
+            'frequency': tx.frequency,
+            'timeunit': tx.timeunit,
             'end_date': end_date
         }
 
@@ -66,7 +66,7 @@ class BudgetCollection(object):
     def on_put(self, request, response):
         user_id = int(request.cookies['budgetapp_login'])
         budget = self._budget_repo.create_budget(user_id, request.media)
-        response.media = json.dumps({ 'Success': True, 'Message': budget })
+        response.media = json.dumps({ 'Success': True, 'Message': request.media })
 
     def on_post(self, request, response):
         response.media = json.dumps({ 'Success': True, 'Message': 'Budget updated.' })

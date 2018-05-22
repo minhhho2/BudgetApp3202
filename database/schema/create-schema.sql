@@ -83,5 +83,5 @@ create table transactions
 	description text,
 	amount numeric not null,
 	dt timestamp
-)
+);
 commit;
