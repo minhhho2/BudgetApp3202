@@ -62,3 +62,13 @@ class Transaction(BaseModel):
     description = TextField()
     amount = FloatField()
     dt = DateTimeField()
+
+class PersonalInformation(BaseModel):
+    class Meta:
+        db_table = 'personal_information'
+
+    user = ForeignKeyField(User)
+    first_name = TextField()
+    last_name = TextField()
+    phone_number = TextField()
+    birthday = DateTimeField()

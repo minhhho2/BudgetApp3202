@@ -1,5 +1,7 @@
 import { observable } from "mobx";
 import ApiService from "../../services/ApiService";
+import UserStore from "../../stores/UserStore";
+import BudgetStore from "./BudgetStore";
 
 class TxStore {
     @observable id = 1;
@@ -10,15 +12,20 @@ class TxStore {
 
     create() {
         const amount = this.amount * this.mult;
+        UserStore.isAuthenticating = true;
+        BudgetStore.txModal = false;
         ApiService.put('/transaction', {
             amount,
             description: this.description
         })
+            .then(() => BudgetStore.getTransactions())
+            .then(() => UserStore.isAuthenticating = false)
+            .catch(() => UserStore.isAuthenticating = false)
     }
 
     delete(id) {
         ApiService.delete(`/transaction/${id}`)
-            .then(_ => this.txs = this.txs.filter(tx => tx.id !== id))
+            .then(_ => BudgetStore.transactions = BudgetStore.transactions.filter(tx => tx.id !== id))
             .catch(err => alert(err.message));
     }
 

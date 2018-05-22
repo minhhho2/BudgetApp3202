@@ -12,6 +12,7 @@ export default class ProfileComponent extends React.Component {
 
     handleSave = () => {
         console.log("save");
+        ProfileStore.save();
         ProfileStore.editable = true;
     }
 

@@ -2,7 +2,8 @@ import * as React from "react";
 import {
     Divider, Form, Label, Input, TextArea,
     Icon, Header, Select, Button, Checkbox,
-    Table
+    Table,
+    Tab
 } from 'semantic-ui-react'
 import TxModal from "./TxModal";
 import IncomeModal from "./IncomeModal";
@@ -12,6 +13,8 @@ import EditBudgetModal from "./EditBudgetModal";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
 import BudgetStore from "./BudgetStore";
+import TxStore from "./TxStore";
+import ExpenseStore from "./ExpenseStore";
 
 @observer
 export default class BudgetComponent extends React.Component {
@@ -24,6 +27,14 @@ export default class BudgetComponent extends React.Component {
 
     delete = (id) => {
         BudgetStore.deleteBudget(id);
+    }
+
+    deleteTx = (id) => {
+        TxStore.delete(id);
+    }
+
+    deleteExpense = (id) => {
+        ExpenseStore.delete(id);
     }
 
     openTxModal = () => {
@@ -70,7 +81,7 @@ export default class BudgetComponent extends React.Component {
                         Income
                     </Button>
                     <Button.Or />
-                    <Button 
+                    <Button
                         color="orange"
                         onClick={this.openExpenseModal}
                     >
@@ -150,7 +161,9 @@ export default class BudgetComponent extends React.Component {
                             <Table.HeaderCell>Name</Table.HeaderCell>
                             <Table.HeaderCell>Description</Table.HeaderCell>
                             <Table.HeaderCell>Amount</Table.HeaderCell>
+                            <Table.HeaderCell>Timing</Table.HeaderCell>
                             <Table.HeaderCell>End date</Table.HeaderCell>
+                            <Table.HeaderCell />
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
@@ -159,7 +172,18 @@ export default class BudgetComponent extends React.Component {
                                 <Table.Cell>{expense.name}</Table.Cell>
                                 <Table.Cell>{expense.description}</Table.Cell>
                                 <Table.Cell>{expense.amount}</Table.Cell>
+                                <Table.Cell>{expense.frequency}/{expense.timeunit}</Table.Cell>
                                 <Table.Cell>{expense.end_date}</Table.Cell>
+                                <Table.Cell>
+                                    <Button primary onClick={this.openExpenseModal}>
+                                        <Icon name="edit" />
+                                        Edit
+                                    </Button>
+                                    <Button negative onClick={() => this.deleteExpense(expense.id)}>
+                                        <Icon name="delete" />
+                                        Delete
+                                    </Button>
+                                </Table.Cell>
                             </Table.Row>
                         ))}
                     </Table.Body>
@@ -172,14 +196,28 @@ export default class BudgetComponent extends React.Component {
                             <Table.HeaderCell>Description</Table.HeaderCell>
                             <Table.HeaderCell>Amount</Table.HeaderCell>
                             <Table.HeaderCell>Date</Table.HeaderCell>
+                            <Table.HeaderCell />
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
                         {transactions.map((tx, index) => (
-                            <Table.Row key={index}>
+                            <Table.Row
+                                key={index}
+                                onClick={() => TxStore.delete(tx.id)}
+                            >
                                 <Table.Cell>{tx.description}</Table.Cell>
                                 <Table.Cell>{tx.amount}</Table.Cell>
                                 <Table.Cell>{tx.dt}</Table.Cell>
+                                <Table.Cell>
+                                    <Button primary onClick={this.openTxModal}>
+                                        <Icon name="edit" />
+                                        Edit
+                                    </Button>
+                                    <Button negative onClick={() => this.deleteTx(tx.id)}>
+                                        <Icon name="delete" />
+                                        Delete
+                                    </Button>
+                                </Table.Cell>
                             </Table.Row>
                         ))}
                     </Table.Body>

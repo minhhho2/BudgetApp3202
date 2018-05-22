@@ -1,26 +1,42 @@
 import { observable } from "mobx";
 import ApiService from "../../services/ApiService";
+import BudgetStore from "./BudgetStore";
+import UserStore from "../../stores/UserStore";
 
 class ExpenseStore {
     @observable id = 1;
+    @observable name = '';
     @observable amount = 0;
-    @observable description = "";
+    @observable description = '';
     @observable timeunit = '';
     @observable frequency = 0;
-
+    @observable hasEndDate = false;
+    @observable endDate = new Date();
     @observable isOther = false;
 
-    save() {
-        const amount = this.amount * this.mult;
+    create() {
+        UserStore.isAuthenticating = true;
+        BudgetStore.expenseModal = false;
+        console.log(this.endDate)
         ApiService.put('/expense', {
-            amount,
-            description: this.description
+            name: this.name,
+            amount: this.amount,
+            description: this.description,
+            frequency: this.frequency,
+            timeunit: this.timeunit,
+            end_date: this.hasEndDate ?
+                this.endDate :
+                undefined
         })
+            .then(console.log)
+            .then(() => BudgetStore.getExpenses())
+            .catch(console.log)
+            .then(() => UserStore.isAuthenticating = false)
     }
 
     delete(id) {
         ApiService.delete(`/expense/${id}`)
-            .then(_ => this.expenses = this.expenses.filter(expense => expense.id !== id))
+            .then(_ => BudgetStore.expenses = BudgetStore.expenses.filter(expense => expense.id !== id))
             .catch(err => alert(err.message));
     }
 

@@ -84,4 +84,16 @@ create table transactions
 	amount numeric not null,
 	dt timestamp
 );
+
+create table personal_information
+(
+	id serial not null
+		constraint personal_information_pkey
+			primary key,
+	user_id integer references users(id) unique,
+	first_name text,
+	last_name text,
+	phone_number text,
+	birthday timestamp
+);
 commit;
