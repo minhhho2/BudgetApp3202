@@ -16,8 +16,8 @@ class ExpenseRepository():
             'id': expense.id,
             'name': expense.name,
             'description': expense.description,
-            'amount': expense.amount,
-            'frequency': expense.frequency,
+            'amount': int(expense.amount),
+            'frequency': int(expense.frequency),
             'timeunit': expense.timeunit,
             'end_date': end_date
         }
@@ -37,7 +37,7 @@ class ExpenseRepository():
             amount=media['amount'],
             frequency=media['frequency'],
             timeunit=media['timeunit'],
-            dt=datetime.datetime.now())
+            end_date=datetime.datetime.now())
         expense.save()
 
         return self._serialise_expense(expense)
@@ -49,7 +49,7 @@ class ExpenseRepository():
         expense.amount = media['amount']
         expense.frequency = media['frequency']
         expense.timeunit = media['timeunit']
-        expense.dt = media['dt']
+        expense.dt = media['end_date']
         expense.save()
 
         return self._serialise_expense(expense)
