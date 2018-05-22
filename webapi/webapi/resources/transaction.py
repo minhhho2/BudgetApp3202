@@ -57,11 +57,11 @@ class TransactionCollection(object):
 
     def on_get(self, request, response):
         user_id = int(request.cookies['budgetapp_login'])
-        return self._tx_repo.get_transactions(user_id)
+        response.media = json.dumps({ 'Success': True, 'Message': self._tx_repo.get_transactions(user_id) })
 
     def on_put(self, request, response):
         user_id = int(request.cookies['budgetapp_login'])
-        return self._tx_repo.create_transaction(request.media, user_id)
+        response.media = json.dumps({ 'Success': True, 'Message': self._tx_repo.create_transaction(request.media, user_id) })
 
 
 class TransactionResource(object):
@@ -69,10 +69,11 @@ class TransactionResource(object):
         self._tx_repo = tx_repo
 
     def on_get(self, request, response, id: int):
-        return self._tx_repo.get_transaction(id)
+        response.media = json.dumps({ 'Success': True, 'Message': self._tx_repo.get_transaction(id) })
 
     def on_post(self, request, response, id: int):
-        return self._tx_repo.update_transaction(request.media, id)
+        response.media = json.dumps({ 'Success': True, 'Message': self._tx_repo.update_transaction(request.media, id) })
 
     def on_delete(self, request, response, id: int):
-        return self._tx_repo.delete_transaction(id)
+        self._tx_repo.delete_transaction(id)
+        response.media = json.dumps({ 'Success': True })

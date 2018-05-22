@@ -76,10 +76,11 @@ class BudgetResource(object):
         self._budget_repo = budget_repo
 
     def on_get(self, request, response, id: int):
-        return self._budget_repo.get_budget(id)
+        response.media = json.dumps({ 'Success': True, 'Message': self._budget_repo.get_budget(id) })
 
     def on_post(self, request, response, id: int):
-        return self._budget_repo.update_budget(request.media, id)
+        response.media = json.dumps({ 'Success': True, 'Message': self._budget_repo.update_budget(request.media, id) })
 
     def on_delete(self, request, response, id: int):
         self._budget_repo.delete_budget(id)
+        response.media = json.dumps({ 'Success': True })

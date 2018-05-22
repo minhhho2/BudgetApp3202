@@ -66,11 +66,11 @@ class ExpenseCollection(object):
 
     def on_get(self, request, response):
         user_id = int(request.cookies['budgetapp_login'])
-        return self._expense_repo.get_expenses(user_id)
+        response.media = json.dumps({ 'Success': True, 'Message': self._expense_repo.get_expenses(user_id) })
 
     def on_put(self, request, response):
         user_id = int(request.cookies['budgetapp_login'])
-        return self._expense_repo.create_expense(request.media, user_id)
+        response.media = json.dumps({ 'Success': True, 'Message': self._expense_repo.create_expense(request.media, user_id) })
 
 
 class ExpenseResource(object):
@@ -78,10 +78,11 @@ class ExpenseResource(object):
         self._expense_repo = expense_repo
 
     def on_get(self, request, response, id: int):
-        return self._expense_repo.get_expense(id)
+        response.media = json.dumps({ 'Success': True, 'Message': self._expense_repo.get_expense(id) })
 
     def on_post(self, request, response, id: int):
-        return self._expense_repo.update_expense(request.media, id)
+        response.media = json.dumps({ 'Success': True, 'Message': self._expense_repo.update_expense(request.media, id) })
 
     def on_delete(self, request, response, id: int):
-        return self._expense_repo.delete_expense(id)
+        self._expense_repo.delete_expense(id)
+        response.media = json.dumps({ 'Success': True })

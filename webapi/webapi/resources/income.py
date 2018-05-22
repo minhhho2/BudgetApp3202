@@ -65,11 +65,11 @@ class IncomeCollection(object):
 
     def on_get(self, request, response):
         user_id = int(request.cookies['budgetapp_login'])
-        return self._income_repo.get_incomes(user_id)
+        response.media = json.dumps({ 'Success': True, 'Message': self._income_repo.get_incomes(user_id)})
 
     def on_put(self, request, response):
         user_id = int(request.cookies['budgetapp_login'])
-        return self._income_repo.create_income(request.media, user_id)
+        response.media = json.dumps({ 'Success': True, 'Message': self._income_repo.create_income(request.media, user_id)})
 
 
 class IncomeResource(object):
@@ -77,10 +77,11 @@ class IncomeResource(object):
         self._income_repo = income_repo
 
     def on_get(self, request, response, id: int):
-        return self._income_repo.get_income(id)
+        response.media = json.dumps({ 'Success': True, 'Message': self._income_repo.get_income(id) })
 
     def on_post(self, request, response, id: int):
-        return self._income_repo.update_income(request.media, id)
+        response.media = json.dumps({ 'Success': True, 'Message': self._income_repo.update_income(request.media, id) })
 
     def on_delete(self, request, response, id: int):
-        return self._income_repo.delete_income(id)
+        self._income_repo.delete_income(id)
+        response.media = json.dumps({ 'Success': True })
