@@ -3,12 +3,14 @@ import { observable } from "mobx";
 class ProfileStore {
     @observable firstname = "Kermet"
     @observable lastname = "Krab"
-    @observable age = 19;
+    @observable birthday = new Date().toISOString().split('T')[0];
+    @observable gender = "trans";
+
     @observable email = "kermit_krab@hotmail.com";
     @observable address = "sesame street, 4074, brisbane, queensland";
     @observable mobile = "+61466999666";
-    @observable dob = "19-29-19";
-    @observable gender = "trans";
+
+    @observable editable = true;
 
     getData() {
         console.log("get details");
@@ -19,4 +21,4 @@ class ProfileStore {
     }
 }
 
-export default new SettingStore();
+export default new ProfileStore();
