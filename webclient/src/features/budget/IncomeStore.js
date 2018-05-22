@@ -2,8 +2,6 @@ import { observable } from "mobx";
 import ApiService from "../../services/ApiService";
 
 class IncomeStore {
-    @observable incomes = [];
-
     @observable id = 1;
     @observable amount = 0;
     @observable description = "";
@@ -22,12 +20,6 @@ class IncomeStore {
         ApiService.delete(`/income/${id}`)
             .then(_ => this.incomes = this.incomes.filter(income => income.id !== id))
             .catch(err => alert(err.message));
-    }
-
-    getincomes() {
-        ApiService.get('/income')
-            .then(res => res.Message)
-            .then(incomes => this.incomes = incomes);
     }
 
     getincome(id) {

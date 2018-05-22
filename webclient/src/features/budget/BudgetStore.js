@@ -14,22 +14,10 @@ class BudgetStore {
     @observable editBudgetModal = false;
 
     addRow() {
-        console.log(this);
         this.incomes.push({
             Description: "",
             Goal: 0
         });
-    }
-
-    save() {
-        ApiService.put('/budget', {
-            name: EditBudgetStore.name,
-            description: EditBudgetStore.description, //'This is my main budget.',
-            amount: EditBudgetStore.amount, //1000,
-            frequency: EditBudgetStore.frequency, //1,
-            timeunit: EditBudgetStore.timeunit //'monthly'
-        })
-            .then(console.log)
     }
 
     getBudgets() {
@@ -38,6 +26,17 @@ class BudgetStore {
             .then(budgets => {
                 this.budgets = budgets["Message"];
             })
+    }
+
+    getIncomes() {
+        ApiService.get('/income')
+            .then(incomes => this.incomes = incomes);
+    }
+
+
+    getExpenses() {
+        ApiService.get('/expense')
+            .then(expenses => this.expenses = expenses);
     }
 
     deleteBudget(id) {

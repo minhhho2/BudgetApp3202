@@ -19,6 +19,18 @@ class EditBudgetStore {
                 this.description = budget.description;
             })
     }
+
+    create() {
+        ApiService.put('/budget', {
+            name: EditBudgetStore.name,
+            description: EditBudgetStore.description, //'This is my main budget.',
+            amount: EditBudgetStore.amount, //1000,
+            frequency: EditBudgetStore.frequency, //1,
+            timeunit: EditBudgetStore.timeunit //'monthly'
+        })
+            .then(console.log)
+            .catch(alert)
+    }
 }
 
 export default new EditBudgetStore();

@@ -2,8 +2,6 @@ import { observable } from "mobx";
 import ApiService from "../../services/ApiService";
 
 class ExpenseStore {
-    @observable expenses = [];
-
     @observable id = 1;
     @observable amount = 0;
     @observable description = "";
@@ -24,12 +22,6 @@ class ExpenseStore {
         ApiService.delete(`/expense/${id}`)
             .then(_ => this.expenses = this.expenses.filter(expense => expense.id !== id))
             .catch(err => alert(err.message));
-    }
-
-    getexpenses() {
-        ApiService.get('/expense')
-            .then(res => res.Message)
-            .then(expenses => this.expenses = expenses);
     }
 
     getexpense(id) {

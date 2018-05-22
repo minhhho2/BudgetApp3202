@@ -2,7 +2,6 @@ import { observable } from "mobx";
 import ApiService from "../../services/ApiService";
 
 class TxStore {
-    @observable txs = [];
     @observable id = 1;
     @observable mult = 1;
     @observable amount = 0;

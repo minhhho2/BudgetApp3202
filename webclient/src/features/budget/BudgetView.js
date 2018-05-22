@@ -17,6 +17,8 @@ import BudgetStore from "./BudgetStore";
 export default class BudgetComponent extends React.Component {
     componentDidMount() {
         BudgetStore.getBudgets();
+        BudgetStore.getIncomes();
+        BudgetStore.getExpenses();
     }
 
     delete = (id) => {

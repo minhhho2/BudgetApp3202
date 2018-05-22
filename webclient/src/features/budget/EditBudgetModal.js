@@ -21,6 +21,10 @@ export default class EditBudgetModal extends React.Component {
     close = () => {
         BudgetStore.editBudgetModal = false;
     }
+    
+    save = () => {
+        EditBudgetStore.create();
+    }
 
     render() {
         const freqOptions = [
@@ -96,7 +100,7 @@ export default class EditBudgetModal extends React.Component {
                             </Form.Field>
 
                         </Form>
-                        <Button onClick={BudgetStore.save}> Save </Button>
+                        <Button onClick={this.save}> Save </Button>
                     </Modal.Description>
                 </Modal.Content>
             </Modal>
