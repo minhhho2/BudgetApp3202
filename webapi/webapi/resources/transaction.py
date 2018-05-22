@@ -11,11 +11,11 @@ class TransactionRepository():
         self._Transaction = transaction_model
 
     def _serialise_tx(self, tx):
-        dt = tx.end_date.isoformat() if tx.dt else None
+        dt = tx.dt.isoformat() if tx.dt else None
         return {
-            'id': income.id,
-            'description': income.description,
-            'amount': income.amount,
+            'id': tx.id,
+            'description': tx.description,
+            'amount': tx.amount,
             'dt': dt
         }
 

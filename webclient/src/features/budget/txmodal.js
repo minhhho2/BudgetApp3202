@@ -12,7 +12,7 @@ export default class TxModal extends React.Component {
     }
 
     submit = () => {
-        TxStore.save();
+        TxStore.create();
     }
 
     handleDescriptionChangeSelect = (e, data) => {
@@ -25,8 +25,16 @@ export default class TxModal extends React.Component {
         TxStore.isOther = false;
     }
 
+    handleDescriptionChange = e => {
+        TxStore.description = e.target.value;
+    }
+
     handleDirChangeSelect = (e, data) => {
         TxStore.mult = data.value; // 1 or -1 as a multiplier for Made/Spent
+    }
+
+    handleAmountChange = (e) => {
+        TxStore.amount = e.target.value;
     }
 
     render() {
@@ -37,7 +45,7 @@ export default class TxModal extends React.Component {
 
         const descriptionInput = TxStore.isOther ?
             <div>
-                <Input type="text" placeholder="Description" />
+                <Input type="text" placeholder="Description" onChange={this.handleDescriptionChange}/>
                 <br style={{ paddingBottom: "1em" }} />
             </div> :
             null;
@@ -54,7 +62,7 @@ export default class TxModal extends React.Component {
                                 onChange={this.handleDirChangeSelect}
                             />
                             <br style={{ paddingBottom: "1em" }} />
-                            <Input placeholder="amount" type="number" />
+                            <Input placeholder="amount" type="number" onChange={this.handleAmountChange}/>
                             <br style={{ paddingBottom: "1em" }} />
                             <Select
                                 onChange={this.handleDescriptionChangeSelect}

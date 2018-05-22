@@ -44,6 +44,13 @@ class BudgetStore {
             .then(expenses => this.expenses = expenses);
     }
 
+    getTransactions() {
+        ApiService.get('/transaction')
+            .then(JSON.parse)
+            .then(res => res.Message)
+            .then(txs => this.transactions = txs);
+    }
+
     deleteBudget(id) {
         ApiService.delete(`/budget/${id}`)
             .then(_ => {

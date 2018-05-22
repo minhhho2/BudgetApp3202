@@ -19,6 +19,7 @@ export default class BudgetComponent extends React.Component {
         BudgetStore.getBudgets();
         BudgetStore.getIncomes();
         BudgetStore.getExpenses();
+        BudgetStore.getTransactions();
     }
 
     delete = (id) => {

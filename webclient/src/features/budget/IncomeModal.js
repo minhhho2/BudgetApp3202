@@ -3,7 +3,7 @@ import { Modal, Input, Header, Form, Button, Select } from "semantic-ui-react";
 import { observer } from "mobx-react";
 import BudgetStore from "./BudgetStore";
 import transactionTypes from "./TransactionTypes";
-import incomeStore from "./incomeStore";
+import IncomeStore from "./IncomeStore";
 
 @observer
 export default class IncomeModal extends React.Component {
@@ -12,21 +12,21 @@ export default class IncomeModal extends React.Component {
     }
 
     submit = () => {
-        incomeStore.save();
+        IncomeStore.create();
     }
 
     handleDescriptionChangeSelect = (e, data) => {
         if (data.value === "other") {
-            incomeStore.description = "";
-            incomeStore.isOther = true;
+            IncomeStore.description = "";
+            IncomeStore.isOther = true;
             return;
         }
-        incomeStore.description = data.value;
-        incomeStore.isOther = false;
+        IncomeStore.description = data.value;
+        IncomeStore.isOther = false;
     }
 
     render() {
-        const descriptionInput = incomeStore.isOther ?
+        const descriptionInput = IncomeStore.isOther ?
             <div>
                 <Input type="text" placeholder="Description" />
                 <br style={{ paddingBottom: "1em" }} />
