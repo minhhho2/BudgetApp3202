@@ -11,6 +11,7 @@ class BudgetStore {
     @observable txModal = false;
     @observable expenseModal = false;
     @observable incomeModal = false;
+    @observable editBudgetModal = false;
 
     addRow() {
         console.log(this);

@@ -7,6 +7,8 @@ import {
 import TxModal from "./TxModal";
 import IncomeModal from "./IncomeModal";
 import ExpenseModal from "./ExpenseModal";
+import EditBudgetModal from "./EditBudgetModal";
+
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
 import BudgetStore from "./BudgetStore";
@@ -33,6 +35,10 @@ export default class BudgetComponent extends React.Component {
         BudgetStore.expenseModal = true;
     }
 
+    openEditBudgetModal = () => {
+        BudgetStore.editBudgetModal = true;
+    }
+
     render() {
         const { budgets, incomes, expenses, transactions } = BudgetStore;
 
@@ -41,13 +47,13 @@ export default class BudgetComponent extends React.Component {
                 <TxModal />
                 <IncomeModal />
                 <ExpenseModal />
+                <EditBudgetModal />
                 <Header as="h2">
                     <Header.Content>Personal finance</Header.Content>
                 </Header>
                 <Button
                     positive
-                    as={Link}
-                    to="/budget/create"
+                    onClick={this.openEditBudgetModal}
                 >
                     <Icon name="add" />
                     New savings goal
@@ -98,7 +104,7 @@ export default class BudgetComponent extends React.Component {
                                 <Table.Cell>{budget.amount}</Table.Cell>
                                 <Table.Cell>{budget.end_date}</Table.Cell>
                                 <Table.Cell>
-                                    <Button primary as={Link} to={`/budget/edit/${budget.id}`}>
+                                    <Button primary onClick={this.openEditBudgetModal}>
                                         <Icon name="edit" />
                                         Edit
                                     </Button>

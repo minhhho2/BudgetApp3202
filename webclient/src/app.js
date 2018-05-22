@@ -15,7 +15,6 @@ import { Header, Icon, Image } from "semantic-ui-react"
 import DashboardStore from "./features/dashboard/DashboardStore";
 import ApiService from "./services/ApiService";
 import BudgetView from "./features/budget/BudgetView";
-import EditBudgetComponent from "./features/budget/EditBudgetComponent";
 import AnalyticsComponent from "./features/analytics";
 import ProfileComponent from "./features/profile";
 import SettingView from "./features/setting/SettingView";
@@ -121,8 +120,6 @@ export default class App extends React.Component {
                                 <Switch>
                                     <Route path="/" exact component={DashboardComponent} />
                                     <Route path="/budget" exact component={BudgetView} />
-                                    <Route path="/budget/create" exact component={EditBudgetComponent} />
-                                    <Route path="/budget/edit/:id" exact component={EditBudgetComponent} />
                                     <Route path="/analytics" exact component={AnalyticsComponent} />
                                     <Route path="/profile" exact component={ProfileComponent} />
                                     <Route path="/setting" exact component={SettingView} />
