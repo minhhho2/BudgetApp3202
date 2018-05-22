@@ -30,7 +30,7 @@ class BudgetStore {
     }
 
     getIncomes() {
-        ApiService.get('/income')
+        return ApiService.get('/income')
             .then(JSON.parse)
             .then(res => res.Message)
             .then(incomes => this.incomes = incomes);
@@ -38,14 +38,14 @@ class BudgetStore {
 
 
     getExpenses() {
-        ApiService.get('/expense')
+        return ApiService.get('/expense')
             .then(JSON.parse)
             .then(res => res.Message)
             .then(expenses => this.expenses = expenses);
     }
 
     getTransactions() {
-        ApiService.get('/transaction')
+        return ApiService.get('/transaction')
             .then(JSON.parse)
             .then(res => res.Message)
             .then(txs => this.transactions = txs);
