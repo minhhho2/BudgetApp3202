@@ -51,6 +51,9 @@ class TransactionRepository():
             .where(self._Transaction.id == id)
             .execute())
 
+    def do_we_sms(self):
+        return False
+
 class TransactionCollection(object):
     def __init__(self, tx_repo=TransactionRepository()):
         self._tx_repo = tx_repo
@@ -62,7 +65,6 @@ class TransactionCollection(object):
     def on_put(self, request, response):
         user_id = int(request.cookies['budgetapp_login'])
         response.media = json.dumps({ 'Success': True, 'Message': self._tx_repo.create_transaction(request.media, user_id) })
-
 
 class TransactionResource(object):
     def __init__(self, tx_repo=TransactionRepository()):
