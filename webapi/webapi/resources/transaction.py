@@ -10,43 +10,58 @@ class TransactionRepository():
         self._user_repo = user_repo
         self._Transaction = transaction_model
 
-    def _serialise_tx(self, income):
-        end_date = income.end_date.isoformat() if income.end_date else None
+    def _serialise_tx(self, tx):
+        dt = tx.end_date.isoformat() if tx.dt else None
         return {
             'id': income.id,
-            'name': income.name,
             'description': income.description,
             'amount': income.amount,
-            'frequency': income.frequency,
-            'timeunit': income.timeunit,
-            'end_date': end_date
+            'dt': dt
         }
 
-    def get_transactions(self):
-        transactions = []
-        return [ self._serialise_tx(tx) for tx in transactions]
+    def get_transactions(self, user_id: int):
+        transactions = self._Transaction.select().where(self._Transaction.user_id == user_id)
+        return [ self._serialise_tx(tx) for tx in transactions ]
 
     def get_transaction(self, id: int):
-        return {}
+        tx = self._Transaction.get(_Transaction.id == id)
+        return self._serialise_tx(tx)
 
-    def create_transaction(self, media: dict):
-        return
+    def create_transaction(self, media: dict, user_id: int):
+        tx = self._Transaction.create(user_id=user_id,
+            description=media['description'],
+            amount=media['amount'],
+            dt=datetime.datetime.now())
+        tx.save()
+
+        return self._serialise_tx(tx)
 
     def update_transaction(self, media: dict, id: int):
-        return
+        tx = self.get_transaction(id)
+        tx.description = media['description']
+        tx.amount = media['amount']
+        tx.dt = media['dt']
+        tx.save()
+
+        return self._serialise_tx(tx)
 
     def delete_transaction(self, id: int):
-        return
+        (self._Transaction
+            .delete()
+            .where(self._Transaction.id == id)
+            .execute())
 
 class TransactionCollection(object):
     def __init__(self, tx_repo=TransactionRepository()):
         self._tx_repo = tx_repo
 
     def on_get(self, request, response):
-        return self._tx_repo.get_transactions()
+        user_id = int(request.cookies['budgetapp_login'])
+        return self._tx_repo.get_transactions(user_id)
 
     def on_put(self, request, response):
-        return self._tx_repo.create_transaction(request.media)
+        user_id = int(request.cookies['budgetapp_login'])
+        return self._tx_repo.create_transaction(request.media, user_id)
 
 
 class TransactionResource(object):

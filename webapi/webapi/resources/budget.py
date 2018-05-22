@@ -2,15 +2,13 @@ import json
 import falcon
 import datetime
 
-from webapi.models import Budget, Income, Expense, User
+from webapi.models import Budget, User
 from webapi.resources.user import UserRepository
 
 class BudgetRepository():
-    def __init__(self, user_repo=UserRepository(), budget_model=Budget, income_model=Income, expense_model=Expense):
+    def __init__(self, user_repo=UserRepository(), budget_model=Budget):
         self._user_repo = user_repo
         self._Budget = budget_model
-        self._Income = income_model
-        self._Expense = expense_model
 
     def _serialise_tx(self, income):
         end_date = income.end_date.isoformat() if income.end_date else None
@@ -23,12 +21,6 @@ class BudgetRepository():
             'timeunit': income.timeunit,
             'end_date': end_date
         }
-
-    def get_incomes(self):
-        return [self._serialise_tx(i) for i in self._Income.select()]
-
-    def get_expenses(self):
-        return [self._serialise_tx(e) for e in self._Expense.select()]
 
     def _serialise_budget(self, budget):
         return self._serialise_tx(budget)
@@ -56,41 +48,11 @@ class BudgetRepository():
     def update_budget(self, budget: dict, id: int):
         pass
 
-    def create_income(self, media: dict):
-        pass
-
-    def create_expense(self, media: dict):
-        pass
-
     def delete_budget(self, budget_id: int):
         (self._Budget
             .delete()
             .where(self._Budget.id == budget_id)
             .execute())
-
-class IncomeResource(object):
-    def __init__(self, budget_repo=BudgetRepository()):
-        self._budget_repo = budget_repo
-
-    def on_put(self, request, response):
-        self._budget_repo.create_income(request.media)
-        response.media = json.dumps({ 'Success': True })
-
-    def on_get(self, request, response):
-        incomes = self._budget_repo.get_incomes()
-        response.media = json.dumps({ 'Success': True, 'Message': incomes })
-
-class ExpenseResource(object):
-    def __init__(self, budget_repo=BudgetRepository()):
-        self._budget_repo = budget_repo
-
-    def on_put(self, request, response):
-        self._budget_repo.create_expense(request.media)
-        response.media = json.dumps({ Success: True })
-
-    def on_get(self, request, response):
-        expenses = self._budget_repo.get_expenses()
-        response.media = json.dumps({ 'Success': True, 'Message': expenses })
 
 class BudgetCollection(object):
     def __init__(self, budget_repo=BudgetRepository()):

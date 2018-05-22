@@ -1,6 +1,10 @@
 import json
 from webapi.resources.user import UserResource, AuthResource
-from webapi.resources.budget import BudgetResource, BudgetCollection, IncomeResource, ExpenseResource
+from webapi.resources.budget import BudgetResource, BudgetCollection
+from webapi.resources.transaction import TransactionCollection, TransactionResource
+from webapi.resources.income import IncomeCollection, IncomeResource
+from webapi.resources.expense import ExpenseCollection, ExpenseResource
+
 class RootResource(object):
     def on_get(self, request, response):
         ''' GET / '''
@@ -13,7 +17,12 @@ routes = [
     ('/', RootResource),
     ('/user', UserResource),
     ('/auth', AuthResource),
-    ('/income', IncomeResource),
+    ('/income', IncomeCollection),
+    ('/income/{id:int}', IncomeResource),
+    ('/transaction', TransactionCollection),
+    ('/transaction/{id:int}', TransactionResource),
+    ('/expense', ExpenseCollection),
+    ('/expense/{id:int}', ExpenseResource),
     ('/expense', ExpenseResource),
     ('/budget', BudgetCollection),
     ('/budget/{id:int}', BudgetResource),
