@@ -27,7 +27,7 @@ class ExpenseRepository():
         return [ self._serialise_expense(expense) for expense in expenses ]
 
     def get_expense(self, id: int):
-        expense = self._Expense.get(_expense.id == id)
+        expense = self._Expense.get(_Expense.id == id)
         return self._serialise_expense(expense)
 
     def create_expense(self, media: dict, user_id: int):
