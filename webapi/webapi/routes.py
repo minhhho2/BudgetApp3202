@@ -6,6 +6,7 @@ from webapi.resources.income import IncomeCollection, IncomeResource
 from webapi.resources.expense import ExpenseCollection, ExpenseResource
 from webapi.resources.profile import ProfileCollection
 from webapi.resources.analytics import AnalyticsCollection
+from webapi.resources.settings import SettingsCollection
 
 class RootResource(object):
     def on_get(self, request, response):
@@ -29,7 +30,8 @@ routes = [
     ('/budget', BudgetCollection),
     ('/budget/{id:int}', BudgetResource),
     ('/profile', ProfileCollection),
-    ('/analytics/{id:int}', AnalyticsCollection)
+    ('/analytics/{id:int}', AnalyticsCollection),
+    ('/settings', SettingsCollection)
 ]
 
 def register_routes(app):
