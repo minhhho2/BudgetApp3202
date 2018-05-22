@@ -18,6 +18,8 @@ import BudgetView from "./features/budget/BudgetView";
 import EditBudgetComponent from "./features/budget/EditBudgetComponent";
 import AnalyticsComponent from "./features/analytics";
 import ProfileComponent from "./features/profile";
+import SettingView from "./features/setting/SettingView";
+import OverviewView from "./features/overview/OverviewView";
 
 class NotFoundComponent extends React.Component {
     render() {
@@ -89,21 +91,29 @@ export default class App extends React.Component {
                 <BrowserRouter>
                     <Sidebar.Pushable as={Segment}>
                         <Sidebar as={Menu} animation="push" width="thin" visible={true} icon="labeled" vertical inverted>
-                        <Menu.Item as={Link} to="/budget" name="Budget">
-                            <Icon name="money" />
-                            Personal finance
+                            <Menu.Item as={Link} to="/budget" name="Budget">
+                                <Icon name="money" />
+                                Personal finance
                         </Menu.Item>
-                        <Menu.Item name="Analyse" as={Link} to="/analytics">
-                            <Icon name="tasks" />
-                            Analyse and compare
+                            <Menu.Item name="Analyse" as={Link} to="/analytics">
+                                <Icon name="tasks" />
+                                Analyse and compare
                         </Menu.Item>
-                        <Menu.Item name="Profile" as={Link} to="/profile">
-                            <Icon name="user" />
-                            Profile
+                            <Menu.Item name="Profile" as={Link} to="/profile">
+                                <Icon name="user" />
+                                Profile
                         </Menu.Item>
-                        <Menu.Item name="Logout" onClick={this.logout}>
-                            <Icon name="log out" />
-                            Logout
+                            <Menu.Item as={Link} to="/overview" name="Overview">
+                                <Icon name="tasks" />
+                                Overview
+                        </Menu.Item>
+                            <Menu.Item as={Link} to="/setting" name="Setting">
+                                <Icon name="setting" />
+                                Settings
+                        </Menu.Item>
+                            <Menu.Item name="Logout" onClick={this.logout}>
+                                <Icon name="log out" />
+                                Logout
                         </Menu.Item>
                         </Sidebar>
                         <Sidebar.Pusher>
@@ -115,13 +125,14 @@ export default class App extends React.Component {
                                     <Route path="/budget/edit/:id" exact component={EditBudgetComponent} />
                                     <Route path="/analytics" exact component={AnalyticsComponent} />
                                     <Route path="/profile" exact component={ProfileComponent} />
+                                    <Route path="/setting" exact component={SettingView} />
+                                    <Route path="/overview" exact component={OverviewView} />
                                     <Route component={NotFoundComponent} />
                                 </Switch>
                             </Segment>
                         </Sidebar.Pusher>
                     </Sidebar.Pushable>
                 </BrowserRouter>
-
             </div>
         );
     }
