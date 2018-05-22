@@ -27,7 +27,7 @@ class IncomeRepository():
         return [ self._serialise_income(income) for income in incomes ]
 
     def get_income(self, id: int):
-        income = self._Income.get(_Income.id == id)
+        income = self._Income.get(self._Income.id == id)
         return self._serialise_income(income)
 
     def create_income(self, media: dict, user_id: int):
