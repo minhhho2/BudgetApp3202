@@ -61,7 +61,7 @@ class ExpenseRepository():
             .execute())
 
 class ExpenseCollection(object):
-    def __init__(self, expense_repo=expenseRepository()):
+    def __init__(self, expense_repo=ExpenseRepository()):
         self._expense_repo = expense_repo
 
     def on_get(self, request, response):
