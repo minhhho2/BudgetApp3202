@@ -7,7 +7,10 @@ class BudgetStore {
     @observable incomes = [];
     @observable expenses = [];
     @observable transactions = [];
+
     @observable txModal = false;
+    @observable expenseModal = false;
+    @observable incomeModal = false;
 
     addRow() {
         console.log(this);

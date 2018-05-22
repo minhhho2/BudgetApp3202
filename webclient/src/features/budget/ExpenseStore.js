@@ -1,46 +1,49 @@
 import { observable } from "mobx";
 import ApiService from "../../services/ApiService";
 
-class TxStore {
-    @observable txs = [];
+class ExpenseStore {
+    @observable expenses = [];
+
     @observable id = 1;
-    @observable mult = 1;
     @observable amount = 0;
     @observable description = "";
+    @observable timeunit = '';
+    @observable frequency = 0;
+
     @observable isOther = false;
 
     save() {
         const amount = this.amount * this.mult;
-        ApiService.put('/transaction', {
+        ApiService.put('/expense', {
             amount,
             description: this.description
         })
     }
 
     delete(id) {
-        ApiService.delete(`/transaction/${id}`)
-            .then(_ => this.txs = this.txs.filter(tx => tx.id !== id))
+        ApiService.delete(`/expense/${id}`)
+            .then(_ => this.expenses = this.expenses.filter(expense => expense.id !== id))
             .catch(err => alert(err.message));
     }
 
-    getTransactions() {
-        ApiService.get('/transaction')
+    getexpenses() {
+        ApiService.get('/expense')
             .then(res => res.Message)
-            .then(txs => this.txs = txs);
+            .then(expenses => this.expenses = expenses);
     }
 
-    getTransaction(id) {
-        ApiService.get(`/transaction/${id}`)
+    getexpense(id) {
+        ApiService.get(`/expense/${id}`)
             .then(res => res.Message)
-            .then(tx => {
-                this.id = tx.id;
-                this.amount = tx.amount;
-                this.description = tx.description;
+            .then(expense => {
+                this.id = expense.id;
+                this.amount = expense.amount;
+                this.description = expense.description;
             });
     }
 
     update() {
-        ApiService.post(`/transaction/${id}`, {
+        ApiService.post(`/expense/${id}`, {
             id: this.id,
             description: this.description,
             amount: this.amount
@@ -48,11 +51,10 @@ class TxStore {
     }
 
     clear() {
+        this.name = '';
         this.description = '';
         this.amount = 0;
-        this.mult = 1;
-        this.isOther = false;
     }
 }
 
-export default new TxStore();
+export default new ExpenseStore();

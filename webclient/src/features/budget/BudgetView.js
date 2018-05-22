@@ -5,6 +5,8 @@ import {
     Table
 } from 'semantic-ui-react'
 import TxModal from "./TxModal";
+import IncomeModal from "./IncomeModal";
+import ExpenseModal from "./ExpenseModal";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
 import BudgetStore from "./BudgetStore";
@@ -23,12 +25,22 @@ export default class BudgetComponent extends React.Component {
         BudgetStore.txModal = true;
     }
 
+    openIncomeModal = () => {
+        BudgetStore.incomeModal = true;
+    }
+
+    openExpenseModal = () => {
+        BudgetStore.expenseModal = true;
+    }
+
     render() {
         const { budgets, incomes, expenses, transactions } = BudgetStore;
 
         return (
             <div>
                 <TxModal />
+                <IncomeModal />
+                <ExpenseModal />
                 <Header as="h2">
                     <Header.Content>Personal finance</Header.Content>
                 </Header>
@@ -41,12 +53,18 @@ export default class BudgetComponent extends React.Component {
                     New savings goal
                 </Button>
                 <Button.Group>
-                    <Button color="teal">
+                    <Button
+                        color="teal"
+                        onClick={this.openIncomeModal}
+                    >
                         <Icon name="plus" />
                         Income
                     </Button>
                     <Button.Or />
-                    <Button color="orange">
+                    <Button 
+                        color="orange"
+                        onClick={this.openExpenseModal}
+                    >
                         <Icon name="minus" />
                         Expense
                     </Button>
