@@ -2,6 +2,7 @@ import * as React from "react";
 import { observer } from "mobx-react";
 import { Icon, Form } from "semantic-ui-react";
 import AnalyticsStore from "./AnalyticsStore";
+import incomeModal from "../budget/IncomeModal";
 
 export default class AnalyticsComponent extends React.Component {
 

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Button, Dropdown } from 'semantic-ui-react'
+import { Button, Dropdown, Form } from 'semantic-ui-react'
 import { observer } from "mobx-react";
 
 import OverviewStore from "./OverviewStore";
@@ -71,16 +71,27 @@ export default class OverviewView extends React.Component {
     }
 
 
-    handleChange = (e, { value }) => {
+    handleChangeType = (e, { value }) => {
         OverviewStore.charts = value;
+        OverviewStore.chartType = value;
+    }
+    handleChangeData = (e, { value }) => {
+        OverviewStore.dataType = value;
+    }
+    handleAdd = () => {
+        console.log("adding chart for: " + OverviewStore.dataType + " - " + OverviewStore.chartType);
     }
 
     render() {
 
-        const chartOptions = OverviewStore.chartOptions.map((option, index) => {
+        const chartOptions = ['pie', 'radar', 'line', 'bar'].map((option, index) => {
             return { key: index, value: option, text: option }
         });
-        const selectedCharts = OverviewStore.charts.toJS();
+        const dataOptions = ['incomes', 'expenses', 'inflow', 'outflow'].map((option, index) => {
+            return { key: index, value: option, text: option }
+        });
+
+        //const selectedCharts = OverviewStore.charts.toJS();
 
         const charts = OverviewStore.charts.map((chart, index) => {
             return <div key={index}>
@@ -90,13 +101,16 @@ export default class OverviewView extends React.Component {
 
         return (
             <div>
-                <Dropdown multiple selection
+                <Dropdown
+                    selection
                     options={chartOptions}
                     placeholder='Select your chart'
-                    onChange={this.handleChange}
-                    value={selectedCharts}
+                    onChange={this.handleChangeType}
+                    value={OverviewStore.chartType}
                 />
-                <h2> Budgets </h2>
+
+                <Button onClick={this.handleAdd}> Add </Button>
+                
                 {charts}
 
 
