@@ -1,17 +1,16 @@
 import { observable } from "mobx";
 import BudgetStore from "../budget/BudgetStore";
+import ApiService from "../../services/ApiService";
 
 class OverviewStore {
     @observable incomes = 0;
     @observable expenses = 0;
-    @observable inflow = 0;
-    @observable outflow = 0;
+    @observable inflows = 0;
+    @observable outflows = 0;
 
-    @observable chartType = [];
-    @observable dataType = [];
+    @observable chartType = '';
+    @observable dataType = '';
 
-    @observable charts = [];
-    
     getData() {
 
         Promise.all([
@@ -29,40 +28,48 @@ class OverviewStore {
     }
 
     getIncomes() {
-        Apiservice.get('analytics/0').then(JSON.parse)
+        ApiService.get('/analytics/0')
+            .then(JSON.parse)
             .then(res => res.Message)
-            .then(incomes = this.incomes = incomes);
-        return this.incomes;
+            .then(incomes => {
+                this.incomes = incomes
+            }
+        );
+        return this.incomes.toJS();
     }
 
     getExpenses() {
-        Apiservice.get('analytics/1').then(JSON.parse)
+        ApiService.get('/analytics/1')
+            .then(JSON.parse)
             .then(res => res.Message)
-            .then(expenses = this.expenses = expenses);
-        return this.expenses;
+            .then(expenses => {
+                this.expenses = expenses
+            }
+        );
+        return this.expenses.toJS();
     }
+
 
     getInflow() {
-        Apiservice.get('analytics/2').then(JSON.parse)
+        ApiService.get('/analytics/2')
+            .then(JSON.parse)
             .then(res => res.Message)
-            .then(inflow = this.inflow = inflow);
-        return this.inflow;
+            .then(inflows => {
+                this.inflows = inflows
+            }
+        );
+        return this.inflows.toJS();
     }
     getOutflow() {
-        Apiservice.get('analytics/2').then(JSON.parse)
+        ApiService.get('/analytics/3')
+            .then(JSON.parse)
             .then(res => res.Message)
-            .then(outflow = this.outflow = outflow);
-        return this.outflow;
+            .then(outflows => {
+                this.outflows = outflows
+            }
+        );
+        return this.outflows.toJS();
     }
-
-
-
-    /*
-    0 = income
-    1 = expense
-    2 = oneoffinflow
-    3 = oneoffoutflow
-    */
 }
 
 export default new OverviewStore();

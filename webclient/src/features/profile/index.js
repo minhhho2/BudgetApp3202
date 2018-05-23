@@ -20,18 +20,35 @@ export default class ProfileComponent extends React.Component {
         ProfileStore.editable = !ProfileStore.editable;
         console.log("editable is: " + ProfileStore.editable);
     }
-    
+
     handleChangeFirstName = (e) => {
-        ProfileStore.firstname = e.target.value
-        console.log(e.target.value)
+        ProfileStore.firstname = e.target.value;
+        console.log(e.target.value);
     }
     handleChangeLastname = (e) => {
-        ProfileStore.lastname = e.target.value
-        console.log(e.target.value)
+        ProfileStore.lastname = e.target.value;
+        console.log(e.target.value);
     }
     handleChangeBirthday = (e) => {
-        ProfileStore.birthday = e.target.value
-        console.log(e.target.value)
+        ProfileStore.birthday = e.target.value;
+        console.log(e.target.value);
+    }
+    handleChangeGender = (e) => {
+        ProfileStore.gender = e.target.value;
+        console.log(e.target.value);
+    }
+
+    handleChangeEmailAddress = (e) => {
+        ProfileStore.emailAddress = e.target.value;
+        console.log(e.target.value);
+    }
+    handleChangeHomeAddress = (e) => {
+        ProfileStore.homeAddress = e.target.value;
+        console.log(e.target.value);
+    }
+    handleChangePhoneNumber = (e) => {
+        ProfileStore.phoneNumber = e.target.value;
+        console.log(e.target.value);
     }
 
     render() {
@@ -69,29 +86,68 @@ export default class ProfileComponent extends React.Component {
                                         onChange={this.handleChangeLastname}
                                     />
 
-                                    <Input 
-                                        id="birthday"
-                                        label="Birthday"
-                                        name="requested_order_ship_date" 
-                                        type="date"
+                                    <Form.Field inline
                                         disabled={ProfileStore.editable}
+                                        control='input'
+                                        label="Birthday"
+                                        type="date"
                                         value={new Date()}
-                                        onChange={this.handleChangeBirthday} 
+                                        onChange={this.handleChangeBirthday}
+                                    />
+                                    <Form.Field inline
+                                        disabled={ProfileStore.editable}
+                                        control='input'
+                                        label='Gender'
+                                        placeholder='gender'
+                                        value={ProfileStore.gender}
+                                        onChange={this.handleChangeGender}
                                     />
 
                                     <Divider horizontal>Contact Information</Divider>
 
-                                    Phone Address E-mail
+                                    <Form.Field inline
+                                        disabled={ProfileStore.editable}
+                                        control='input'
+                                        label='Email Address'
+                                        placeholder='email'
+                                        value={ProfileStore.emailAddress}
+                                        onChange={this.handleChangeEmailAddress}
+                                    />
+                                    <Form.Field inline
+                                        disabled={ProfileStore.editable}
+                                        control='input'
+                                        label='Home Address'
+                                        placeholder='home address'
+                                        value={ProfileStore.homeAddress}
+                                        onChange={this.handleChangeHomeAddress}
+                                    />
+                                    <Form.Field inline
+                                        disabled={ProfileStore.editable}
+                                        control='input'
+                                        label='Number'
+                                        placeholder='number'
+                                        value={ProfileStore.phoneNumber}
+                                        onChange={this.handleChangePhoneNumber}
+                                    />
 
                                 </Form>
-                                <Button onClick={this.handleSave}> Save </Button>
-                                <Button onClick={this.handleEdit}>
-                                    {ProfileStore.editable ?
-                                        "Edit" :
-                                        "Cancel"}
-                                </Button>
                             </h4>
+                            <Form>
+                                <Form.Group widths="equal">
+                                    <Form.Field>
+                                        <Button fluid onClick={this.handleSave}> Save </Button>
+                                    </Form.Field>
+                                    <Form.Field>
+                                        <Button fluid onClick={this.handleEdit}>
+                                            {ProfileStore.editable ?
+                                                "Edit" :
+                                                "Cancel"}
+                                        </Button>
+                                    </Form.Field>
+                                </Form.Group>
+                            </Form>
                         </Grid.Column>
+
                     </Grid.Row>
                 </Grid>
 

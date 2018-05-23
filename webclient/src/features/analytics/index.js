@@ -1,18 +1,24 @@
 import * as React from "react";
 import { observer } from "mobx-react";
-import { Icon, Form } from "semantic-ui-react";
+import { Icon, Form, Input, Select } from "semantic-ui-react";
 import AnalyticsStore from "./AnalyticsStore";
 import incomeModal from "../budget/IncomeModal";
+import TransactionTypes from "../budget/TransactionTypes";
 
 export default class AnalyticsComponent extends React.Component {
 
-    handleChangeAge = (e) => {  
+    handleChangeAge = (e) => {
         AnalyticsStore.age = parseInt(e.target.value);
         console.log(AnalyticsStore.age);
     }
     handleChangeType = (e, { value }) => {
         AnalyticsStore.type = value;
         console.log(AnalyticsStore.type);
+    }
+
+    handleChangeDescription = (e, { value }) => {
+        AnalyticsStore.description = value;
+        console.log(AnalyticsStore.description);
     }
 
     render() {
@@ -25,21 +31,31 @@ export default class AnalyticsComponent extends React.Component {
             <div>
                 <Form>
                     <Form.Group widths="equal">
-                        <Form.Input inline
-                            label="Age"
-                            type="number"
-                            min='0' max='200'
-                            placeholder='age'
-                            value={AnalyticsStore.age}
-                            onChange={this.handleChangeAge}
-                        />
-                        <Form.Select inline
-                            label="Type"
-                            options={options}
-                            placeholder='Type'
-                            value={AnalyticsStore.type}
-                            onChange={this.handleChangeType}
-                        />
+                        <Form.Field>
+                            <Input
+                                label="Age"
+                                type="number"
+                                min='0' max='200'
+                                placeholder='age'
+                                onChange={this.handleChangeAge}
+                            />
+                        </Form.Field>
+                        <Form.Field>
+                            <Select
+                                label="Type"
+                                options={options}
+                                placeholder='Type'
+                                onChange={this.handleChangeType}
+                            />
+                        </Form.Field>
+                        <Form.Field>
+                            <Select
+                                label="Description"
+                                options={TransactionTypes}
+                                placeholder='description'
+                                onChange={this.handleChangeDescription}
+                            />
+                        </Form.Field>
                     </Form.Group>
                 </Form>
 

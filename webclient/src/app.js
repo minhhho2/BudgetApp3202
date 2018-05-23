@@ -2,7 +2,7 @@ import * as React from "react";
 import { observer } from "mobx-react";
 
 // Components
-import CounterComponent from "./features/counter/CounterComponent";
+//import CounterComponent from "./features/counter/CounterComponent";
 import LoginComponent from "./features/auth/LoginComponent";
 import DashboardComponent from "./features/dashboard/DashboardComponent";
 

@@ -93,8 +93,11 @@ create table personal_information
 	user_id integer references users(id) unique,
 	first_name text,
 	last_name text,
+	birthday timestamp,
+	gender text,
 	phone_number text,
-	birthday timestamp
+	email_address text,
+	home_address text
 );
 
 create table user_settings

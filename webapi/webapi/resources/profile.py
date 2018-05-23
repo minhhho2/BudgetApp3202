@@ -11,8 +11,11 @@ class ProfileRepository():
         return {
             'first_name': personal_info.first_name,
             'last_name': personal_info.last_name,
+            'birthday': birthday,
+            'gender' : personal_info.gender,
             'phone_number': personal_info.phone_number,
-            'birthday': birthday
+            'email_address': personal_info.email_address,
+            'home_address': personal_info.home_address,
         }
 
     def update_personal_info(self, media: dict, user_id: int):
@@ -20,9 +23,11 @@ class ProfileRepository():
 
         personal_info.first_name = media['first_name']
         personal_info.last_name= media['last_name']
-        personal_info.phone_number= media['phone_number']
         personal_info.birthday= dateutil.parser.parse(media['birthday'])
-
+        personal_info.gender= media['gender']
+        personal_info.phone_number= media['phone_number']
+        personal_info.email_address= media['email_address']
+        personal_info.home_address= media['home_address']
         personal_info.save()
 
         return self._serialise_personal_info(personal_info)
