@@ -1,12 +1,13 @@
-from webapi.models import User, PersonalInformation
+from webapi.models import User, PersonalInformation, UserSettings
 import json
 import falcon
 import bcrypt
 
 class UserRepository():
-    def __init__(self, user_model=User, personal_info_model=PersonalInformation):
+    def __init__(self, user_model=User, personal_info_model=PersonalInformation, user_settings=UserSettings):
         self._User = user_model
         self._PersonalInformation = personal_info_model
+        self._UserSettings = user_settings
 
     def register_user(self, first_name, last_name, username, password):
         password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
@@ -22,13 +23,18 @@ class UserRepository():
             birthday=None,
             phone_number='')
 
+        self._UserSettings.create(user_id=user_id,
+            text_notification=False,
+            email_notification=False,
+            share_data=False)
+
         return self._serialise_user(user)
 
     def validate_credentials(self, username, password):
         user = self._User.select().where(self._User.user_name == username).first()
         if not user:
             return None
-        return self._serialise_user(user) #self._serialise_user(user)
+        return self._serialise_user(user)
 
     def get_user(self, user_id):
         user = self._User.get(self._User.id == user_id)

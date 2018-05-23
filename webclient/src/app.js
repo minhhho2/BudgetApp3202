@@ -94,17 +94,17 @@ export default class App extends React.Component {
                                 <Icon name="money" />
                                 Personal finance
                         </Menu.Item>
-                            <Menu.Item name="Analyse" as={Link} to="/analytics">
-                                <Icon name="tasks" />
-                                Analyse and compare
-                        </Menu.Item>
                             <Menu.Item name="Profile" as={Link} to="/profile">
                                 <Icon name="user" />
                                 Profile
                         </Menu.Item>
                             <Menu.Item as={Link} to="/overview" name="Overview">
                                 <Icon name="tasks" />
-                                Overview
+                                Analyse
+                        </Menu.Item>
+                        <Menu.Item name="Analyse" as={Link} to="/analytics">
+                                <Icon name="tasks" />
+                                Compare
                         </Menu.Item>
                             <Menu.Item as={Link} to="/setting" name="Setting">
                                 <Icon name="setting" />

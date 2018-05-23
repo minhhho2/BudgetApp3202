@@ -96,4 +96,16 @@ create table personal_information
 	phone_number text,
 	birthday timestamp
 );
+
+create table user_settings
+(
+	id serial not null
+		constraint user_settings_pkey
+			primary key,
+	user_id integer references users(id) unique,
+	text_notification boolean,
+	email_notification boolean,
+	share_data boolean
+);
+
 commit;

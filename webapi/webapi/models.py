@@ -72,3 +72,12 @@ class PersonalInformation(BaseModel):
     last_name = TextField()
     phone_number = TextField()
     birthday = DateTimeField()
+
+class UserSettings(BaseModel):
+    class Meta:
+        db_table = 'user_settings'
+
+    user = ForeignKeyField(User)
+	text_notification = BooleanField()
+	email_notification = BooleanField()
+	share_data = BooleanField()

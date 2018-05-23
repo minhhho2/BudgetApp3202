@@ -62,7 +62,7 @@ export default class BudgetComponent extends React.Component {
         const { budgets, incomes, expenses, transactions } = BudgetStore;
 
         return (
-            <div>
+            <div style={{ overflow: 'auto' }}>
                 <TxModal />
                 <IncomeModal />
                 <ExpenseModal />
