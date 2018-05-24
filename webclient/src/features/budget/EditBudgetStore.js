@@ -57,7 +57,7 @@ class EditBudgetStore {
             amount: this.amount, //1000,
             frequency: this.frequency, //1,
             timeunit: this.timeunit, //'monthly'
-            endDate: this.endDate
+            end_date: this.endDate
         })
             .then(() => BudgetStore.getBudgets());
         BudgetStore.editBudgetModal = false;

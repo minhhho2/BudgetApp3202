@@ -102,11 +102,8 @@ export default class EditBudgetModal extends React.Component {
                             <Form.Field>
                                 <Input
                                     type="date"
-<<<<<<< HEAD
                                     value={EditBudgetStore.endDate}
-=======
                                     onChange={this.onChangeEndDate}
->>>>>>> 4b8c9dacb407e61ff202537d56e44a32639feec1
                                     label="End date"
                                 />
                             </Form.Field>
