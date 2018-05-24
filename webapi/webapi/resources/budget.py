@@ -53,7 +53,7 @@ class BudgetRepository():
         budget.amount = media['amount']
         budget.frequency = media['frequency']
         budget.timeunit = media['timeunit']
-        budget.end_date = media['end_date']
+        budget.end_date = dateutil.parser.parse(media['end_date'])
         budget.save()
 
         return self._serialise_budget(budget)
