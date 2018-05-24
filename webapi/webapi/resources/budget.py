@@ -53,7 +53,9 @@ class BudgetRepository():
         budget.amount = media['amount']
         budget.frequency = media['frequency']
         budget.timeunit = media['timeunit']
-        budget.end_date = dateutil.parser.parse(media.get('end_date', None))
+
+        end_date = dateutil.parser.parse(media['end_date']) if media.get('end_date', False) else None
+        budget.end_date = end_date
         budget.save()
 
         return self._serialise_budget(budget)
@@ -89,7 +91,7 @@ class BudgetResource(object):
         response.media = json.dumps({ 'Success': True, 'Message': self._budget_repo.get_budget(id) })
 
     def on_post(self, request, response, id: int):
-        response.media = json.dumps({ 'Success': True, 'Message': request.media })#self._budget_repo.update_budget(request.media, id) })
+        response.media = json.dumps({ 'Success': True, 'Message': self._budget_repo.update_budget(request.media, id) })
 
     def on_delete(self, request, response, id: int):
         self._budget_repo.delete_budget(id)

@@ -50,7 +50,7 @@ class EditBudgetStore {
     }
 
     update() {
-        console.log("editbudgetstore: update: " + this.id);
+        UserStore.isAuthenticating = true;
         ApiService.post(`/budget/${this.id}`, {
             name: this.name,
             description: this.description, //'This is my main budget.',
@@ -59,8 +59,9 @@ class EditBudgetStore {
             timeunit: this.timeunit, //'monthly'
             end_date: this.endDate
         })
-            .then(console.log)
-            .then(() => BudgetStore.getBudgets());
+            .then(() => BudgetStore.getBudgets())
+            .catch(err => alert(err.message))
+            .then(() => UserStore.isAuthenticating = false);
         BudgetStore.editBudgetModal = false;
     }
 }

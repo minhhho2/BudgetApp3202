@@ -51,7 +51,9 @@ class IncomeRepository():
         income.amount = media['amount']
         income.frequency = media['frequency']
         income.timeunit = media['timeunit']
-        income.end_date = media['end_date']
+
+        end_date = dateutil.parser.parse(media['end_date']) if media.get('end_date', False) else None
+        income.end_date = end_date
         income.save()
 
         return self._serialise_income(income)

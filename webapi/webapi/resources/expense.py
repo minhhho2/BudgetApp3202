@@ -51,7 +51,9 @@ class ExpenseRepository():
         expense.amount = media['amount']
         expense.frequency = media['frequency']
         expense.timeunit = media['timeunit']
-        expense.end_date = media['end_date']
+
+        end_date = dateutil.parser.parse(media['end_date']) if media.get('end_date', False) else None
+        expense.end_date = end_date
         expense.save()
 
         return self._serialise_expense(expense)
