@@ -4,16 +4,25 @@ import { observer } from "mobx-react";
 import BudgetStore from "./BudgetStore";
 import transactionTypes from "./TransactionTypes";
 import ExpenseStore from "./ExpenseStore";
+import timeUnits from "./TimeUnits";
 
 @observer
 export default class ExpenseModal extends React.Component {
-    handleClose = () => {
-        BudgetStore.expenseModal = false;
-        ExpenseStore.hasEndDate = false;
+
+    close = () => {
+        BudgetStore.editExpenseModal = false;
+        ExpenseStore.clear();
+        //ExpenseStore.hasEndDate = false;
     }
 
-    submit = () => {
+    save = () => {
         ExpenseStore.create();
+        this.close();
+    }
+
+    update = () => {
+        ExpenseStore.update();
+        this.close();
     }
 
     handleDescriptionChangeSelect = (e, data) => {
@@ -51,56 +60,74 @@ export default class ExpenseModal extends React.Component {
     }
 
     render() {
-        const timeunits = [
-            { key: 'Daily', value: 'Daily', text: 'Daily' },
-            { key: 'Weekly', value: 'Weekly', text: 'Weekly' },
-            { key: 'Monthly', value: 'Monthly', text: 'Monthly' },
-            { key: 'Annually', value: 'Annually', text: 'Annually' },
-        ];
+        const { id, name, amount, description, timeunit, frequency, endDate } = ExpenseStore;
 
-        const descriptionInput = ExpenseStore.isOther ?
-            <div>
-                <Input type="text" placeholder="Description" />
-                <br style={{ paddingBottom: "1em" }} />
-            </div> :
-            null;
-
-        const endDateInput = ExpenseStore.hasEndDate ?
-            <Input
-                type="date"
-                label="End date"
-                onChange={this.handleEndDateChange}
-            /> :
-            null;
+        const button = id === undefined ?
+            <Button type="button" onClick={this.save}> Save </Button> :
+            <Button type="button" onClick={this.update}> Update </Button>;
 
         return (
-            <Modal open={BudgetStore.expenseModal} onClose={this.handleClose}>
-                <Modal.Header>Add recuring expense</Modal.Header>
+            <Modal open={BudgetStore.editExpenseModal} onClose={this.close}>
+                <Modal.Header>
+                    {
+                        id === undefined ?
+                            "Create Recurring Expense" :
+                            "Update Recurring Expense"
+                    }
+                </Modal.Header>
                 <Modal.Content>
                     <Modal.Description>
-                        <Form onSubmit={this.submit}>
-                            <Input placeholder="name" onChange={this.handleNameChange} />
-                            <br style={{ paddingBottom: "1em"}} />
-                            <Input placeholder="amount" type="number" onChange={this.handleAmountChange} />
-                            <Select options={timeunits} value={ExpenseStore.timeunit} onChange={this.handleTimeUnitChange} />
-                            <Input placeholder="Frequency" type="number" onChange={this.handleFrequencyChange} />
-                            <br style={{ paddingBottom: "1em" }} />
-                            <Select
-                                onChange={this.handleDescriptionChangeSelect}
-                                placeholder="Type"
-                                options={transactionTypes}
-                            />
-                            <br style={{ paddingBottom: "1em" }} />
-                            {descriptionInput}
-                            <br style={{ paddingBottom: "1em" }} />
-                            <Checkbox onChange={this.handleHasEndDateChange} label="Has end date?" />
-                            <br style={{ paddingBottom: "1em" }} />                            
-                            {endDateInput}
-                            <br style={{ paddingBottom: "1em" }} />
+                        <Form>
+                            <Form.Field>
+                                <Input
+                                    placeholder="name"
+                                    label="name"
+                                    value={name}
+                                    onChange={this.handleNameChange}
+                                />
+                            </Form.Field>
+                            <Form.Field>
+                                <Input
+                                    placeholder="amount"
+                                    label="amount"
+                                    value={amount}
+                                    type="number"
+                                    onChange={this.handleAmountChange} />
+                            </Form.Field>
+                            <Form.Field>
+                                <Select
+                                    options={timeUnits}
+                                    value={timeunit}
+                                    onChange={this.handleTimeUnitChange} />
+                            </Form.Field>
+                            <Form.Field>
+                                <Input
+                                    placeholder="Frequency"
+                                    label="frequency"
+                                    type="number"
+                                    value={frequency}
+                                    onChange={this.handleFrequencyChange}
+                                />
+                            </Form.Field>
+                            <Form.Field>
+                                <Input
+                                    label="Description"
+                                    onChange={this.handleDescriptionChangeSelect}
+                                    placeholder="Type"
+                                    type="text"
+                                    value={description}
+                                />
+                            </Form.Field>
+                            <Form.Field>
+                                <Input
+                                    type="date"
+                                    label="end date"
+                                    onChange={this.handleEndDateChange}
+                                    value={endDate}
+                                />
+                            </Form.Field>
 
-                            <Button type="submit" primary>
-                                Save
-                            </Button>
+                            {button}
                         </Form>
                     </Modal.Description>
                 </Modal.Content>

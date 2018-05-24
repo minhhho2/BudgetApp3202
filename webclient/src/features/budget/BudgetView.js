@@ -12,9 +12,11 @@ import EditBudgetModal from "./EditBudgetModal";
 
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
+
+import TxStore from "./TxStore";
+
 import BudgetStore from "./BudgetStore";
 import EditBudgetStore from "./EditBudgetStore";
-import TxStore from "./TxStore";
 import ExpenseStore from "./ExpenseStore";
 import IncomeStore from "./IncomeStore";
 
@@ -57,17 +59,20 @@ export default class BudgetComponent extends React.Component {
     }
 
     openIncomeModal = (id) => {
-        console.log("open income modal with id: " + id);
         BudgetStore.editIncomeModal = true;
-
         IncomeStore.id = id;
         if (IncomeStore.id != undefined) {
             IncomeStore.getData(id);
         }
     }
 
-    openExpenseModal = () => {
-        BudgetStore.expenseModal = true;
+    openExpenseModal = (id) => {
+        console.log("open expense modal with id: " + id);
+        BudgetStore.editExpenseModal = true;
+        ExpenseStore.id = id;
+        if (ExpenseStore.id != undefined) {
+            ExpenseStore.getData(id);
+        }
     }
 
 
@@ -102,7 +107,7 @@ export default class BudgetComponent extends React.Component {
                     <Button.Or />
                     <Button
                         color="orange"
-                        onClick={this.openExpenseModal}
+                        onClick={() => this.openExpenseModal(undefined)}
                     >
                         <Icon name="minus" />
                         Expense
@@ -207,7 +212,7 @@ export default class BudgetComponent extends React.Component {
                                 <Table.Cell>{expense.frequency}/{expense.timeunit}</Table.Cell>
                                 <Table.Cell>{expense.end_date}</Table.Cell>
                                 <Table.Cell>
-                                    <Button primary onClick={this.openExpenseModal}>
+                                    <Button primary onClick={() => this.openExpenseModal(expense.id)}>
                                         <Icon name="edit" />
                                         Edit
                                     </Button>

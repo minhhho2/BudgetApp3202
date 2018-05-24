@@ -62,17 +62,15 @@ export default class EditBudgetModal extends React.Component {
 
         return (
             <Modal open={BudgetStore.editBudgetModal} onClose={this.close}>
+                <Modal.Header>
+                    {
+                        id === undefined ?
+                            "Create Budget" :
+                            "Update Budget"
+                    }
+                </Modal.Header>
                 <Modal.Content>
                     <Modal.Description>
-                        <Header as="h3">
-                            <Header.Content>
-                                {
-                                    id === undefined ?
-                                        "Create Budget" :
-                                        "Update Budget"
-                                }
-                            </Header.Content>
-                        </Header>
                         <Form>
                             <Form.Field>
                                 <Input

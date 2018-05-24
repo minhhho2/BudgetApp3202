@@ -14,6 +14,22 @@ class ExpenseStore {
     @observable endDate = new Date();
     @observable isOther = false;
 
+    getData(id) {
+        ApiService.get(`/expense/${id}`)
+            .then(JSON.parse)
+            .then(res => res.Message)
+            .then(expense => {
+                this.id = expense.id;
+                this.name = expense.name;
+                this.amount = expense.amount;
+                this.description = expense.description;
+                this.timeunit = expense.timeunit;
+                this.frequency = expense.frequency;
+                this.endDate = expense.endDate;
+            });
+        console.log("getting expense store data");
+    }
+
     create() {
         UserStore.isAuthenticating = true;
         BudgetStore.expenseModal = false;
@@ -49,18 +65,31 @@ class ExpenseStore {
             });
     }
 
+
     update() {
-        ApiService.post(`/expense/${id}`, {
-            id: this.id,
+        console.log("update in expense: " + this.id);
+
+        ApiService.post(`/expense/${this.id}`, {
+            name: this.name,
+            amount: this.amount,
             description: this.description,
-            amount: this.amount
-        });
+            timeunit: this.timeunit,
+            frequency: this.frequency,
+            end_date: this.endDate
+        })
+            .then(() => BudgetStore.getExpenses())
+            .catch(err => alert(err.message))
+            
+        BudgetStore.editExpenseModal = false;
     }
 
     clear() {
         this.name = '';
         this.description = '';
         this.amount = 0;
+        this.frequency = 0;
+        this.timeunit = "";
+        this.endDate = undefined
     }
 }
 

@@ -4,6 +4,7 @@ import { observer } from "mobx-react";
 import BudgetStore from "./BudgetStore";
 import transactionTypes from "./TransactionTypes";
 import IncomeStore from "./IncomeStore";
+import timeUnits from "./TimeUnits";
 
 @observer
 export default class incomeModal extends React.Component {
@@ -62,20 +63,20 @@ export default class incomeModal extends React.Component {
 
     render() {
         const { id, name, amount, description, timeunit, frequency, endDate } = IncomeStore;
+
         const button = id === undefined ?
             <Button type="button" onClick={this.save}> Save </Button> :
             <Button type="button" onClick={this.update}> Update </Button>;
 
-        const timeunits = [
-            { key: 'Daily', value: 'Daily', text: 'Daily' },
-            { key: 'Weekly', value: 'Weekly', text: 'Weekly' },
-            { key: 'Monthly', value: 'Monthly', text: 'Monthly' },
-            { key: 'Annually', value: 'Annually', text: 'Annually' },
-        ];
-
         return (
             <Modal open={BudgetStore.editIncomeModal} onClose={this.close}>
-                <Modal.Header>Add recuring income</Modal.Header>
+                <Modal.Header>
+                    {
+                        id === undefined ?
+                            "Create Recurring Income" :
+                            "Update Recurring Income"
+                    }
+                </Modal.Header>
                 <Modal.Content>
                     <Modal.Description>
                         <Form>
@@ -87,7 +88,6 @@ export default class incomeModal extends React.Component {
                                     onChange={this.handleNameChange}
                                 />
                             </Form.Field>
-
                             <Form.Field>
                                 <Input
                                     placeholder="amount"
@@ -98,7 +98,7 @@ export default class incomeModal extends React.Component {
                             </Form.Field>
                             <Form.Field>
                                 <Select
-                                    options={timeunits}
+                                    options={timeUnits}
                                     value={timeunit}
                                     onChange={this.handleTimeUnitChange}
                                 />
