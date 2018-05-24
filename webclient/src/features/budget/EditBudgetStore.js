@@ -59,6 +59,7 @@ class EditBudgetStore {
             timeunit: this.timeunit, //'monthly'
             end_date: this.endDate
         })
+            .then(console.log)
             .then(() => BudgetStore.getBudgets());
         BudgetStore.editBudgetModal = false;
     }

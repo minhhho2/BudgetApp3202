@@ -9,6 +9,7 @@ import ExpenseStore from "./ExpenseStore";
 export default class ExpenseModal extends React.Component {
     handleClose = () => {
         BudgetStore.expenseModal = false;
+        ExpenseStore.hasEndDate = false;
     }
 
     submit = () => {
