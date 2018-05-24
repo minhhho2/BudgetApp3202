@@ -10,10 +10,9 @@ class BudgetStore {
 
     @observable txModal = false;
     @observable expenseModal = false;
-    @observable incomeModal = false;
-    @observable editBudgetModal = false;
 
-    @observable editBudgetId = "";
+    @observable editBudgetModal = false;
+    @observable editIncomeModal = false;
 
     addRow() {
         this.incomes.push({

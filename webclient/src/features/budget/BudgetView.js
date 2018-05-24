@@ -47,14 +47,6 @@ export default class BudgetComponent extends React.Component {
         BudgetStore.txModal = true;
     }
 
-    openIncomeModal = () => {
-        BudgetStore.incomeModal = true;
-    }
-
-    openExpenseModal = () => {
-        BudgetStore.expenseModal = true;
-    }
-
     openEditBudgetModal = (id) => {
         BudgetStore.editBudgetModal = true;
 
@@ -62,9 +54,23 @@ export default class BudgetComponent extends React.Component {
         if (EditBudgetStore.id != undefined) {
             EditBudgetStore.getData(id);
         }
-        console.log("mounting with id: " + EditBudgetStore.id);
-
     }
+
+    openIncomeModal = (id) => {
+        console.log("open income modal with id: " + id);
+        BudgetStore.editIncomeModal = true;
+
+        IncomeStore.id = id;
+        if (IncomeStore.id != undefined) {
+            IncomeStore.getData(id);
+        }
+    }
+
+    openExpenseModal = () => {
+        BudgetStore.expenseModal = true;
+    }
+
+
 
     render() {
         const { budgets, incomes, expenses, transactions } = BudgetStore;
@@ -88,7 +94,7 @@ export default class BudgetComponent extends React.Component {
                 <Button.Group>
                     <Button
                         color="teal"
-                        onClick={this.openIncomeModal}
+                        onClick={() => this.openIncomeModal(undefined)}
                     >
                         <Icon name="plus" />
                         Income
@@ -166,7 +172,7 @@ export default class BudgetComponent extends React.Component {
                                 <Table.Cell>{income.frequency}/{income.timeunit}</Table.Cell>
                                 <Table.Cell>{income.end_date}</Table.Cell>
                                 <Table.Cell>
-                                    <Button primary onClick={this.openIncomeModal}>
+                                    <Button primary onClick={() => this.openIncomeModal(income.id)}>
                                         <Icon name="edit" />
                                         Edit
                                     </Button>

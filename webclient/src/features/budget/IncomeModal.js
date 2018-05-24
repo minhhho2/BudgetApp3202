@@ -7,13 +7,19 @@ import IncomeStore from "./IncomeStore";
 
 @observer
 export default class incomeModal extends React.Component {
-    handleClose = () => {
-        BudgetStore.incomeModal = false;
-        IncomeStore.hasEndDate = false;
+
+    close = () => {
+        BudgetStore.editIncomeModal = false;
     }
 
-    submit = () => {
+    save = () => {
         IncomeStore.create();
+        this.close();
+    }
+
+    update = () => {
+        IncomeStore.update();
+        this.close();
     }
 
     handleDescriptionChangeSelect = (e, data) => {
@@ -22,6 +28,7 @@ export default class incomeModal extends React.Component {
             IncomeStore.isOther = true;
             return;
         }
+
         IncomeStore.description = data.value;
         IncomeStore.isOther = false;
     }
@@ -51,6 +58,11 @@ export default class incomeModal extends React.Component {
     }
 
     render() {
+        const { id, name, amount, description, timeunit, frequency, endDate } = IncomeStore;
+        const button = id === undefined ?
+            <Button type="button" onClick={this.save}> Save </Button> :
+            <Button type="button" onClick={this.update}> Update </Button>;
+
         const timeunits = [
             { key: 'Daily', value: 'Daily', text: 'Daily' },
             { key: 'Weekly', value: 'Weekly', text: 'Weekly' },
@@ -58,49 +70,67 @@ export default class incomeModal extends React.Component {
             { key: 'Annually', value: 'Annually', text: 'Annually' },
         ];
 
-        const descriptionInput = IncomeStore.isOther ?
-            <div>
-                <Input type="text" placeholder="Description" />
-                <br style={{ paddingBottom: "1em" }} />
-            </div> :
-            null;
-
-        const endDateInput = IncomeStore.hasEndDate ?
-            <Input
-                type="date"
-                label="End date"
-                onChange={this.handleEndDateChange}
-            /> :
-            null;
-
         return (
-            <Modal open={BudgetStore.incomeModal} onClose={this.handleClose}>
+            <Modal open={BudgetStore.editIncomeModal} onClose={this.close}>
                 <Modal.Header>Add recuring income</Modal.Header>
                 <Modal.Content>
                     <Modal.Description>
-                        <Form onSubmit={this.submit}>
-                            <Input placeholder="name" onChange={this.handleNameChange} />
-                            <br style={{ paddingBottom: "1em" }} />
-                            <Input placeholder="amount" type="number" onChange={this.handleAmountChange} />
-                            <Select options={timeunits} value={IncomeStore.timeunit} onChange={this.handleTimeUnitChange} />
-                            <Input placeholder="Frequency" type="number" onChange={this.handleFrequencyChange} />
-                            <br style={{ paddingBottom: "1em" }} />
-                            <Select
-                                onChange={this.handleDescriptionChangeSelect}
-                                placeholder="Type"
-                                options={transactionTypes}
-                            />
-                            <br style={{ paddingBottom: "1em" }} />
-                            {descriptionInput}
-                            <br style={{ paddingBottom: "1em" }} />
-                            <Checkbox onChange={this.handleHasEndDateChange} label="Has end date?" />
-                            <br style={{ paddingBottom: "1em" }} />
-                            {endDateInput}
-                            <br style={{ paddingBottom: "1em" }} />
+                        <Form>
+                            <Form.Field>
+                                <Input
+                                    placeholder="name"
+                                    label="name"
+                                    value={name}
+                                    onChange={this.handleNameChange}
+                                />
+                            </Form.Field>
 
-                            <Button type="submit" primary>
-                                Save
-                            </Button>
+                            <Form.Field>
+                                <Input
+                                    placeholder="amount"
+                                    label="amount"
+                                    value={amount}
+                                    type="number"
+                                    onChange={this.handleAmountChange} />
+                            </Form.Field>
+                            <Form.Field>
+                                <Select
+                                    options={timeunits}
+                                    value={timeunit}
+                                    onChange={this.handleTimeUnitChange}
+                                />
+                            </Form.Field>
+                            <Form.Field>
+                                <Input
+                                    placeholder="Frequency"
+                                    label="frequency"
+                                    type="number"
+                                    value={frequency}
+                                    onChange={this.handleFrequencyChange}
+                                />
+                            </Form.Field>
+
+                            <Form.Field>
+                                <Input
+                                    label="Description"
+                                    onChange={this.handleDescriptionChangeSelect}
+                                    placeholder="Type"
+                                    type="text"
+                                    value={description}
+                                />
+                            </Form.Field>
+
+                            <Form.Field>
+                                <Input
+                                    type="date"
+                                    label="end date"
+                                    onChange={this.handleEndDateChange}
+                                    value={endDate}
+                                />
+                            </Form.Field>
+
+                            {button}
+
                         </Form>
                     </Modal.Description>
                 </Modal.Content>

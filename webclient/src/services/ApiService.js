@@ -24,7 +24,7 @@ class ApiService {
     }
 
     post(url, data) {
-        console.log("api service: post: " + data.description);
+        console.log("api service: post: " + data.id);
         return fetch(baseUrl + url, {
             ...defaultFetchOptions,
             method: "post",

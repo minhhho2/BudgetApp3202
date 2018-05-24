@@ -20,6 +20,7 @@ export default class EditBudgetModal extends React.Component {
 
     close = () => {
         BudgetStore.editBudgetModal = false;
+        EditBudgetStore.reset();
     }
 
     save = () => {
@@ -64,7 +65,13 @@ export default class EditBudgetModal extends React.Component {
                 <Modal.Content>
                     <Modal.Description>
                         <Header as="h3">
-                            <Header.Content>Create budget</Header.Content>
+                            <Header.Content>
+                                {
+                                    id === undefined ?
+                                        "Create Budget" :
+                                        "Update Budget"
+                                }
+                            </Header.Content>
                         </Header>
                         <Form>
                             <Form.Field>

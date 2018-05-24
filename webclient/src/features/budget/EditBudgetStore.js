@@ -64,6 +64,20 @@ class EditBudgetStore {
             .then(() => UserStore.isAuthenticating = false);
         BudgetStore.editBudgetModal = false;
     }
+
+    reset() {
+        this.id = undefined;
+        this.name = "";
+        this.description = "";
+        this.amount = 0;
+        this.frequency = 0;
+        this.timeunit = 0;
+        this.endDate = undefined;
+        this.oneOff = 1;
+        console.log("clear field");
+    }
+
+
 }
 
 export default new EditBudgetStore();

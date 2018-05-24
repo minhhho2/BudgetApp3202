@@ -4,19 +4,34 @@ import BudgetStore from "./BudgetStore";
 import UserStore from "../../stores/UserStore";
 
 class IncomeStore {
-    @observable id = 1;
+    @observable id = undefined;
     @observable name = '';
     @observable amount = 0;
     @observable description = '';
     @observable timeunit = '';
     @observable frequency = 0;
     @observable hasEndDate = false;
-    @observable endDate = new Date();
+    @observable endDate = undefined;
     @observable isOther = false;
+
+    getData(id) {
+        ApiService.get(`/income/${id}`)
+            .then(JSON.parse)
+            .then(res => res.Message)
+            .then(income => {
+                this.id = income.id;
+                this.name = income.name;
+                this.amount = income.amount;
+                this.description = income.description;
+                this.timeunit = income.timeunit;
+                this.frequency = income.frequency;
+                this.endDate = income.endDate;
+            });
+        console.log("getting income store data");
+    }
 
     create() {
         UserStore.isAuthenticating = true;
-        BudgetStore.incomeModal = false;
 
         ApiService.put('/income', {
             name: this.name,
@@ -39,22 +54,20 @@ class IncomeStore {
             .catch(err => alert(err.message));
     }
 
-    getincome(id) {
-        ApiService.get(`/income/${id}`)
-            .then(res => res.Message)
-            .then(income => {
-                this.id = income.id;
-                this.amount = income.amount;
-                this.description = income.description;
-            });
-    }
 
     update() {
-        ApiService.post(`/income/${id}`, {
-            id: this.id,
+        ApiService.post(`/income/${this.id}`, {
+            name: this.name,
+            amount: this.amount,
             description: this.description,
-            amount: this.amount
-        });
+            timeunit: this.timeunit,
+            frequency: this.frequency,
+            end_date: this.endDate
+        })
+            .then(() => BudgetStore.getIncomes())
+            .catch(err => alert(err.message))
+
+        BudgetStore.editIncomeModal = false;
     }
 
     clear() {
