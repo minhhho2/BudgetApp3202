@@ -46,7 +46,7 @@ class IncomeRepository():
 
     def update_income(self, media: dict, id: int):
         income = self._Income.get(self._Income.id == id)
-
+        income.name= media['name']
         income.description = media['description']
         income.amount = media['amount']
         income.frequency = media['frequency']

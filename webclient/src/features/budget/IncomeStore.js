@@ -56,6 +56,8 @@ class IncomeStore {
 
 
     update() {
+        console.log("update in incomestore: " + this.id);
+
         ApiService.post(`/income/${this.id}`, {
             name: this.name,
             amount: this.amount,
@@ -66,7 +68,7 @@ class IncomeStore {
         })
             .then(() => BudgetStore.getIncomes())
             .catch(err => alert(err.message))
-
+            
         BudgetStore.editIncomeModal = false;
     }
 
@@ -74,6 +76,9 @@ class IncomeStore {
         this.name = '';
         this.description = '';
         this.amount = 0;
+        this.frequency = 0;
+        this.timeunit = "";
+        this.endDate = undefined
     }
 }
 
