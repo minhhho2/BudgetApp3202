@@ -9,6 +9,7 @@ import IncomeStore from "./IncomeStore";
 export default class incomeModal extends React.Component {
     handleClose = () => {
         BudgetStore.incomeModal = false;
+        IncomeStore.hasEndDate = false;
     }
 
     submit = () => {
@@ -79,7 +80,7 @@ export default class incomeModal extends React.Component {
                     <Modal.Description>
                         <Form onSubmit={this.submit}>
                             <Input placeholder="name" onChange={this.handleNameChange} />
-                            <br style={{ paddingBottom: "1em"}} />
+                            <br style={{ paddingBottom: "1em" }} />
                             <Input placeholder="amount" type="number" onChange={this.handleAmountChange} />
                             <Select options={timeunits} value={IncomeStore.timeunit} onChange={this.handleTimeUnitChange} />
                             <Input placeholder="Frequency" type="number" onChange={this.handleFrequencyChange} />
@@ -93,7 +94,7 @@ export default class incomeModal extends React.Component {
                             {descriptionInput}
                             <br style={{ paddingBottom: "1em" }} />
                             <Checkbox onChange={this.handleHasEndDateChange} label="Has end date?" />
-                            <br style={{ paddingBottom: "1em" }} />                            
+                            <br style={{ paddingBottom: "1em" }} />
                             {endDateInput}
                             <br style={{ paddingBottom: "1em" }} />
 

@@ -95,6 +95,7 @@ export default class EditBudgetModal extends React.Component {
                             <Form.Field>
                                 <Input
                                     type="date"
+                                    onChange={this.onChangeEndDate}
                                     label="End date"
                                 />
                             </Form.Field>

@@ -1,6 +1,7 @@
 import json
 import falcon
 import datetime
+import dateutil.parser
 
 from webapi.models import User, Transaction
 from webapi.resources.user import UserRepository
@@ -28,10 +29,11 @@ class TransactionRepository():
         return self._serialise_tx(tx)
 
     def create_transaction(self, media: dict, user_id: int):
+        dt = dateutil.parser.parse(media['end_date'])
         tx = self._Transaction.create(user_id=user_id,
             description=media['description'],
             amount=media['amount'],
-            dt=datetime.datetime.now())
+            dt=dt)
         tx.save()
 
         return self._serialise_tx(tx)

@@ -31,10 +31,14 @@ class EditBudgetStore {
             description: this.description, //'This is my main budget.',
             amount: this.amount, //1000,
             frequency: this.frequency, //1,
-            timeunit: this.timeunit //'monthly'
+            timeunit: this.timeunit, //'monthly'
+            end_date: this.endDate
         })
             .then(() => BudgetStore.getBudgets())
-            .catch(() => UserStore.isAuthenticating = false)
+            .catch(e => {
+                console.log(e);
+                UserStore.isAuthenticating = false
+            })
             .then(() => UserStore.isAuthenticating = false)
     }
 }

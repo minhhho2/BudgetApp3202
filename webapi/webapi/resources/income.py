@@ -1,6 +1,7 @@
 import json
 import falcon
 import datetime
+import dateutil.parser
 
 from webapi.models import User, Income
 from webapi.resources.user import UserRepository
@@ -31,24 +32,26 @@ class IncomeRepository():
         return self._serialise_income(income)
 
     def create_income(self, media: dict, user_id: int):
+        end_date = dateutil.parser.parse(media['end_date'])
         income = self._Income.create(user_id=user_id,
             name=media['name'],
             description=media['description'],
             amount=media['amount'],
             frequency=media['frequency'],
             timeunit=media['timeunit'],
-            dt=datetime.datetime.now())
+            end_date=end_date)
         income.save()
 
         return self._serialise_income(income)
 
     def update_income(self, media: dict, id: int):
-        income = self.get_income(id)
+        income = self._Income.get(self._Income.id == id)
+
         income.description = media['description']
         income.amount = media['amount']
         income.frequency = media['frequency']
         income.timeunit = media['timeunit']
-        income.dt = media['dt']
+        income.end_date = media['end_date']
         income.save()
 
         return self._serialise_income(income)
