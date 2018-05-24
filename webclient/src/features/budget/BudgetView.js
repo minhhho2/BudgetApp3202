@@ -45,8 +45,12 @@ export default class BudgetComponent extends React.Component {
         IncomeStore.delete(id);
     }
 
-    openTxModal = () => {
-        BudgetStore.txModal = true;
+    openTxModal = (id) => {
+        BudgetStore.editTxModal = true;
+        TxStore.id = id;
+        if (TxStore.id != undefined) {
+            TxStore.getData(id);
+        }
     }
 
     openEditBudgetModal = (id) => {
@@ -87,8 +91,9 @@ export default class BudgetComponent extends React.Component {
                 <ExpenseModal />
                 <EditBudgetModal />
                 <Header as="h2">
-                    <Header.Content>Personal finance</Header.Content>
+                    <Header.Content>Personal Finance</Header.Content>
                 </Header>
+
                 <Button
                     positive
                     onClick={() => this.openEditBudgetModal(undefined)}
@@ -116,7 +121,7 @@ export default class BudgetComponent extends React.Component {
                 <div style={{ float: "right", paddingRight: "10em" }}>
                     <Button
                         primary
-                        onClick={this.openTxModal}
+                        onClick={() => this.openTxModal(undefined)}
                     >
                         <Icon name="money" />
                         Transaction
@@ -246,7 +251,7 @@ export default class BudgetComponent extends React.Component {
                                 <Table.Cell>{tx.amount}</Table.Cell>
                                 <Table.Cell>{tx.dt}</Table.Cell>
                                 <Table.Cell>
-                                    <Button primary onClick={this.openTxModal}>
+                                    <Button primary onClick={() => this.openTxModal(tx.id)}>
                                         <Icon name="edit" />
                                         Edit
                                     </Button>

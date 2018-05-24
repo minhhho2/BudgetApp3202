@@ -27,6 +27,7 @@ class IncomeStore {
                 this.frequency = income.frequency;
                 this.endDate = income.endDate;
             });
+
         console.log("getting income store data");
     }
 
@@ -56,8 +57,6 @@ class IncomeStore {
 
 
     update() {
-        console.log("update in incomestore: " + this.id);
-
         ApiService.post(`/income/${this.id}`, {
             name: this.name,
             amount: this.amount,
@@ -67,9 +66,7 @@ class IncomeStore {
             end_date: this.endDate
         })
             .then(() => BudgetStore.getIncomes())
-            .catch(err => alert(err.message))
-            
-        BudgetStore.editIncomeModal = false;
+            .catch(err => alert(err.message))            
     }
 
     clear() {

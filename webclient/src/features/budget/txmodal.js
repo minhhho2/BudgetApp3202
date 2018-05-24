@@ -3,16 +3,24 @@ import { Modal, Input, Header, Form, Button, Select } from "semantic-ui-react";
 import { observer } from "mobx-react";
 import BudgetStore from "./BudgetStore";
 import transactionTypes from "./TransactionTypes";
+import txTypes from "./TxTypes";
 import TxStore from "./TxStore";
 
 @observer
 export default class TxModal extends React.Component {
-    handleClose = () => {
-        BudgetStore.txModal = false;
+    close = () => {
+        BudgetStore.editTxModal = false;
+        TxStore.clear();
     }
 
-    submit = () => {
+    save = () => {
         TxStore.create();
+        this.close();
+    }
+
+    update = () => {
+        TxStore.update();
+        this.close();
     }
 
     handleDescriptionChangeSelect = (e, data) => {
@@ -21,16 +29,16 @@ export default class TxModal extends React.Component {
             TxStore.isOther = true;
             return;
         }
+        
         TxStore.description = data.value;
         TxStore.isOther = false;
     }
-
     handleDescriptionChange = e => {
         TxStore.description = e.target.value;
     }
 
     handleDirChangeSelect = (e, data) => {
-        TxStore.mult = data.value; // 1 or -1 as a multiplier for Made/Spent
+        TxStore.mult = data.value;
     }
 
     handleAmountChange = (e) => {
@@ -38,42 +46,55 @@ export default class TxModal extends React.Component {
     }
 
     render() {
-        const txTypes = [
-            { key: '+', value: 1, text: '+' },
-            { key: '-', value: -1, text: '-' }
-        ];
+        const { id, amount, description } = TxStore;
+        const button = id === undefined ?
+            <Button type="button" onClick={this.save}> Save </Button> :
+            <Button type="button" onClick={this.update}> Update </Button>;
 
         const descriptionInput = TxStore.isOther ?
-            <div>
-                <Input type="text" placeholder="Description" onChange={this.handleDescriptionChange}/>
-                <br style={{ paddingBottom: "1em" }} />
-            </div> :
+            <Form.Field>
+                <Input 
+                    type="text" 
+                    placeholder="Description" 
+                    onChange={this.handleDescriptionChange} />
+            </Form.Field> :
             null;
 
         return (
-            <Modal open={BudgetStore.txModal} onClose={this.handleClose}>
-                <Modal.Header>Add transaction</Modal.Header>
+            <Modal open={BudgetStore.editTxModal} onClose={this.close}>
+                <Modal.Header>{id === undefined ?
+                    "Create Transaction" :
+                    "Update Transaction"
+                }</Modal.Header>
                 <Modal.Content>
                     <Modal.Description>
-                        <Form onSubmit={this.submit}>
-                            <Select
-                                placeholder="+/-"
-                                options={txTypes}
-                                onChange={this.handleDirChangeSelect}
-                            />
-                            <br style={{ paddingBottom: "1em" }} />
-                            <Input placeholder="amount" type="number" onChange={this.handleAmountChange}/>
-                            <br style={{ paddingBottom: "1em" }} />
-                            <Select
-                                onChange={this.handleDescriptionChangeSelect}
-                                placeholder="Description"
-                                options={transactionTypes}
-                            />
-                            <br style={{ paddingBottom: "1em" }} />
+                        <Form>
+                            <Form.Field>
+                                <Select
+                                    placeholder="+/-"
+                                    options={txTypes}
+                                    onChange={this.handleDirChangeSelect}
+                                />
+                            </Form.Field>
+                            <Form.Field>
+                                <Input
+                                    placeholder="amount"
+                                    type="number"
+                                    //value={amount}
+                                    onChange={this.handleAmountChange}
+                                />
+                            </Form.Field>
+                            <Form.Field>
+                                <Select
+                                    onChange={this.handleDescriptionChangeSelect}
+                                    //value={description}
+                                    options={transactionTypes}
+                                />
+                            </Form.Field>
+
                             {descriptionInput}
-                            <Button type="submit" primary>
-                                Save
-                            </Button>
+
+                            {button}
                         </Form>
                     </Modal.Description>
                 </Modal.Content>

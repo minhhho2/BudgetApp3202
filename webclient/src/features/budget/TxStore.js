@@ -5,38 +5,13 @@ import BudgetStore from "./BudgetStore";
 
 class TxStore {
     @observable id = 1;
-    @observable mult = 1;
     @observable amount = 0;
     @observable description = "";
+    @observable dt = undefined;
+    @observable mult = 1;
     @observable isOther = false;
 
-    create() {
-        const amount = this.amount * this.mult;
-        UserStore.isAuthenticating = true;
-        BudgetStore.txModal = false;
-        ApiService.put('/transaction', {
-            amount,
-            description: this.description
-        })
-            .then(console.log)
-            .then(() => BudgetStore.getTransactions())
-            .then(() => UserStore.isAuthenticating = false)
-            .catch(() => UserStore.isAuthenticating = false)
-    }
-
-    delete(id) {
-        ApiService.delete(`/transaction/${id}`)
-            .then(_ => BudgetStore.transactions = BudgetStore.transactions.filter(tx => tx.id !== id))
-            .catch(err => alert(err.message));
-    }
-
-    getTransactions() {
-        ApiService.get('/transaction')
-            .then(res => res.Message)
-            .then(txs => this.txs = txs);
-    }
-
-    getTransaction(id) {
+    getData(id) {
         ApiService.get(`/transaction/${id}`)
             .then(res => res.Message)
             .then(tx => {
@@ -46,18 +21,46 @@ class TxStore {
             });
     }
 
+    create() {
+        UserStore.isAuthenticating = true;
+        ApiService.put('/transaction', {
+            amount: (this.amount * this.mult),
+            description: this.description
+            //dt: new Date()         // defaulted to undefined for now
+        })
+            .then(console.log)
+            .then(() => BudgetStore.getTransactions())
+            .catch(console.log)
+            .then(() => UserStore.isAuthenticating = false)
+    }
+
+    delete(id) {
+        ApiService.delete(`/transaction/${id}`)
+            .then(_ => BudgetStore.transactions = BudgetStore.transactions.filter(tx => tx.id !== id))
+            .catch(err => alert(err.message));
+    }
+
     update() {
         ApiService.post(`/transaction/${id}`, {
             id: this.id,
             description: this.description,
             amount: this.amount
-        });
+        })
+            .then(() => BudgetStore.getTransactions())
+            .catch(err => alert(err.message))
+    }
+
+    getTransactions() {
+        ApiService.get('/transaction')
+            .then(res => res.Message)
+            .then(txs => this.txs = txs);
     }
 
     clear() {
-        this.description = '';
-        this.amount = 0;
+        this.id = 1;
         this.mult = 1;
+        this.amount = 0;
+        this.description = "";
         this.isOther = false;
     }
 }

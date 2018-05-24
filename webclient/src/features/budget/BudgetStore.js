@@ -8,19 +8,10 @@ class BudgetStore {
     @observable expenses = [];
     @observable transactions = [];
 
-    @observable txModal = false;
-
     @observable editBudgetModal = false;
     @observable editIncomeModal = false;
     @observable editExpenseModal = false;
-/*
-    addRow() {
-        this.incomes.push({
-            Description: "",
-            Goal: 0
-        });
-    }
-*/
+    @observable editTxModal = false;
 
     getBudgets() {
         ApiService.get('/budget')

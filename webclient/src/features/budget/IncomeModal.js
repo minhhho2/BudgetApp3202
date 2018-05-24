@@ -35,6 +35,10 @@ export default class incomeModal extends React.Component {
         IncomeStore.isOther = false;
     }
 
+    handleDescriptionChange = e => {
+        IncomeStore.description = e.target.value;
+    }
+
     handleTimeUnitChange = (e, data) => {
         IncomeStore.timeunit = data.value
     }
@@ -67,6 +71,16 @@ export default class incomeModal extends React.Component {
         const button = id === undefined ?
             <Button type="button" onClick={this.save}> Save </Button> :
             <Button type="button" onClick={this.update}> Update </Button>;
+
+        const descriptionInput = IncomeStore.isOther ?
+            <Form.Field>
+                <Input
+                    type="text"
+                    placeholder="Description"
+                    onChange={this.handleDescriptionChange}
+                />
+            </Form.Field> :
+            null;
 
         return (
             <Modal open={BudgetStore.editIncomeModal} onClose={this.close}>
@@ -112,16 +126,16 @@ export default class incomeModal extends React.Component {
                                     onChange={this.handleFrequencyChange}
                                 />
                             </Form.Field>
-
                             <Form.Field>
-                                <Input
-                                    label="Description"
+                                <Select
                                     onChange={this.handleDescriptionChangeSelect}
                                     placeholder="Type"
-                                    type="text"
                                     value={description}
+                                    options={transactionTypes}
                                 />
                             </Form.Field>
+                            
+                            {descriptionInput}
 
                             <Form.Field>
                                 <Input
