@@ -80,7 +80,7 @@ export default class BudgetComponent extends React.Component {
                 </Header>
                 <Button
                     positive
-                    onClick={() => this.openEditBudgetModal(-1)}
+                    onClick={() => this.openEditBudgetModal(undefined)}
                 >
                     <Icon name="add" />
                     New savings goal

@@ -21,7 +21,7 @@ export default class EditBudgetModal extends React.Component {
     close = () => {
         BudgetStore.editBudgetModal = false;
     }
-    
+
     save = () => {
         EditBudgetStore.create();
     }
@@ -40,10 +40,13 @@ export default class EditBudgetModal extends React.Component {
             { text: 'year', value: '365' }
         ];
 
-        // TODO: breaking shit here
-        const { name, description, amount, oneOff } = EditBudgetStore;
+        const { id, name, description, amount, oneOff } = EditBudgetStore;
 
-        var frequencyComponent = EditBudgetStore.oneOff ?
+        var button = id === undefined ?
+            <Button onClick={this.save}> Save </Button> :
+            <Button onClick={this.update}> Update </Button>;
+
+        var frequencyComponent = oneOff ?
             <div /> :
             (
                 <Form.Group widths='equal'>
@@ -109,8 +112,9 @@ export default class EditBudgetModal extends React.Component {
                             </Form.Field>
 
                         </Form>
-                        <Button onClick={this.update}> Update </Button>
-                        <Button onClick={this.save}> Save </Button>
+
+                        {button}
+
                     </Modal.Description>
                 </Modal.Content>
             </Modal>
