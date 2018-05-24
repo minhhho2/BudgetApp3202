@@ -58,7 +58,9 @@ class OverviewStore {
                 this.inflows = inflows
             }
         );
-        return this.inflows.toJS();
+        console.log(this.inflows);
+        //return this.inflows.toJS();
+        
     }
     getOutflow() {
         ApiService.get('/analytics/3')
