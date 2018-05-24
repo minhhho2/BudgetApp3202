@@ -24,7 +24,7 @@ class ProfileStore {
                 this.firstname = profile.first_name;
                 this.lastname = profile.last_name;
                 this.birthday = new Date(profile.birthday);
-                this.gender = profile.gender;
+                // this.gender = profile.gender;
                 this.phoneNumber = profile.phone_number;
                 this.emailAddress = profile.emailAddress;
                 this.homeAddress = profile.homeAddress;

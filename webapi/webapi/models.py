@@ -72,6 +72,9 @@ class PersonalInformation(BaseModel):
     last_name = TextField()
     phone_number = TextField()
     birthday = DateTimeField()
+    gender = TextField()
+    email_address = TextField()
+    home_address = TextField()
 
 class UserSettings(BaseModel):
     class Meta:
