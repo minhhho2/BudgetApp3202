@@ -1,7 +1,7 @@
 import json
 import falcon
 import datetime
-
+import dateutil.parser
 from webapi.models import Budget, User
 from webapi.resources.user import UserRepository
 
@@ -40,13 +40,23 @@ class BudgetRepository():
             amount=budget['amount'],
             frequency=budget['frequency'],
             timeunit=budget['timeunit'],
-            end_date=datetime.datetime.now())
+            end_date=dateutil.parser.parse(budget['end_date']))
         budget.save()
 
         return self._serialise_budget(budget)
 
-    def update_budget(self, budget: dict, id: int):
-        pass
+    def update_budget(self, media: dict, id: int):
+        budget = self._Budget.get(self._Budget.id == id)
+
+        budget.name = media['name']
+        budget.description = media['description']
+        budget.amount = media['amount']
+        budget.frequency = media['frequency']
+        budget.timeunit = media['timeunit']
+        budget.end_date = media['end_date']
+        budget.save()
+
+        return self._serialise_budget(budget)
 
     def delete_budget(self, budget_id: int):
         (self._Budget

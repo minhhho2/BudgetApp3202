@@ -78,6 +78,6 @@ class UserSettings(BaseModel):
         db_table = 'user_settings'
 
     user = ForeignKeyField(User)
-	text_notification = BooleanField()
-	email_notification = BooleanField()
-	share_data = BooleanField()
+    text_notification = BooleanField()
+    email_notification = BooleanField()
+    share_data = BooleanField()

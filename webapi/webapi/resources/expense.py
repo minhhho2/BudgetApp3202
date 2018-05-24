@@ -1,6 +1,7 @@
 import json
 import falcon
 import datetime
+import dateutil.parser
 
 from webapi.models import User, Expense
 from webapi.resources.user import UserRepository
@@ -31,25 +32,26 @@ class ExpenseRepository():
         return self._serialise_expense(expense)
 
     def create_expense(self, media: dict, user_id: int):
+        end_date = dateutil.parser.parse(media['end_date'])
         expense = self._Expense.create(user_id=user_id,
             name=media['name'],
             description=media['description'],
             amount=media['amount'],
             frequency=media['frequency'],
             timeunit=media['timeunit'],
-            end_date=datetime.datetime.now())
+            end_date=end_date)
         expense.save()
 
         return self._serialise_expense(expense)
 
     def update_expense(self, media: dict, id: int):
-        expense = self.get_expense(id)
-        expense.name
+        expense = self._Expense.get(self._Expense.id == id)
+
         expense.description = media['description']
         expense.amount = media['amount']
         expense.frequency = media['frequency']
         expense.timeunit = media['timeunit']
-        expense.dt = media['end_date']
+        expense.end_date = media['end_date']
         expense.save()
 
         return self._serialise_expense(expense)
