@@ -13,6 +13,7 @@ import EditBudgetModal from "./EditBudgetModal";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
 import BudgetStore from "./BudgetStore";
+import EditBudgetStore from "./EditBudgetStore";
 import TxStore from "./TxStore";
 import ExpenseStore from "./ExpenseStore";
 import IncomeStore from "./IncomeStore";
@@ -54,8 +55,15 @@ export default class BudgetComponent extends React.Component {
         BudgetStore.expenseModal = true;
     }
 
-    openEditBudgetModal = () => {
+    openEditBudgetModal = (id) => {
         BudgetStore.editBudgetModal = true;
+
+        EditBudgetStore.id = id;
+        if (EditBudgetStore.id != undefined) {
+            EditBudgetStore.getData(id);
+        }
+        console.log("mounting with id: " + EditBudgetStore.id);
+
     }
 
     render() {
@@ -72,7 +80,7 @@ export default class BudgetComponent extends React.Component {
                 </Header>
                 <Button
                     positive
-                    onClick={this.openEditBudgetModal}
+                    onClick={() => this.openEditBudgetModal(-1)}
                 >
                     <Icon name="add" />
                     New savings goal
@@ -123,7 +131,7 @@ export default class BudgetComponent extends React.Component {
                                 <Table.Cell>{budget.amount}</Table.Cell>
                                 <Table.Cell>{budget.end_date}</Table.Cell>
                                 <Table.Cell>
-                                    <Button primary onClick={this.openEditBudgetModal}>
+                                    <Button primary onClick={() => this.openEditBudgetModal(budget.id)}>
                                         <Icon name="edit" />
                                         Edit
                                     </Button>

@@ -13,6 +13,8 @@ class BudgetStore {
     @observable incomeModal = false;
     @observable editBudgetModal = false;
 
+    @observable editBudgetId = "";
+
     addRow() {
         this.incomes.push({
             Description: "",

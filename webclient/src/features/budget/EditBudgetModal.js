@@ -26,6 +26,12 @@ export default class EditBudgetModal extends React.Component {
         EditBudgetStore.create();
     }
 
+    update = () => {
+        EditBudgetStore.update();
+    }
+
+
+
     render() {
         const freqOptions = [
             { text: 'day', value: '7' },
@@ -70,6 +76,7 @@ export default class EditBudgetModal extends React.Component {
                                 <TextArea
                                     placeholder="Description"
                                     label="Description"
+                                    value={EditBudgetStore.description}
                                     onChange={this.onChangeDescription}
                                 />
                             </Form.Field>
@@ -95,11 +102,13 @@ export default class EditBudgetModal extends React.Component {
                             <Form.Field>
                                 <Input
                                     type="date"
+                                    value={EditBudgetStore.endDate}
                                     label="End date"
                                 />
                             </Form.Field>
 
                         </Form>
+                        <Button onClick={this.update}> Update </Button>
                         <Button onClick={this.save}> Save </Button>
                     </Modal.Description>
                 </Modal.Content>

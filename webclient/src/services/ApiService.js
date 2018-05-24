@@ -1,6 +1,6 @@
 import * as moment from "moment";
 
- const baseUrl = "https://api.cloudstacks.co";
+const baseUrl = "https://api.cloudstacks.co";
 // const baseUrl = "http://localhost:4100";
 
 // So we can distinguish fetch requests on the backend
@@ -24,6 +24,7 @@ class ApiService {
     }
 
     post(url, data) {
+        console.log("api service: post: " + data.description);
         return fetch(baseUrl + url, {
             ...defaultFetchOptions,
             method: "post",
