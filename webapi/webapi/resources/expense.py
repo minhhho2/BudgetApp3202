@@ -32,7 +32,7 @@ class ExpenseRepository():
         return self._serialise_expense(expense)
 
     def create_expense(self, media: dict, user_id: int):
-        end_date = dateutil.parser.parse(media['end_date'])
+        end_date = dateutil.parser.parse(media['end_date']) if media.get('end_date', False) else None
         expense = self._Expense.create(user_id=user_id,
             name=media['name'],
             description=media['description'],

@@ -18,6 +18,7 @@ class TxStore {
             amount,
             description: this.description
         })
+            .then(console.log)
             .then(() => BudgetStore.getTransactions())
             .then(() => UserStore.isAuthenticating = false)
             .catch(() => UserStore.isAuthenticating = false)

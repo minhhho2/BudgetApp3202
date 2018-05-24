@@ -42,11 +42,13 @@ class ProfileStore {
             last_name: this.lastname,
             birthday: this.birthday,
             gender: this.gender,
-            phone_number: this.mobile,
+            phone_number: this.phoneNumber,
             email_address: this.emailAddress,
             home_address: this.homeAddress
         })
-            .then(() => UserStore.isAuthenticating = false);
+            .then(console.log)
+            .then(() => UserStore.isAuthenticating = false)
+            .catch(() => UserStore.isAuthenticating = false);
     }
 }
 
