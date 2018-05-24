@@ -1,9 +1,4 @@
 from twilio.rest import Client
-from file1 import *  
-
-mock_receiver = "+61466389745"
-mock_sender = "+61448068514"
-mock_message = " message from twilio "
 
 class MessageClient:
     def __init__(self):
@@ -16,7 +11,7 @@ class MessageClient:
             from_=self.twilio_number,
             body=body)
 
-    def _load_twilio_config():
+    def _load_twilio_config(self):
         ''' data from twilio account '''
         twilio_number = "+61448068514"
         twilio_account_sid = "AC6814cfccdf1a3ba97bfeff02802c5e85"

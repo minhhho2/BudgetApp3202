@@ -32,7 +32,7 @@ class IncomeRepository():
         return self._serialise_income(income)
 
     def create_income(self, media: dict, user_id: int):
-        end_date = dateutil.parser.parse(media['end_date'])
+        end_date = dateutil.parser.parse(media['end_date']) if media.get('end_date', False) else None
         income = self._Income.create(user_id=user_id,
             name=media['name'],
             description=media['description'],
