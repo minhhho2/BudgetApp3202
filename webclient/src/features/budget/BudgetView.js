@@ -76,8 +76,6 @@ export default class BudgetComponent extends React.Component {
         }
     }
 
-
-
     render() {
         const { budgets, incomes, expenses, transactions } = BudgetStore;
 

@@ -2,18 +2,19 @@ import json
 import falcon
 import datetime
 
-from webapi.models import Income, Expense, Transaction, Budget, PersonalInformation, User
+from webapi.models import Income, Expense, Transaction, Budget, PersonalInformation, User, UserSettings
 from webapi.resources.analytics import AnalyticsRepository
 
 class ComparisonRepository():
     def __init__(self, income_model=Income, expense_model=Expense,
-        budget_model=Budget, profile_model=PersonalInformation,
+        budget_model=Budget, profile_model=PersonalInformation, user_settings_model=UserSettings,
         user_model=User, analytics_repo=AnalyticsRepository()):
 
         self._Income = income_model
         self._Expense = expense_model
         self._Budget = budget_model
         self._PersonalInformation = PersonalInformation
+        self._UserSettings = user_settings_model
         self._User = user_model
         self._analytics_repo = analytics_repo
 
@@ -30,7 +31,9 @@ class ComparisonRepository():
         global_expenses = self._Expense.select()
         own_expenses = global_expenses.where(self._Expense.user_id==user_id)
         
-        user_filter = self._PersonalInformation.select()
+        sharing_ids = [u.user_id for u in self._UserSettings.select().where(self._UserSettings.share_data)]
+
+        user_filter = self._PersonalInformation.select().where(self._PersonalInformation.user_id in sharing_ids)
         if media.get('gender', False):
             user_filter = user_filter.where(self._PersonalInformation.gender==personal_info.gender)
         if media.get('age', False):

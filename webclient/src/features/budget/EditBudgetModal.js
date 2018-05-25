@@ -65,8 +65,8 @@ export default class EditBudgetModal extends React.Component {
                 <Modal.Header>
                     {
                         id === undefined ?
-                            "Create Budget" :
-                            "Update Budget"
+                            "Create savings goal" :
+                            "Update savings goal"
                     }
                 </Modal.Header>
                 <Modal.Content>
@@ -74,7 +74,7 @@ export default class EditBudgetModal extends React.Component {
                         <Form>
                             <Form.Field>
                                 <Input
-                                    placeholder="Budget name"
+                                    placeholder="Savings goal name"
                                     label="Name"
                                     value={EditBudgetStore.name}
                                     onChange={this.onChangeName}

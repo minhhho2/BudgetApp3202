@@ -1,27 +1,36 @@
 import { observable } from "mobx";
+import ApiService from "../../services/ApiService";
+import UserStore from "../../stores/UserStore";
 
 class SettingStore {
-    @observable emails = 0;
-    @observable texts = 0;
-    @observable sharing = 0;
+    @observable emails = true;
+    @observable texts = true;
+    @observable sharing = true;
     @observable availableNotifications = [];
 
     getSettings() {
-        ApiService.get('/setting').then(JSON.parse)
+        ApiService.get('/settings')
+            .then(JSON.parse)
+            .then(res => res.Message)
             .then(settings => {
-                this.emails = emails;
-                this.texts = texts;
-                this.sharing = sharing;
-                this.notifications = notifications;
+                this.emails = settings.email_notification;
+                this.texts = settings.text_notification;
+                this.sharing = settings.share_data;
             });
     }
 
     saveSettings() {
-        ApiService.put('/setting', {
-            emails: this.emails,
-            texts: this.texts,
-            sharing: this.sharing
-        });
+        UserStore.isAuthenticating = true;
+        ApiService.post('/settings', {
+            email_notification: this.emails,
+            text_notification: this.texts,
+            share_data: this.sharing
+        })
+            .then(JSON.parse)
+            .then(res => res.Message)
+            .then(() => this.getSettings())
+            .catch(err => alert(err.message))
+            .then(() => UserStore.isAuthenticating = false);
     }
 }
 

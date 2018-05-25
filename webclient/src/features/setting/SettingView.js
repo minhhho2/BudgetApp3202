@@ -15,9 +15,13 @@ export default class SettingView extends React.Component {
     }
 
     // handle method of notification
-    handleEmailChange = (e, { value }) => SettingStore.emails = !value | 0;
-    handleTextChange = (e, { value }) => SettingStore.texts = !value | 0;
-    handleSharingChange = (e, { value }) => SettingStore.sharing = !value | 0;
+    handleEmailChange = (e, data) => { SettingStore.emails = !SettingStore.emails };
+    handleTextChange = (e, data) => { SettingStore.texts = !SettingStore.texts };
+    handleSharingChange = (e, data) => { SettingStore.sharing = !SettingStore.sharing };
+
+    save = () => {
+        SettingStore.saveSettings();
+    }
 
     render() {
 
@@ -27,26 +31,23 @@ export default class SettingView extends React.Component {
                 <Form.Checkbox
                     toggle
                     label="Email notification"
-                    value={SettingStore.emails}
-                    checked={SettingStore.emails === 1}
-                    onChange={this.handleEmailChange}
+                    onClick={this.handleEmailChange}
+                    checked={SettingStore.emails}
                 />
                 <br />
                 <Form.Checkbox
                     toggle
                     label="Text notification"
-                    value={SettingStore.texts}
-                    checked={SettingStore.texts === 1}
-                    onChange={this.handleTextChange}
+                    onClick={this.handleTextChange}
+                    checked={SettingStore.texts}
                 />
                 <br />
 
                 <Form.Checkbox
                     toggle
                     label="Share budget information"
-                    value={SettingStore.sharing}
-                    checked={SettingStore.sharing === 1}
-                    onChange={this.handleSharingChange}
+                    onClick={this.handleSharingChange}
+                    checked={SettingStore.sharing}
                 />
                 <br />
 
@@ -57,7 +58,7 @@ export default class SettingView extends React.Component {
                 />
 
                 <br />
-                <Button toggle onClick={SettingStore.saveSettings}> Save </Button>
+                <Button toggle onClick={this.save}> Save </Button>
             </div >
         );
     }
