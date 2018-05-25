@@ -34,7 +34,7 @@ class AnalyticsStore {
             .then(data => {
                 const { user_data, average_global_data } = data;
                 this.userData = ["User", user_data.weekly_saving_goals, user_data.weekly_income, user_data.weekly_expenses ]
-                this.globalData = ["User", average_global_data.weekly_saving_goals, average_global_data.weekly_income, average_global_data.weekly_expenses ]
+                this.globalData = ["Global", average_global_data.weekly_saving_goals, average_global_data.weekly_income, average_global_data.weekly_expenses ]
             })
             .then(() => this.sanitize());
     }

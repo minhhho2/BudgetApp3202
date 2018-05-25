@@ -10,12 +10,15 @@ class AnalyticsRepository():
         self._Transaction = transaction_model
 
     def _serialise(self, obj):
-        amount = obj.amount * obj.frequency
-        if obj.timeunit == 'Daily':
+        freq = obj.frequency if obj.frequency > 0 else 1
+        timeunit = obj.timeunit if len(obj.timeunit) > 0 else 'Annually'
+
+        amount = obj.amount * freq
+        if timeunit == 'Daily':
             amount *= 7
-        if obj.timeunit == 'Monthly':
+        if timeunit == 'Monthly':
             amount /= 4
-        if obj.timeunit == 'Annually':
+        if timeunit == 'Annually':
             amount /= 52
                 
         return {

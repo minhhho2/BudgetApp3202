@@ -40,8 +40,8 @@ class TransactionRepository():
     def create_transaction(self, media: dict, user_id: int):
         dt = dateutil.parser.parse(media['end_date']) if media.get('end_date', False) else datetime.datetime.now()
         tx = self._Transaction.create(user_id=user_id,
-            description=media['description'],
-            amount=media['amount'],
+            description=media.get('description', ''),
+            amount=media.get('amount', 0),
             dt=dt)
         tx.save()
 
@@ -109,7 +109,8 @@ class TransactionRepository():
     def _send_warning_sms(self, user_id: int, description: str):
         profile = self._PersonalInformation.get(self._PersonalInformation.user_id==user_id)
         phone_number = profile.phone_number
-        self._msg_client.send_sms(f'Your last transaction "{description}" puts you over your weekly allowance', phone_number)
+        if len(phone_number > 0):
+            self._msg_client.send_sms(f'Your last transaction "{description}" puts you over your weekly allowance', phone_number)
 
 class TransactionCollection(object):
     def __init__(self, tx_repo=TransactionRepository()):

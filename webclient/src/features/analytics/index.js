@@ -72,10 +72,6 @@ export default class AnalyticsComponent extends React.Component {
                         </Table.Row>
                     </Table.Body>
                 </Table>
-
-
-
-
             </div>
         )
     }

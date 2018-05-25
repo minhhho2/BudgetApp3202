@@ -30,11 +30,11 @@ export default class RegisterComponent extends React.Component {
                         </Form.Field>
                         <Form.Field>
                             <label>Password</label>
-                            <input placeholder="Password" onChange={this.changePasswordHandler} />
+                            <input type="password" placeholder="Password" onChange={this.changePasswordHandler} />
                         </Form.Field>
                         <Form.Field>
                             <label>Confirm password</label>
-                            <input placeholder="Confirm password" onChange={this.changePasswordConfirmHandler} />
+                            <input type="password" placeholder="Confirm password" onChange={this.changePasswordConfirmHandler} />
                         </Form.Field>
                         <Button positive type="submit">Register</Button>
                         <Button as={Link} to="/">Cancel</Button>

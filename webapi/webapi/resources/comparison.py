@@ -34,12 +34,16 @@ class ComparisonRepository():
         sharing_ids = [u.user_id for u in self._UserSettings.select().where(self._UserSettings.share_data)]
 
         user_filter = self._PersonalInformation.select().where(self._PersonalInformation.user_id in sharing_ids)
-        if media.get('gender', False):
-            user_filter = user_filter.where(self._PersonalInformation.gender==personal_info.gender)
-        if media.get('age', False):
-            user_filter = user_filter.where(self._PersonalInformation.birthday.year == personal_info.birthday.year)
-
-        user_filter = [u.user_id for u in user_filter]
+        try:
+            if personal_info.gender is not None and media.get('gender', False):
+                user_filter = user_filter.where(self._PersonalInformation.gender==personal_info.gender)
+            if personal_info.birthday is not None and media.get('age', False):
+                user_filter = user_filter.where(self._PersonalInformation.birthday.year == personal_info.birthday.year)
+        except Exception as e:
+            user_filter = user_filter
+        finally:
+            user_filter = [u.user_id for u in user_filter]
+        
         global_savings_goals = global_savings_goals.where(self._Budget.user_id in user_filter)
         global_incomes = global_incomes.where(self._Income.user_id in user_filter)
         global_expenses = global_expenses.where(self._Expense.user_id in user_filter)

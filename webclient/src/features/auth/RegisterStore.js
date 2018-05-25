@@ -12,12 +12,13 @@ class RegisterStore {
     validate() {
         const { username, newPassword, newPasswordConfirm } = this.credentials;
         if (username.length < 6) {
+            this.validationErrors.push("Username must be 6 chars or longer.")
         }
         if (newPassword.length < 6) {
-        }
-        if (newPasswordConfirm.length < 6) {
+            this.validationErrors.push("Password must be 6 chars or longer.")
         }
         if (newPassword !== newPasswordConfirm) {
+            this.validationErrors.push("Passwords do not match.")
         }
     }
 
@@ -25,6 +26,9 @@ class RegisterStore {
         this.validationErrors = [];
         const errors = this.validate();
         if (this.validationErrors.length > 0) {
+            this.validationErrors.forEach(err => {
+                alert(err);
+            })
             return;
         }
 
@@ -34,7 +38,6 @@ class RegisterStore {
         UserStore.isAuthenticating = true;
         ApiService.put('/user', data)
             .then(res => {
-                (res);
                 UserStore.isAuthenticating = false;
             });
     }
