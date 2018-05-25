@@ -1,7 +1,7 @@
 import json
 import falcon
 import datetime
-import dateutil.parser
+from dateutil import parser, rrule
 
 from webapi.models import User, Transaction, PersonalInformation, Income, Expense, Budget
 from webapi.resources.user import UserRepository
@@ -79,9 +79,11 @@ class TransactionRepository():
         today = datetime.datetime.now()
 
         if budget_end_date < today:
-            return budget.amount/52
+            return 0
 
-        return 1
+        weeks = rrule.rrule(rrule.WEEKLY, dtstart=today, until=budget_end_date).count()
+        return budget.amount/weeks
+
 
     def _do_we_sms(self, user_id: int):
         budgets = self._Budget.select().where(self._Budget.user_id==user_id)

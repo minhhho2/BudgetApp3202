@@ -31,7 +31,7 @@ class AnalyticsRepository():
         expenses = self._Expense.select().where(self._Expense.user_id==user_id)
         return [self._serialise(ex) for ex in expenses]
 
-    def get_weiht_adjusted_transactions(self, user_id: int, incoming):
+    def get_weight_adjusted_transactions(self, user_id: int, incoming):
         transactions = self._Transaction.select().where(self._Transaction.user_id==user_id)
         transaction_dict = dict()
         for tx in transactions:
@@ -60,8 +60,8 @@ class AnalyticsCollection(object):
         if id == 1:
             data = self._analytics_repo.get_weight_adjusted_expenses(user_id)
         if id == 2:
-            data = self._analytics_repo.get_weiht_adjusted_transactions(user_id, True)
+            data = self._analytics_repo.get_weight_adjusted_transactions(user_id, True)
         if id == 3:
-            data = self._analytics_repo.get_weiht_adjusted_transactions(user_id, False)            
+            data = self._analytics_repo.get_weight_adjusted_transactions(user_id, False)            
 
         response.media = json.dumps({ 'Success': True, 'Message': data })
