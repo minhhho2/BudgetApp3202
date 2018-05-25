@@ -33,7 +33,7 @@ routes = [
     ('/profile', ProfileCollection),
     ('/analytics/{id:int}', AnalyticsCollection),
     ('/settings', SettingsCollection),
-    ('/compare/', ComparisonCollection)
+    ('/compare', ComparisonCollection)
 ]
 
 def register_routes(app):

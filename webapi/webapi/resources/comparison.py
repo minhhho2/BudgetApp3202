@@ -43,7 +43,7 @@ class ComparisonRepository():
 
         global_weekly_savings_goal = sum([self._analytics_repo._serialise(b)['amount'] for b in global_savings_goals])/user_count
         global_weekly_income = sum([self._analytics_repo._serialise(i)['amount'] for i in global_incomes])/user_count
-        global_weekly_expense = sum([self._analytics_repo._serialise(e)['amount'] for e in global_expense])/user_count
+        global_weekly_expense = sum([self._analytics_repo._serialise(e)['amount'] for e in global_expenses])/user_count
 
         own_weekly_savings_goal = sum([self._analytics_repo._serialise(b)['amount'] for b in own_savings_goals])
         own_weekly_income = sum([self._analytics_repo._serialise(i)['amount'] for i in own_incomes])
