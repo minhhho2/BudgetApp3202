@@ -1,6 +1,9 @@
 import * as React from "react";
 import { observer } from "mobx-react";
-import { Icon, Grid, Form, Input, Field, Image, Segment, Divider, Button } from "semantic-ui-react";
+import {
+    Icon, Grid, Form, Input, Field, Image,
+    Segment, Divider, Button, Select
+} from "semantic-ui-react";
 import ProfileStore from "./ProfileStore.js";
 
 @observer
@@ -63,7 +66,9 @@ export default class ProfileComponent extends React.Component {
                 <Grid divided='vertically'>
                     <Grid.Row columns={2}>
                         <Grid.Column width={3}>
-                            <Image src='https://i.pinimg.com/originals/82/2b/96/822b96b7c5c63142b4491c502749c443.jpg' size='small' wrapped />
+                            <Image src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+                                size='small' wrapped
+                            />
                         </Grid.Column>
                         <Grid.Column width={10}>
                             <h4>
@@ -94,14 +99,20 @@ export default class ProfileComponent extends React.Component {
                                         value={new Date()}
                                         onChange={this.handleChangeBirthday}
                                     />
-                                    <Form.Field inline
-                                        disabled={ProfileStore.editable}
-                                        control='input'
-                                        label='Gender'
-                                        placeholder='gender'
-                                        value={ProfileStore.gender}
-                                        onChange={this.handleChangeGender}
-                                    />
+                                    <Form.Field>
+                                        <Select
+                                            disabled={ProfileStore.editable}
+                                            label='Gender'
+                                            placeholder='gender'
+                                            value={ProfileStore.gender}
+                                            onChange={this.handleChangeGender}
+                                            options={[
+                                                { key: 'male', value: 'male', text: 'male' },
+                                                { key: 'female', value: 'female', text: 'female' }
+                                            ]}
+                                        />
+
+                                    </Form.Field>
 
                                     <Divider horizontal>Contact Information</Divider>
 

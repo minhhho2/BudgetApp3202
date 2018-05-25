@@ -102,7 +102,7 @@ export default class App extends React.Component {
                                 <Icon name="tasks" />
                                 Analyse
                         </Menu.Item>
-                        <Menu.Item name="Analyse" as={Link} to="/analytics">
+                            <Menu.Item name="Analyse" as={Link} to="/analytics">
                                 <Icon name="tasks" />
                                 Compare
                         </Menu.Item>
@@ -117,15 +117,17 @@ export default class App extends React.Component {
                         </Sidebar>
                         <Sidebar.Pusher>
                             <Segment basic>
-                                <Switch>
-                                    <Route path="/" exact component={DashboardComponent} />
-                                    <Route path="/budget" exact component={BudgetView} />
-                                    <Route path="/analytics" exact component={AnalyticsComponent} />
-                                    <Route path="/profile" exact component={ProfileComponent} />
-                                    <Route path="/setting" exact component={SettingView} />
-                                    <Route path="/overview" exact component={OverviewView} />
-                                    <Route component={NotFoundComponent} />
-                                </Switch>
+                                <div style={{ width: "80%" }}>
+                                    <Switch>
+                                        <Route path="/" exact component={DashboardComponent} />
+                                        <Route path="/budget" exact component={BudgetView} />
+                                        <Route path="/analytics" exact component={AnalyticsComponent} />
+                                        <Route path="/profile" exact component={ProfileComponent} />
+                                        <Route path="/setting" exact component={SettingView} />
+                                        <Route path="/overview" exact component={OverviewView} />
+                                        <Route component={NotFoundComponent} />
+                                    </Switch>
+                                </div>
                             </Segment>
                         </Sidebar.Pusher>
                     </Sidebar.Pushable>

@@ -3,16 +3,13 @@ import ApiService from "../../services/ApiService";
 import UserStore from "../../stores/UserStore";
 
 class ProfileStore {
-    @observable firstname = "Kermet";
-    @observable lastname = "Krab";
+    @observable firstname = "";
+    @observable lastname = "";
     @observable birthday = new Date().toISOString().split('T')[0];
-
-    @observable gender = "trans";
-
-    @observable phoneNumber = "+61466999666";
-    @observable emailAddress = "kermit_krab@hotmail.com";
-    @observable homeAddress = "sesame street, 4074, brisbane, queensland";
-
+    @observable gender = "";
+    @observable phoneNumber = "";
+    @observable emailAddress = "";
+    @observable homeAddress = "";
     @observable editable = true;
 
     getData() {
@@ -24,19 +21,17 @@ class ProfileStore {
                 this.firstname = profile.first_name;
                 this.lastname = profile.last_name;
                 this.birthday = new Date(profile.birthday);
-                // this.gender = profile.gender;
+                this.gender = profile.gender;
                 this.phoneNumber = profile.phone_number;
                 this.emailAddress = profile.emailAddress;
                 this.homeAddress = profile.homeAddress;
-
-                console.log(new Date(this.birthday));
             })
             .then(() => UserStore.isAuthenticating = false);
 
     }
 
     save() {
-        UserStore.isAuthenticating = true;        
+        UserStore.isAuthenticating = true;
         ApiService.put('/profile', {
             first_name: this.firstname,
             last_name: this.lastname,
