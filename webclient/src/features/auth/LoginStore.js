@@ -34,7 +34,7 @@ class LoginStore {
                 }
                 UserStore.setUser(res);
             })
-            .catch(err => console.log(err))
+            .catch(err => alert(err.message))
             .finally(() => UserStore.isAuthenticating = false);
     }
 }

@@ -10,48 +10,38 @@ import ProfileStore from "./ProfileStore.js";
 export default class ProfileComponent extends React.Component {
     componentDidMount() {
         ProfileStore.getData();
-        console.log(ProfileStore.birthday);
     }
 
     handleSave = () => {
-        console.log("save");
         ProfileStore.save();
         ProfileStore.editable = true;
     }
 
     handleEdit = () => {
         ProfileStore.editable = !ProfileStore.editable;
-        console.log("editable is: " + ProfileStore.editable);
     }
 
     handleChangeFirstName = (e) => {
         ProfileStore.firstname = e.target.value;
-        console.log(e.target.value);
     }
     handleChangeLastname = (e) => {
         ProfileStore.lastname = e.target.value;
-        console.log(e.target.value);
     }
     handleChangeBirthday = (e) => {
         ProfileStore.birthday = e.target.value;
-        console.log(e.target.value);
     }
     handleChangeGender = (e) => {
         ProfileStore.gender = e.target.value;
-        console.log(e.target.value);
     }
 
     handleChangeEmailAddress = (e) => {
         ProfileStore.emailAddress = e.target.value;
-        console.log(e.target.value);
     }
     handleChangeHomeAddress = (e) => {
         ProfileStore.homeAddress = e.target.value;
-        console.log(e.target.value);
     }
     handleChangePhoneNumber = (e) => {
         ProfileStore.phoneNumber = e.target.value;
-        console.log(e.target.value);
     }
 
     render() {

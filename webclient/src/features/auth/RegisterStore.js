@@ -34,7 +34,7 @@ class RegisterStore {
         UserStore.isAuthenticating = true;
         ApiService.put('/user', data)
             .then(res => {
-                console.log(res);
+                (res);
                 UserStore.isAuthenticating = false;
             });
     }

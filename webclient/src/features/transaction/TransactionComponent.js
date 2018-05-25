@@ -36,8 +36,6 @@ export default class TransactionComponent extends React.Component {
         );
 
         this.props.updateTransactions(newTransaction);
-
-        console.log("Adding transaction: " + newTransaction.toString());
         TransactionStore.isOpen = false;
     }
 

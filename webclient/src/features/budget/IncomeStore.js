@@ -27,8 +27,6 @@ class IncomeStore {
                 this.frequency = income.frequency;
                 this.endDate = income.endDate;
             });
-
-        console.log("getting income store data");
     }
 
     create() {
@@ -45,7 +43,7 @@ class IncomeStore {
                 undefined
         })
             .then(() => BudgetStore.getIncomes())
-            .catch(console.log)
+            .catch(err => alert(err.message))
             .then(() => UserStore.isAuthenticating = false)
     }
 

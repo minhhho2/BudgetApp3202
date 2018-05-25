@@ -56,7 +56,6 @@ export default class AnalyticsComponent extends React.Component {
 
                     <Table.Body>
                         <Table.Row>
-                            {console.log(userData)}
                             {userData.map((elem, index) => {
                                 return <Table.Cell key={index}>
                                     <Header as='h2' textAlign='center'>{elem}</Header>

@@ -12,7 +12,6 @@ export default class ApplicationContent extends React.Component {
         var total = 0;
         array.forEach((el) => {
             total += el.amount;
-            console.log("amount: " + el.amount);
         });
         return total;
     }

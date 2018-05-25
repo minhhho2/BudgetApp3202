@@ -55,7 +55,6 @@ export default class App extends React.Component {
 
     updateTransactions = (transaction) => {
         DashboardStore.transactions.push(transaction);
-        console.log("Current State: " + transaction.toString()); // + this.state.state);
     }
 
     render() {

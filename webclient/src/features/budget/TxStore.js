@@ -30,9 +30,8 @@ class TxStore {
             description: this.description,
             dt: new Date()         // defaulted to undefined for now
         })
-            .then(console.log)
             .then(() => BudgetStore.getTransactions())
-            .catch(console.log)
+            .catch(err => alert(err.message))
             .then(() => UserStore.isAuthenticating = false)
     }
 
