@@ -76,7 +76,7 @@ export default class EditBudgetModal extends React.Component {
                                 <Input
                                     placeholder="Budget name"
                                     label="Name"
-                                    value={EditBudgetStore.name}
+                                    value={name}
                                     onChange={this.onChangeName}
                                 />
                             </Form.Field>
@@ -84,7 +84,7 @@ export default class EditBudgetModal extends React.Component {
                                 <TextArea
                                     placeholder="Description"
                                     label="Description"
-                                    value={EditBudgetStore.description}
+                                    value={description}
                                     onChange={this.onChangeDescription}
                                 />
                             </Form.Field>
@@ -93,7 +93,7 @@ export default class EditBudgetModal extends React.Component {
                                     placeholder="amount"
                                     label="Amount"
                                     type="number"
-                                    value={EditBudgetStore.amount}
+                                    value={amount}
                                     onChange={this.onChangeAmount}
                                 />
                             </Form.Field>
@@ -101,7 +101,7 @@ export default class EditBudgetModal extends React.Component {
                                 <Checkbox
                                     toggle
                                     label="One off"
-                                    value={EditBudgetStore.oneOff}
+                                    value={oneOff}
                                     checked={EditBudgetStore.oneOff === 1}
                                     onChange={this.onChangeOneOff}
                                 />
@@ -110,7 +110,7 @@ export default class EditBudgetModal extends React.Component {
                             <Form.Field>
                                 <Input
                                     type="date"
-                                    value={EditBudgetStore.endDate}
+                                    value={endDate}
                                     onChange={this.onChangeEndDate}
                                     label="End date"
                                 />

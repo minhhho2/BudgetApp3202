@@ -47,6 +47,7 @@ export default class TxModal extends React.Component {
 
     render() {
         const { id, amount, description } = TxStore;
+        
         const button = id === undefined ?
             <Button type="button" onClick={this.save}> Save </Button> :
             <Button type="button" onClick={this.update}> Update </Button>;
