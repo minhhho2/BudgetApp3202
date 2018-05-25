@@ -8,14 +8,18 @@ class SettingsRepository:
         self._UserSettings = UserSettings
 
     def _serialise_settings(self, settings):
-        return {}
+        return {
+            'text_notification': settings.text_notification,
+            'email_notification': settings.email_notification,
+            'share_data': settings.share_data
+        }
 
     def update_settings(self, media: dict, user_id: int):
         settings = self._UserSettings.get(self._UserSettings.user_id==user_id)
 
-        settings.text_notification = media['text_notification']
-        settings.email_notification = media['email_notification']
-        settings.share_data = media['share_data']
+        settings.text_notification = media.get('text_notification', False)
+        settings.email_notification = media.get('email_notification', False)
+        settings.share_data = media.get('share_data', False)
 
         settings.save()
         return self._serialise_settings(settings)
@@ -30,8 +34,8 @@ class SettingsCollection(object):
 
     def on_get(self, request, response):
         user_id = int(request.cookies['budgetapp_login'])
-        return self._settings_repo.get_settings(user_id)
+        response.media = json.dumps({ 'Success': True, 'Message': self._settings_repo.get_settings(user_id) })
 
     def on_post(self, request, response):
         user_id = int(request.cookies['budgetapp_login'])
-        return self._settings_repo.update_settings(request.media, user_id)
+        response.media = json.dumps({ 'Success': True, 'Message': self._settings_repo.update_settings(request.media, user_id) })

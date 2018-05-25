@@ -69,15 +69,12 @@ export default class BudgetComponent extends React.Component {
     }
 
     openExpenseModal = (id) => {
-        console.log("open expense modal with id: " + id);
         BudgetStore.editExpenseModal = true;
         ExpenseStore.id = id;
         if (ExpenseStore.id != undefined) {
             ExpenseStore.getData(id);
         }
     }
-
-
 
     render() {
         const { budgets, incomes, expenses, transactions } = BudgetStore;

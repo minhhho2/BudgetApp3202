@@ -32,7 +32,8 @@ class UserRepository():
 
     def validate_credentials(self, username, password):
         user = self._User.select().where(self._User.user_name == username).first()
-        if not user:
+        is_valid = bcrypt.checkpw(password.encode('utf-8'), user.password_hash.encode('utf-8'))
+        if not user or not is_valid:
             return None
         return self._serialise_user(user)
 
@@ -75,6 +76,7 @@ class UserResource(object):
 
     def on_post(self, request, response):
         response.media = json.dumps({ 'Success': False, 'Message': 'Invalid credentials.' })
+        
         username, password = request.media['username'], request.media['password']
         user = self._user_repo.validate_credentials(username, password)
         if not user or user is None:

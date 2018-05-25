@@ -41,7 +41,6 @@ class ProfileStore {
             email_address: this.emailAddress,
             home_address: this.homeAddress
         })
-            .then(console.log)
             .then(() => UserStore.isAuthenticating = false)
             .catch(() => UserStore.isAuthenticating = false);
     }

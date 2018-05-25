@@ -14,7 +14,6 @@ class EditBudgetStore {
     @observable oneOff = 1;
 
     getData(id) {
-        console.log("id in editbudget store is: " + id);
         ApiService.get(`/budget/${id}`)
             .then(JSON.parse)
             .then(res => res.Message)
@@ -35,16 +34,15 @@ class EditBudgetStore {
 
         ApiService.put('/budget', {
             name: this.name,
-            description: this.description, //'This is my main budget.',
-            amount: this.amount, //1000,
-            frequency: this.frequency, //1,
-            timeunit: this.timeunit, //'monthly'
+            description: this.description,
+            amount: this.amount,
+            frequency: this.frequency,
+            timeunit: this.timeunit,
             end_date: this.endDate
         })
             .then(() => BudgetStore.getBudgets())
-            .catch(e => {
-                console.log(e);
-                UserStore.isAuthenticating = false
+            .catch(err => {
+                alert(err.message)
             })
             .then(() => UserStore.isAuthenticating = false)
     }
@@ -53,10 +51,10 @@ class EditBudgetStore {
         UserStore.isAuthenticating = true;
         ApiService.post(`/budget/${this.id}`, {
             name: this.name,
-            description: this.description, //'This is my main budget.',
-            amount: this.amount, //1000,
-            frequency: this.frequency, //1,
-            timeunit: this.timeunit, //'monthly'
+            description: this.description,
+            amount: this.amount,
+            frequency: this.frequency,
+            timeunit: this.timeunit,
             end_date: this.endDate
         })
             .then(() => BudgetStore.getBudgets())
@@ -74,7 +72,6 @@ class EditBudgetStore {
         this.timeunit = 0;
         this.endDate = undefined;
         this.oneOff = 1;
-        console.log("clear field");
     }
 
 

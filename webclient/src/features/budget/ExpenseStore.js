@@ -27,7 +27,6 @@ class ExpenseStore {
                 this.frequency = expense.frequency;
                 this.endDate = expense.endDate;
             });
-        console.log("getting expense store data");
     }
 
     create() {
@@ -43,7 +42,7 @@ class ExpenseStore {
             end_date: this.endDate
         })
             .then(() => BudgetStore.getExpenses())
-            .catch(console.log)
+            .catch(err => alert(err.message))
             .then(() => UserStore.isAuthenticating = false)
     }
 
@@ -54,8 +53,6 @@ class ExpenseStore {
     }
 
     update() {
-        console.log("update in expense: " + this.id);
-
         ApiService.post(`/expense/${this.id}`, {
             name: this.name,
             amount: this.amount,
