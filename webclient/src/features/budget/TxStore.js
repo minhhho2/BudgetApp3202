@@ -12,8 +12,8 @@ class TxStore {
     @observable isOther = false;
 
     getData(id) {
-        console.log("id: " + id)
         ApiService.get(`/transaction/${id}`)
+            .then(JSON.parse)
             .then(res => res.Message)
             .then(tx => {
                 this.id = tx.id;
@@ -37,7 +37,7 @@ class TxStore {
     }
 
     delete(id) {
-        ApiService.delete(`/transaction/${this.id}`)
+        ApiService.delete(`/transaction/${id}`)
             .then(_ => BudgetStore.transactions = BudgetStore.transactions.filter(tx => tx.id !== id))
             .catch(err => alert(err.message));
     }

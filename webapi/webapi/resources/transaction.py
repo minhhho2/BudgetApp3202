@@ -34,7 +34,7 @@ class TransactionRepository():
         return [ self._serialise_tx(tx) for tx in transactions ]
 
     def get_transaction(self, id: int):
-        tx = self._Transaction.get(_Transaction.id == id)
+        tx = self._Transaction.get(self._Transaction.id == id)
         return self._serialise_tx(tx)
 
     def create_transaction(self, media: dict, user_id: int):
