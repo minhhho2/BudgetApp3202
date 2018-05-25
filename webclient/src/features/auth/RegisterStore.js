@@ -32,7 +32,7 @@ class RegisterStore {
         const data = { username, password: newPassword };
 
         UserStore.isAuthenticating = true;
-        ApiService.put('/auth', data)
+        ApiService.put('/user', data)
             .then(res => {
                 console.log(res);
                 UserStore.isAuthenticating = false;

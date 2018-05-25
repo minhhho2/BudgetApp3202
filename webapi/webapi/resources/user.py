@@ -23,7 +23,7 @@ class UserRepository():
             birthday=None,
             phone_number='')
 
-        self._UserSettings.create(user_id=user_id,
+        self._UserSettings.create(user_id=user.id,
             text_notification=False,
             email_notification=False,
             share_data=False)
@@ -57,8 +57,8 @@ class UserResource(object):
 
     def on_put(self, request, response):
         ''' Register '''
-        first_name = request.media['first_name']
-        last_name = request.media['last_name']
+        first_name = request.media.get('first_name', '')
+        last_name = request.media.get('last_name', '')
         username = request.media['username']
         password = request.media['password']
 

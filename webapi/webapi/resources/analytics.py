@@ -42,9 +42,9 @@ class AnalyticsRepository():
             txs.append({ 'description': key, 'amount': transaction_dict[key] })
 
         if incoming:
-            return [ tx for tx in txs if tx['amount'] > 0]
-        else:
             return [ tx for tx in txs if tx['amount'] < 0]
+        else:
+            return [ tx for tx in txs if tx['amount'] > 0]
         
 
 class AnalyticsCollection(object):
