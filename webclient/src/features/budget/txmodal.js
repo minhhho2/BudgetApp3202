@@ -56,6 +56,7 @@ export default class TxModal extends React.Component {
                 <Input 
                     type="text" 
                     placeholder="Description" 
+                    value={description}
                     onChange={this.handleDescriptionChange} />
             </Form.Field> :
             null;
@@ -80,14 +81,14 @@ export default class TxModal extends React.Component {
                                 <Input
                                     placeholder="amount"
                                     type="number"
-                                    //value={amount}
+                                    value={amount}
                                     onChange={this.handleAmountChange}
                                 />
                             </Form.Field>
                             <Form.Field>
                                 <Select
                                     onChange={this.handleDescriptionChangeSelect}
-                                    //value={description}
+                                    value={description}
                                     options={transactionTypes}
                                 />
                             </Form.Field>

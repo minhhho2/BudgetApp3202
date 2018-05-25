@@ -4,7 +4,7 @@ import UserStore from "../../stores/UserStore";
 import BudgetStore from "./BudgetStore";
 
 class TxStore {
-    @observable id = 1;
+    @observable id = undefined;
     @observable amount = 0;
     @observable description = "";
     @observable dt = undefined;
@@ -12,12 +12,14 @@ class TxStore {
     @observable isOther = false;
 
     getData(id) {
+        console.log("id: " + id)
         ApiService.get(`/transaction/${id}`)
             .then(res => res.Message)
             .then(tx => {
                 this.id = tx.id;
                 this.amount = tx.amount;
                 this.description = tx.description;
+                this.dt = tx.dt;
             });
     }
 
@@ -25,8 +27,8 @@ class TxStore {
         UserStore.isAuthenticating = true;
         ApiService.put('/transaction', {
             amount: (this.amount * this.mult),
-            description: this.description
-            //dt: new Date()         // defaulted to undefined for now
+            description: this.description,
+            dt: new Date()         // defaulted to undefined for now
         })
             .then(console.log)
             .then(() => BudgetStore.getTransactions())
@@ -35,13 +37,13 @@ class TxStore {
     }
 
     delete(id) {
-        ApiService.delete(`/transaction/${id}`)
+        ApiService.delete(`/transaction/${this.id}`)
             .then(_ => BudgetStore.transactions = BudgetStore.transactions.filter(tx => tx.id !== id))
             .catch(err => alert(err.message));
     }
 
     update() {
-        ApiService.post(`/transaction/${id}`, {
+        ApiService.post(`/transaction/${this.id}`, {
             id: this.id,
             description: this.description,
             amount: this.amount
@@ -57,7 +59,7 @@ class TxStore {
     }
 
     clear() {
-        this.id = 1;
+        this.id = undefined;
         this.mult = 1;
         this.amount = 0;
         this.description = "";

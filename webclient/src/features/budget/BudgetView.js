@@ -14,7 +14,6 @@ import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
 
 import TxStore from "./TxStore";
-
 import BudgetStore from "./BudgetStore";
 import EditBudgetStore from "./EditBudgetStore";
 import ExpenseStore from "./ExpenseStore";
@@ -55,7 +54,6 @@ export default class BudgetComponent extends React.Component {
 
     openEditBudgetModal = (id) => {
         BudgetStore.editBudgetModal = true;
-
         EditBudgetStore.id = id;
         if (EditBudgetStore.id != undefined) {
             EditBudgetStore.getData(id);
@@ -243,10 +241,7 @@ export default class BudgetComponent extends React.Component {
                     </Table.Header>
                     <Table.Body>
                         {transactions.map((tx, index) => (
-                            <Table.Row
-                                key={index}
-                                onClick={() => TxStore.delete(tx.id)}
-                            >
+                            <Table.Row key={index} >
                                 <Table.Cell>{tx.description}</Table.Cell>
                                 <Table.Cell>{tx.amount}</Table.Cell>
                                 <Table.Cell>{tx.dt}</Table.Cell>

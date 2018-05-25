@@ -2,11 +2,20 @@ import * as React from "react";
 import { Button, Dropdown, Form, Select } from 'semantic-ui-react'
 import { observer } from "mobx-react";
 
+import chartOptions from "./ChartOptions"
+import dataOptions from "./dataOptions"
+import chartVariables from "./ChartVariables"
+
+
+
 import OverviewStore from "./OverviewStore";
 import Chart from 'chart.js';
 
 @observer
 export default class OverviewView extends React.Component {
+    componentWillUnmount() {
+        OverviewStore.hasChart = false;
+    }
 
     handleChangeType = (e, { value }) => {
         OverviewStore.chartType = value;
@@ -16,93 +25,70 @@ export default class OverviewView extends React.Component {
     }
 
     getChartData = (data) => {
-        var tupleLabelAmount = {
+        var dict = {
             labels: [],
             amounts: []
         }
+
         data.map(elem => {
-            if (!tupleLabelAmount.labels.includes(elem.description)) {
-                tupleLabelAmount.labels.push(elem.description);
+            if (!dict.labels.includes(elem.description)) {
+                dict.labels.push(elem.description);
             }
         });
 
-        tupleLabelAmount.labels.forEach(label => {
+        dict.labels.forEach(label => {
             const results = data.filter(elem => label === elem.description);
             var sum = results.reduce((accumulator, currentValue) => {
                 return accumulator + currentValue.amount;
             }, 0);
-            tupleLabelAmount.amounts.push(sum);
+            dict.amounts.push(sum);
         })
-        return tupleLabelAmount;
+
+        return dict;
     }
 
-    getDataType = () => {
-        switch (OverviewStore.dataType) {
+    updateDataType = (dataType) => {
+        switch (dataType) {
             case 'incomes':
                 return OverviewStore.getIncomes();
-                break;
             case 'expenses':
                 return OverviewStore.getExpenses();
-                break;
             case 'inflow':
                 return OverviewStore.getInflow();
-                break;
             case 'outflow':
                 return OverviewStore.getOutflow();
-                break;
             default:
-                return null
+                return null;
         }
     }
 
     handleAdd = () => {
-        console.log("adding chart for: " + OverviewStore.dataType + " - " + OverviewStore.chartType);
-        console.log("getting data type");
+        this.updateDataType(OverviewStore.dataType)
+        .then(() => {
+            const chartData = this.getChartData(OverviewStore.data); // tuple
 
-        var data = this.getDataType(OverviewStore.dataType);
-
-        console.log("getting chart data");
-        const chartData = this.getChartData(data);
-
-        const chartTitle = OverviewStore.chartType + " chart for types of " + OverviewStore.dataType;
-        let myChart = new Chart(this.refs.chart, {
-            type: OverviewStore.chartType,
-            data: {
-                labels: chartData.labels,
-                datasets: [{
-                    label: chartTitle,
-                    data: chartData.amounts,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-
-            options: {
-                responsive: false,
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
+            if (OverviewStore.hasChart) {
+                OverviewStore.chart.destroy();
             }
+            OverviewStore.chart = new Chart(this.refs.chart, {
+                type: OverviewStore.chartType,
+                data: {
+                    labels: chartData.labels,
+                    datasets: [{
+                        label: "Standardised " + OverviewStore.dataType,  // title
+                        data: chartData.amounts,
+                        backgroundColor: chartVariables.backgroundColor,
+                        borderColor: chartVariables.borderColor,
+                        borderWidth: 1
+                    }]
+                },
+                options: chartVariables.options
+            });
+            OverviewStore.hasChart = true;
         });
     }
 
     render() {
-
-        const chartOptions = ['pie', 'radar', 'line', 'bar'].map((option, index) => {
-            return { key: index, value: option, text: option }
-        });
-        const dataOptions = ['incomes', 'expenses', 'inflow', 'outflow'].map((option, index) => {
-            return { key: index, value: option, text: option }
-        });
-
         return (
             <div>
                 <Form>
@@ -122,21 +108,17 @@ export default class OverviewView extends React.Component {
                                 onChange={this.handleChangeType}
                             />
                         </Form.Field>
+
                         <Form.Field>
                             <Button onClick={this.handleAdd}> Add </Button>
                         </Form.Field>
 
                     </Form.Group>
                 </Form>
-                <div>
-                    <canvas ref="chart" id="chart" height={'500'} width={'500'}></canvas>
-                </div>
 
+                <canvas ref="chart" id="chart" height={'500'} width={'500'} />
 
-
-
-
-            </div >
+            </div>
         );
     }
 }
