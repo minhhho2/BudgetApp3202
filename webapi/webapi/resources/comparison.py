@@ -34,7 +34,7 @@ class ComparisonRepository():
         if media.get('gender', False):
             user_filter = user_filter.where(self._PersonalInformation.gender==personal_info.gender)
         if media.get('age', False):
-            user_filter = user_filter.where(self._PersonalInformation.birthday.year = personal_info.birthday.year)
+            user_filter = user_filter.where(self._PersonalInformation.birthday.year == personal_info.birthday.year)
 
         user_filter = [u.user_id for u in user_filter]
         global_savings_goals = global_savings_goals.where(self._Budget.user_id in user_filter)
