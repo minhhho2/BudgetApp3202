@@ -4,7 +4,7 @@ import BudgetStore from "./BudgetStore";
 import UserStore from "../../stores/UserStore";
 
 class ExpenseStore {
-    @observable id = 1;
+    @observable id = '';
     @observable name = '';
     @observable amount = 0;
     @observable description = '';

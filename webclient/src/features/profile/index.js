@@ -55,6 +55,7 @@ export default class ProfileComponent extends React.Component {
     }
 
     render() {
+        const { editable, firstname, lastname, gender, emailAddress, homeAddress, phoneNumber } = ProfileStore;
         return (
             <div>
                 <h1>
@@ -75,24 +76,23 @@ export default class ProfileComponent extends React.Component {
                                 <Divider horizontal>Basic Information</Divider>
                                 <Form>
                                     <Form.Field inline
-                                        disabled={ProfileStore.editable}
+                                        disabled={editable}
                                         control='input'
                                         label='First name'
                                         placeholder='first name'
-                                        value={ProfileStore.firstname}
+                                        value={firstname}
                                         onChange={this.handleChangeFirstName}
                                     />
                                     <Form.Field inline
-                                        disabled={ProfileStore.editable}
+                                        disabled={editable}
                                         control='input'
                                         label='Last name'
                                         placeholder='last name'
-                                        value={ProfileStore.lastname}
+                                        value={lastname}
                                         onChange={this.handleChangeLastname}
                                     />
-
                                     <Form.Field inline
-                                        disabled={ProfileStore.editable}
+                                        disabled={editable}
                                         control='input'
                                         label="Birthday"
                                         type="date"
@@ -101,10 +101,10 @@ export default class ProfileComponent extends React.Component {
                                     />
                                     <Form.Field>
                                         <Select
-                                            disabled={ProfileStore.editable}
+                                            disabled={editable}
                                             label='Gender'
                                             placeholder='gender'
-                                            value={ProfileStore.gender}
+                                            value={gender}
                                             onChange={this.handleChangeGender}
                                             options={[
                                                 { key: 'male', value: 'male', text: 'male' },
@@ -117,30 +117,30 @@ export default class ProfileComponent extends React.Component {
                                     <Divider horizontal>Contact Information</Divider>
 
                                     <Form.Field inline
-                                        disabled={ProfileStore.editable}
+                                        disabled={editable}
                                         control='input'
                                         label='Email Address'
                                         placeholder='email'
-                                        value={ProfileStore.emailAddress}
+                                        value={emailAddress}
                                         onChange={this.handleChangeEmailAddress}
                                     />
+
                                     <Form.Field inline
-                                        disabled={ProfileStore.editable}
+                                        disabled={editable}
                                         control='input'
                                         label='Home Address'
                                         placeholder='home address'
-                                        value={ProfileStore.homeAddress}
+                                        value={homeAddress}
                                         onChange={this.handleChangeHomeAddress}
                                     />
                                     <Form.Field inline
-                                        disabled={ProfileStore.editable}
+                                        disabled={editable}
                                         control='input'
                                         label='Number'
                                         placeholder='number'
-                                        value={ProfileStore.phoneNumber}
+                                        value={phoneNumber}
                                         onChange={this.handleChangePhoneNumber}
                                     />
-
                                 </Form>
                             </h4>
                             <Form>
@@ -150,18 +150,14 @@ export default class ProfileComponent extends React.Component {
                                     </Form.Field>
                                     <Form.Field>
                                         <Button fluid onClick={this.handleEdit}>
-                                            {ProfileStore.editable ?
-                                                "Edit" :
-                                                "Cancel"}
+                                            {editable ? "Edit" : "Cancel"}
                                         </Button>
                                     </Form.Field>
                                 </Form.Group>
                             </Form>
                         </Grid.Column>
-
                     </Grid.Row>
                 </Grid>
-
             </div>
         );
     }

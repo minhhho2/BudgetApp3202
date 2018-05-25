@@ -12,7 +12,6 @@ export default class ExpenseModal extends React.Component {
     close = () => {
         BudgetStore.editExpenseModal = false;
         ExpenseStore.clear();
-        //ExpenseStore.hasEndDate = false;
     }
 
     save = () => {
