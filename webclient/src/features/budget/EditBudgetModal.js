@@ -41,7 +41,7 @@ export default class EditBudgetModal extends React.Component {
             { text: 'year', value: '365' }
         ];
 
-        const { id, name, description, amount, oneOff } = EditBudgetStore;
+        const { id, name, description, amount, oneOff , endDate} = EditBudgetStore;
 
         var button = id === undefined ?
             <Button onClick={this.save}> Save </Button> :

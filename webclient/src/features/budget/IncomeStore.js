@@ -40,9 +40,9 @@ class IncomeStore {
             description: this.description,
             frequency: this.frequency,
             timeunit: this.timeunit,
-            end_date: this.hasEndDate ?
-                this.endDate :
-                undefined
+            end_date: this.endDate //this.hasEndDate ?
+                //this.endDate :
+                //undefined
         })
             .then(() => BudgetStore.getIncomes())
             .catch(console.log)
@@ -54,7 +54,6 @@ class IncomeStore {
             .then(_ => BudgetStore.incomes = BudgetStore.incomes.filter(income => income.id !== id))
             .catch(err => alert(err.message));
     }
-
 
     update() {
         ApiService.post(`/income/${this.id}`, {

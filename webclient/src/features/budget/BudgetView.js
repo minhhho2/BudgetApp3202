@@ -143,7 +143,11 @@ export default class BudgetComponent extends React.Component {
                                 <Table.Cell>{budget.name}</Table.Cell>
                                 <Table.Cell>{budget.description}</Table.Cell>
                                 <Table.Cell>{budget.amount}</Table.Cell>
-                                <Table.Cell>{budget.end_date}</Table.Cell>
+                                <Table.Cell>{
+                                    Boolean(budget.end_date) ?
+                                        budget.end_date.split('T')[0] :
+                                        ''
+                                }</Table.Cell>
                                 <Table.Cell>
                                     <Button primary onClick={() => this.openEditBudgetModal(budget.id)}>
                                         <Icon name="edit" />
@@ -178,7 +182,11 @@ export default class BudgetComponent extends React.Component {
                                 <Table.Cell>{income.description}</Table.Cell>
                                 <Table.Cell>{income.amount}</Table.Cell>
                                 <Table.Cell>{income.frequency}/{income.timeunit}</Table.Cell>
-                                <Table.Cell>{income.end_date}</Table.Cell>
+                                <Table.Cell>{
+                                    Boolean(income.end_date) ?
+                                        income.end_date.split('T')[0] :
+                                        ''
+                                }</Table.Cell>
                                 <Table.Cell>
                                     <Button primary onClick={() => this.openIncomeModal(income.id)}>
                                         <Icon name="edit" />
@@ -213,7 +221,11 @@ export default class BudgetComponent extends React.Component {
                                 <Table.Cell>{expense.description}</Table.Cell>
                                 <Table.Cell>{expense.amount}</Table.Cell>
                                 <Table.Cell>{expense.frequency}/{expense.timeunit}</Table.Cell>
-                                <Table.Cell>{expense.end_date}</Table.Cell>
+                                <Table.Cell>{
+                                    Boolean(expense.end_date) ?
+                                        expense.end_date.split('T')[0] :
+                                        ''
+                                }</Table.Cell>                                
                                 <Table.Cell>
                                     <Button primary onClick={() => this.openExpenseModal(expense.id)}>
                                         <Icon name="edit" />
@@ -244,7 +256,11 @@ export default class BudgetComponent extends React.Component {
                             <Table.Row key={index} >
                                 <Table.Cell>{tx.description}</Table.Cell>
                                 <Table.Cell>{tx.amount}</Table.Cell>
-                                <Table.Cell>{tx.dt}</Table.Cell>
+                                <Table.Cell>{
+                                    Boolean(tx.dt) ?
+                                        tx.dt.split('T')[0] :
+                                        ''
+                                }</Table.Cell>           
                                 <Table.Cell>
                                     <Button primary onClick={() => this.openTxModal(tx.id)}>
                                         <Icon name="edit" />

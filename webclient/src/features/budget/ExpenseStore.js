@@ -11,7 +11,7 @@ class ExpenseStore {
     @observable timeunit = '';
     @observable frequency = 0;
     @observable hasEndDate = false;
-    @observable endDate = new Date();
+    @observable endDate = undefined;
     @observable isOther = false;
 
     getData(id) {
@@ -40,9 +40,7 @@ class ExpenseStore {
             description: this.description,
             frequency: this.frequency,
             timeunit: this.timeunit,
-            end_date: this.hasEndDate ?
-                this.endDate :
-                undefined
+            end_date: this.endDate
         })
             .then(() => BudgetStore.getExpenses())
             .catch(console.log)
@@ -54,17 +52,6 @@ class ExpenseStore {
             .then(_ => BudgetStore.expenses = BudgetStore.expenses.filter(expense => expense.id !== id))
             .catch(err => alert(err.message));
     }
-
-    getExpense(id) {
-        ApiService.get(`/expense/${id}`)
-            .then(res => res.Message)
-            .then(expense => {
-                this.id = expense.id;
-                this.amount = expense.amount;
-                this.description = expense.description;
-            });
-    }
-
 
     update() {
         console.log("update in expense: " + this.id);

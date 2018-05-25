@@ -62,7 +62,6 @@ export default class incomeModal extends React.Component {
     handleNameChange = (e) => {
         IncomeStore.name = e.target.value;
         console.log(IncomeStore.name)
-
     }
 
     render() {
@@ -134,9 +133,7 @@ export default class incomeModal extends React.Component {
                                     options={transactionTypes}
                                 />
                             </Form.Field>
-                            
                             {descriptionInput}
-
                             <Form.Field>
                                 <Input
                                     type="date"
@@ -145,9 +142,7 @@ export default class incomeModal extends React.Component {
                                     value={endDate}
                                 />
                             </Form.Field>
-
                             {button}
-
                         </Form>
                     </Modal.Description>
                 </Modal.Content>

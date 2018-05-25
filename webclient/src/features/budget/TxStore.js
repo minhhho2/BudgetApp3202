@@ -28,7 +28,7 @@ class TxStore {
         ApiService.put('/transaction', {
             amount: (this.amount * this.mult),
             description: this.description,
-            dt: new Date()         // defaulted to undefined for now
+            dt: this.dt
         })
             .then(console.log)
             .then(() => BudgetStore.getTransactions())
@@ -46,7 +46,8 @@ class TxStore {
         ApiService.post(`/transaction/${this.id}`, {
             id: this.id,
             description: this.description,
-            amount: this.amount
+            amount: this.amount,
+            dt: this.dt
         })
             .then(() => BudgetStore.getTransactions())
             .catch(err => alert(err.message))
@@ -63,6 +64,7 @@ class TxStore {
         this.mult = 1;
         this.amount = 0;
         this.description = "";
+        this.dt = undefined;
         this.isOther = false;
     }
 }
