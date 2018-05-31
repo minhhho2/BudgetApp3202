@@ -109,7 +109,7 @@ class TransactionRepository():
     def _send_warning_sms(self, user_id: int, description: str):
         profile = self._PersonalInformation.get(self._PersonalInformation.user_id==user_id)
         phone_number = profile.phone_number
-        if len(phone_number > 0):
+        if len(phone_number) > 0:
             self._msg_client.send_sms(f'Your last transaction "{description}" puts you over your weekly allowance', phone_number)
 
 class TransactionCollection(object):
