@@ -20,6 +20,5 @@ Budget App is a browser based web applciation designed for individuals intereste
 - Notification system for abnormal spending and savings
  
  ## Figures
-![Game Screen](https://github.com/minhhho2/Barricade/blob/master/assets/game.png)
-![Instructions View](https://github.com/minhhho2/Barricade/blob/master/assets/instructions.png)
-![Landing Page](https://github.com/minhhho2/Barricade/blob/master/assets/landing.png)
+![one View](https://github.com/minhhho2/BudgetApp3202/blob/master/assets/one.png)
+![two View](https://github.com/minhhho2/BudgetApp3202/blob/master/assets/two.png)
